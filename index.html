@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raed Ouiriemmi — Software Developer & Data Scientist</title>
+  <meta name="description" content="Portfolio of Raed Ouiriemmi — Software Developer and Data Science Master's student building full-stack apps with AI, NLP and computer vision." />
+  <meta name="author" content="Raed Ouiriemmi" />
+
+  <!-- Open Graph / social preview -->
+  <meta property="og:title" content="Raed Ouiriemmi — Software Developer & Data Scientist" />
+  <meta property="og:description" content="Full-stack developer & Data Science student. AI chatbots, NLP, computer vision, mobile apps." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>" />
+</head>
+<body>
+  <!-- Animated background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <!-- Navbar -->
+  <header class="nav" id="nav">
+    <a href="#hero" class="nav__logo">RO<span>.</span></a>
+    <nav class="nav__links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav__actions">
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button id="menuToggle" class="icon-btn menu-btn" aria-label="Menu">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <div class="hero__inner reveal">
+        <p class="hero__hi">Hi, I'm</p>
+        <h1 class="hero__name">Raed Ouiriemmi</h1>
+        <h2 class="hero__role">
+          <span class="grad">Software Developer</span> &amp; <span class="grad">Data Science</span> Student
+        </h2>
+        <p class="hero__tag">
+          I build full-stack web &amp; mobile apps with a Python backend and an AI core —
+          language models, NLP and computer vision. Comfortable taking a project from the
+          first commit all the way to the server it runs on.
+        </p>
+        <div class="hero__cta">
+          <a href="mailto:ouiriemmiraed@gmail.com" class="btn btn--primary">Get in touch</a>
+          <a href="Raed_Ouiriemmi_CV.pdf" class="btn btn--ghost" download>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+            Download CV
+          </a>
+        </div>
+        <div class="hero__socials">
+          <a href="https://github.com/Ouiriemmiraed" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/raed-ouiriemmi-9858b5242" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.2V9h3.4v1.6h.1c.5-.9 1.7-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.4H3.5V9h3.6v11.4zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.5c0 1 .8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg>
+          </a>
+          <a href="mailto:ouiriemmiraed@gmail.com" aria-label="Email" title="Email">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="hero__scroll" aria-hidden="true"><span></span></div>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="about">
+      <div class="section__head reveal">
+        <span class="section__num">01</span>
+        <h2 class="section__title">About me</h2>
+      </div>
+      <div class="about reveal">
+        <div class="about__text">
+          <p>
+            I'm a <strong>Data Science Master's student</strong> at the Faculty of Sciences of Monastir,
+            Tunisia, with a Bachelor's in Software Engineering &amp; Information Systems. Over the past two
+            years I've shipped several applications that pair a web or mobile frontend with a Python
+            backend and a real AI component.
+          </p>
+          <p>
+            I like owning the whole stack: designing the API, training or wiring up the model, building
+            the UI, and hardening the Linux server it all runs on (Docker, nginx, UFW, fail2ban). Most of
+            my apps are localized in <strong>English, French and Arabic</strong> (with full RTL support).
+          </p>
+          <div class="about__facts">
+            <div class="fact"><span class="fact__k">📍</span> Monastir, Tunisia</div>
+            <div class="fact"><span class="fact__k">🎓</span> M.Sc. Data Science (in progress)</div>
+            <div class="fact"><span class="fact__k">💬</span> Arabic · French (B2) · English (B1)</div>
+          </div>
+        </div>
+        <div class="about__stats">
+          <div class="stat"><span class="stat__n" data-count="6">6</span><span class="stat__l">AI / ML projects</span></div>
+          <div class="stat"><span class="stat__n" data-count="6">6</span><span class="stat__l">months pro internship</span></div>
+          <div class="stat"><span class="stat__n" data-count="3">3</span><span class="stat__l">languages spoken</span></div>
+          <div class="stat"><span class="stat__n" data-count="10">10</span><span class="stat__l">+ technologies mastered</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="section" id="skills">
+      <div class="section__head reveal">
+        <span class="section__num">02</span>
+        <h2 class="section__title">Skills &amp; tools</h2>
+      </div>
+      <div class="skills">
+        <div class="skill-card reveal">
+          <h3>Languages</h3>
+          <div class="tags">
+            <span>Python</span><span>JavaScript</span><span>Java</span><span>C#</span><span>C++</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h3>Web &amp; Mobile</h3>
+          <div class="tags">
+            <span>React.js</span><span>React Native (Expo)</span><span>Node.js</span><span>FastAPI</span><span>HTML</span><span>CSS</span><span>Tailwind</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h3>AI / Machine Learning</h3>
+          <div class="tags">
+            <span>TensorFlow</span><span>PyTorch</span><span>Keras</span><span>scikit-learn</span><span>YOLO</span><span>LLaMA 2</span><span>BART</span><span>OpenAI API</span><span>OpenRouter</span><span>Pandas</span><span>NumPy</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h3>Databases</h3>
+          <div class="tags">
+            <span>PostgreSQL</span><span>MySQL</span><span>MSSQL</span><span>MongoDB</span><span>Firebase</span><span>Supabase</span><span>SQLAlchemy</span><span>Alembic</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h3>DevOps &amp; Tools</h3>
+          <div class="tags">
+            <span>Docker</span><span>Docker Compose</span><span>nginx</span><span>Linux / Ubuntu</span><span>UFW</span><span>fail2ban</span><span>Git</span><span>GitHub</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h3>Methods</h3>
+          <div class="tags">
+            <span>UML</span><span>Agile</span><span>Testing (JUnit)</span><span>Web scraping</span><span>i18n / RTL</span><span>Maven</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section" id="projects">
+      <div class="section__head reveal">
+        <span class="section__num">03</span>
+        <h2 class="section__title">Featured projects</h2>
+      </div>
+      <div class="projects">
+
+        <article class="project reveal">
+          <div class="project__top">
+            <span class="project__icon">🏋️</span>
+            <span class="project__year">2025–2026</span>
+          </div>
+          <h3>AppFullSport — Fitness coaching app</h3>
+          <p>
+            Full mobile fitness app: workout sessions with per-set weight/rep tracking, rest timer and
+            automatic personal-record detection (seeded with ~83 exercises). Step counting via HealthKit
+            &amp; CoreMotion on iOS and the hardware sensor on Android. Hardened, self-managed VPS deploy.
+          </p>
+          <div class="tags">
+            <span>React Native</span><span>FastAPI</span><span>PostgreSQL</span><span>Docker</span><span>nginx</span>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project__top">
+            <span class="project__icon">🤖</span>
+            <span class="project__year">2025</span>
+          </div>
+          <h3>Natural-language SQL Chatbot</h3>
+          <p>
+            A web chatbot that turns plain-English questions into SQL, runs them against an MSSQL database
+            and returns concise, readable answers through a modern interface.
+          </p>
+          <div class="tags">
+            <span>React.js</span><span>FastAPI</span><span>MSSQL</span><span>OpenRouter API</span>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project__top">
+            <span class="project__icon">💬</span>
+            <span class="project__year">2025</span>
+          </div>
+          <h3>Discord Automation &amp; Management</h3>
+          <p>
+            Web app to centrally manage multiple Discord accounts via tokens &amp; proxies, with a real-time
+            admin dashboard. AI agents generate and post natural replies through Discord webhooks.
+          </p>
+          <div class="tags">
+            <span>React.js</span><span>FastAPI</span><span>Discord Webhooks</span><span>OpenAI API</span>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project__top">
+            <span class="project__icon">🛒</span>
+            <span class="project__year">2024</span>
+          </div>
+          <h3>IT Product Search Chatbot</h3>
+          <p>
+            LLaMA-2-powered chatbot that helps users find IT products with personalized recommendations,
+            kept fresh by a daily web scraper pulling the MyTek catalog.
+          </p>
+          <div class="tags">
+            <span>LLaMA 2</span><span>Python</span><span>Web scraping</span><span>NLP</span>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project__top">
+            <span class="project__icon">📝</span>
+            <span class="project__year">2024</span>
+          </div>
+          <h3>Text Summarization &amp; Translation</h3>
+          <p>
+            Web app integrating BART for summarization and Helsinki-NLP for translation — faster
+            summaries with support for 10+ languages.
+          </p>
+          <div class="tags">
+            <span>FastAPI</span><span>React.js</span><span>BART</span><span>Helsinki-NLP</span>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project__top">
+            <span class="project__icon">🚗</span>
+            <span class="project__year">Sep 2024</span>
+          </div>
+          <h3>License Plate Detection (YOLO)</h3>
+          <p>
+            Trained a YOLO model to detect and extract vehicle license plates from video, frame by frame,
+            in real time.
+          </p>
+          <div class="tags">
+            <span>YOLO</span><span>PyTorch</span><span>Computer Vision</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Experience & Education -->
+    <section class="section" id="experience">
+      <div class="section__head reveal">
+        <span class="section__num">04</span>
+        <h2 class="section__title">Experience &amp; education</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <span class="tl-date">Feb 2024 – Aug 2024</span>
+          <h3>Software Development Intern — AZ IT</h3>
+          <p class="tl-sub">Monastir, Tunisia</p>
+          <p>
+            Six-month internship across two projects: a <strong>React Native mobile app</strong> + web
+            dashboard for secure document exchange between accountants and clients, and a
+            <strong>business-address platform</strong> (graduation project) letting companies register a
+            legal office without renting a physical space — React.js frontend, Node.js backend.
+          </p>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <span class="tl-date">Sep 2024 – Present</span>
+          <h3>Master's in Data Science</h3>
+          <p class="tl-sub">Faculty of Sciences of Monastir, Tunisia</p>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <span class="tl-date">2021 – 2024</span>
+          <h3>Bachelor's in Software Engineering &amp; Information Systems</h3>
+          <p class="tl-sub">Faculty of Sciences of Monastir, Tunisia</p>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <span class="tl-date">2021</span>
+          <h3>Scientific Baccalaureate</h3>
+          <p class="tl-sub">Dhouiher High School, Zarzis, Tunisia</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section section--contact" id="contact">
+      <div class="contact reveal">
+        <span class="section__num">05</span>
+        <h2 class="contact__title">Let's build something together</h2>
+        <p class="contact__text">
+          I'm open to developer and data-science opportunities. The fastest way to reach me is email —
+          I usually reply within a day.
+        </p>
+        <a href="mailto:ouiriemmiraed@gmail.com" class="btn btn--primary btn--lg">ouiriemmiraed@gmail.com</a>
+        <div class="contact__alt">
+          <a href="tel:+21622077542">+216 22 077 542</a>
+          <span>·</span>
+          <a href="Raed_Ouiriemmi_CV.pdf" download>Download CV (PDF)</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Raed Ouiriemmi · Built with HTML, CSS &amp; a little JavaScript.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
