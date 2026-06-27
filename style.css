@@ -113,6 +113,25 @@ a { color: inherit; text-decoration: none; }
   position: relative;
 }
 .hero__inner { max-width: 760px; }
+.hero__avatar {
+  position: relative; width: 152px; height: 152px; margin: 0 auto 28px;
+  border-radius: 50%; padding: 4px; background: var(--grad);
+  box-shadow: 0 14px 44px -10px rgba(79, 140, 255, .55);
+  animation: floaty 5s ease-in-out infinite;
+}
+.hero__avatar img,
+.hero__avatar-fallback {
+  width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+  border: 4px solid var(--bg); display: block;
+}
+.hero__avatar-fallback {
+  display: grid; place-items: center; background: var(--bg-soft);
+  font-family: "Space Grotesk"; font-size: 3rem; font-weight: 700;
+  color: transparent; background-image: var(--grad); -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@media (prefers-reduced-motion: reduce) { .hero__avatar { animation: none; } }
 .hero__hi { color: var(--accent); font-weight: 600; letter-spacing: 1px; margin-bottom: 8px; }
 .hero__name { font-size: clamp(2.6rem, 8vw, 5rem); font-weight: 700; letter-spacing: -1px; }
 .hero__role { font-size: clamp(1.1rem, 3.6vw, 1.9rem); font-weight: 600; color: var(--muted); margin-top: 10px; }
