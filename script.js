@@ -1,9 +1,14 @@
-// ===== Theme toggle (persists in localStorage) =====
+// ===================================================================
+//  Raed Ouiriemmi — portfolio interactions
+// ===================================================================
 const root = document.documentElement;
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isTouch = window.matchMedia("(hover: none)").matches;
+
+// ===== Theme toggle (persists in localStorage) =====
 const themeToggle = document.getElementById("themeToggle");
 const savedTheme = localStorage.getItem("theme");
 if (savedTheme) root.setAttribute("data-theme", savedTheme);
-
 themeToggle.addEventListener("click", () => {
   const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
   root.setAttribute("data-theme", next);
@@ -18,14 +23,27 @@ navLinks.querySelectorAll("a").forEach((a) =>
   a.addEventListener("click", () => navLinks.classList.remove("open"))
 );
 
-// ===== Navbar shadow on scroll =====
+// ===== Navbar state + scroll progress =====
 const nav = document.getElementById("nav");
-const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 20);
+const progress = document.getElementById("scrollProgress");
+const onScroll = () => {
+  const y = window.scrollY;
+  nav.classList.toggle("scrolled", y > 20);
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
+};
 window.addEventListener("scroll", onScroll, { passive: true });
 onScroll();
 
-// ===== Reveal on scroll =====
-const revealEls = document.querySelectorAll(".reveal");
+// ===== Reveal on scroll (with stagger inside grids) =====
+const groups = [".about__stats", ".skills", ".projects", ".timeline"];
+groups.forEach((sel) => {
+  const parent = document.querySelector(sel);
+  if (!parent) return;
+  [...parent.children].forEach((child, i) => {
+    if (child.classList.contains("reveal")) child.style.transitionDelay = i * 80 + "ms";
+  });
+});
 const io = new IntersectionObserver(
   (entries) => {
     entries.forEach((e) => {
@@ -37,10 +55,27 @@ const io = new IntersectionObserver(
   },
   { threshold: 0.12 }
 );
-revealEls.forEach((el) => io.observe(el));
+document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+// ===== Scroll-spy: highlight active nav link =====
+const navAnchors = [...navLinks.querySelectorAll("a")];
+const sections = navAnchors
+  .map((a) => document.querySelector(a.getAttribute("href")))
+  .filter(Boolean);
+const spy = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      navAnchors.forEach((a) =>
+        a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id)
+      );
+    });
+  },
+  { rootMargin: "-45% 0px -50% 0px" }
+);
+sections.forEach((s) => spy.observe(s));
 
 // ===== Animated count-up stats =====
-const counters = document.querySelectorAll(".stat__n");
 const countIO = new IntersectionObserver(
   (entries) => {
     entries.forEach((e) => {
@@ -60,7 +95,64 @@ const countIO = new IntersectionObserver(
   },
   { threshold: 0.5 }
 );
-counters.forEach((c) => countIO.observe(c));
+document.querySelectorAll(".stat__n").forEach((c) => countIO.observe(c));
 
 // ===== Footer year =====
 document.getElementById("year").textContent = new Date().getFullYear();
+
+// ===================================================================
+//  Pointer-driven effects (desktop, motion-allowed only)
+// ===================================================================
+if (!reduceMotion && !isTouch) {
+  // -- Spotlight: cards light up under the cursor --
+  document.querySelectorAll(".spot").forEach((card) => {
+    card.addEventListener("pointermove", (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty("--mx", e.clientX - r.left + "px");
+      card.style.setProperty("--my", e.clientY - r.top + "px");
+    });
+  });
+
+  // -- 3D tilt on project cards --
+  document.querySelectorAll("[data-tilt]").forEach((card) => {
+    const MAX = 6; // degrees
+    card.addEventListener("pointermove", (e) => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `perspective(900px) rotateX(${(-py * MAX).toFixed(2)}deg) rotateY(${(px * MAX).toFixed(2)}deg) translateY(-6px)`;
+    });
+    card.addEventListener("pointerleave", () => {
+      card.style.transform = "";
+    });
+  });
+
+  // -- Magnetic buttons --
+  document.querySelectorAll(".magnetic").forEach((btn) => {
+    const STR = 0.35;
+    btn.addEventListener("pointermove", (e) => {
+      const r = btn.getBoundingClientRect();
+      const x = e.clientX - (r.left + r.width / 2);
+      const y = e.clientY - (r.top + r.height / 2);
+      btn.style.transform = `translate(${x * STR}px, ${y * STR}px)`;
+    });
+    btn.addEventListener("pointerleave", () => {
+      btn.style.transform = "";
+    });
+  });
+
+  // -- Cursor-following ambient glow (lerped) --
+  const glow = document.getElementById("cursorGlow");
+  let tx = window.innerWidth / 2, ty = window.innerHeight / 2, cx = tx, cy = ty;
+  window.addEventListener("pointermove", (e) => {
+    tx = e.clientX; ty = e.clientY;
+    document.body.classList.add("has-cursor");
+  });
+  const raf = () => {
+    cx += (tx - cx) * 0.12;
+    cy += (ty - cy) * 0.12;
+    glow.style.transform = `translate(${cx}px, ${cy}px)`;
+    requestAnimationFrame(raf);
+  };
+  raf();
+}
