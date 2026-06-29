@@ -19,6 +19,39 @@ navLinks.querySelectorAll("a").forEach((a) =>
   })
 );
 
+// ===== Theme toggle (persists in localStorage) =====
+const themeToggle = document.getElementById("themeToggle");
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) root.setAttribute("data-theme", savedTheme);
+themeToggle.addEventListener("click", () => {
+  const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+  root.setAttribute("data-theme", next);
+  localStorage.setItem("theme", next);
+});
+
+// ===== Language switch (EN / FR / AR, with RTL for Arabic) =====
+const langSelect = document.getElementById("langSelect");
+const RTL_LANGS = ["ar"];
+function applyLang(lang) {
+  const dict = typeof I18N !== "undefined" ? I18N[lang] : null;
+  if (!dict) return;
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const v = dict[el.getAttribute("data-i18n")];
+    if (v != null) el.innerHTML = v;
+  });
+  root.setAttribute("lang", lang);
+  root.setAttribute("dir", RTL_LANGS.includes(lang) ? "rtl" : "ltr");
+  if (dict["doc.title"]) document.title = dict["doc.title"];
+  const md = document.querySelector('meta[name="description"]');
+  if (md && dict["doc.desc"]) md.setAttribute("content", dict["doc.desc"].replace(/<[^>]+>/g, ""));
+  if (langSelect) langSelect.value = lang;
+  localStorage.setItem("lang", lang);
+}
+const browserLang = (navigator.language || "en").slice(0, 2);
+const startLang = localStorage.getItem("lang") || (["en", "fr", "ar"].includes(browserLang) ? browserLang : "en");
+applyLang(["en", "fr", "ar"].includes(startLang) ? startLang : "en");
+if (langSelect) langSelect.addEventListener("change", (e) => applyLang(e.target.value));
+
 // ===== Navbar state + scroll progress + ghost parallax =====
 const nav = document.getElementById("nav");
 const progress = document.getElementById("scrollProgress");

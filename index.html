@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js" } }
@@ -72,14 +72,23 @@
   <header class="nav" id="nav">
     <a href="#hero" class="nav__logo">RO<span>.</span></a>
     <nav class="nav__links" id="navLinks">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#skills" data-i18n="nav.skills">Skills</a>
+      <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#experience" data-i18n="nav.experience">Experience</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
     </nav>
     <div class="nav__actions">
-      <a href="Raed_Ouiriemmi_CV.pdf" class="nav__cv btn btn--primary" download>Resume</a>
+      <select id="langSelect" class="lang-select" aria-label="Language / Langue / اللغة">
+        <option value="en">EN</option>
+        <option value="fr">FR</option>
+        <option value="ar">ع</option>
+      </select>
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <a href="Raed_Ouiriemmi_CV.pdf" class="nav__cv btn btn--primary" download data-i18n="nav.resume">Resume</a>
       <button id="menuToggle" class="icon-btn menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
@@ -91,27 +100,27 @@
     <section class="hero" id="hero">
       <div class="hero__canvas" id="webgl" aria-hidden="true"></div>
       <div class="hero__inner reveal">
-        <span class="badge"><span class="badge__dot"></span> Available for developer &amp; data-science roles</span>
+        <span class="badge"><span class="badge__dot"></span> <span data-i18n="hero.badge">Available for developer &amp; data-science roles</span></span>
         <div class="hero__avatar">
           <img src="profile.jpg" alt="Raed Ouiriemmi" width="150" height="150"
                loading="eager" decoding="async">
           <span class="hero__avatar-fallback">RO</span>
         </div>
-        <p class="hero__hi">Hi, I'm</p>
+        <p class="hero__hi" data-i18n="hero.hi">Hi, I'm</p>
         <h1 class="hero__name">Raed Ouiriemmi</h1>
-        <h2 class="hero__role">
+        <h2 class="hero__role" data-i18n="hero.role">
           <span class="grad">Software Developer</span> &amp; <span class="grad">Data Science</span> Student
         </h2>
-        <p class="hero__tag">
+        <p class="hero__tag" data-i18n="hero.tag">
           I build full-stack web &amp; mobile apps with a Python backend and an AI core —
           language models, NLP and computer vision. Comfortable taking a project from the
           first commit all the way to the server it runs on.
         </p>
         <div class="hero__cta">
-          <a href="mailto:ouiriemmiraed@gmail.com" class="btn btn--primary magnetic">Get in touch</a>
+          <a href="mailto:ouiriemmiraed@gmail.com" class="btn btn--primary magnetic" data-i18n="hero.contact">Get in touch</a>
           <a href="Raed_Ouiriemmi_CV.pdf" class="btn btn--ghost" download>
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
-            Download CV
+            <span data-i18n="hero.cv">Download CV</span>
           </a>
         </div>
         <div class="hero__socials">
@@ -141,33 +150,33 @@
     <section class="section" id="about">
       <div class="section__head reveal">
         <span class="section__num">01</span>
-        <h2 class="section__title">About me</h2>
-        <span class="section__ghost">01</span>
+        <h2 class="section__title" data-i18n="about.title">About me</h2>
+        <span class="section__ghost" aria-hidden="true">01</span>
       </div>
       <div class="about reveal">
         <div class="about__text">
-          <p>
+          <p data-i18n="about.p1">
             I'm a <strong>Data Science Master's student</strong> at the Faculty of Sciences of Monastir,
             Tunisia, with a Bachelor's in Software Engineering &amp; Information Systems. Over the past two
             years I've shipped several applications that pair a web or mobile frontend with a Python
             backend and a real AI component.
           </p>
-          <p>
+          <p data-i18n="about.p2">
             I like owning the whole stack: designing the API, training or wiring up the model, building
             the UI, and hardening the Linux server it all runs on (Docker, nginx, UFW, fail2ban). Most of
             my apps are localized in <strong>English, French and Arabic</strong> (with full RTL support).
           </p>
           <div class="about__facts">
-            <div class="fact"><span class="fact__k">📍</span> Monastir, Tunisia</div>
-            <div class="fact"><span class="fact__k">🎓</span> M.Sc. Data Science (in progress)</div>
-            <div class="fact"><span class="fact__k">💬</span> Arabic · French (B2) · English (B1)</div>
+            <div class="fact"><span class="fact__k">📍</span> <span data-i18n="about.fact1">Monastir, Tunisia</span></div>
+            <div class="fact"><span class="fact__k">🎓</span> <span data-i18n="about.fact2">M.Sc. Data Science (in progress)</span></div>
+            <div class="fact"><span class="fact__k">💬</span> <span data-i18n="about.fact3">Arabic · French (B2) · English (B1)</span></div>
           </div>
         </div>
         <div class="about__stats">
-          <div class="stat spot"><span class="stat__n" data-count="6">6</span><span class="stat__l">AI / ML projects</span></div>
-          <div class="stat spot"><span class="stat__n" data-count="6">6</span><span class="stat__l">months pro internship</span></div>
-          <div class="stat spot"><span class="stat__n" data-count="3">3</span><span class="stat__l">languages spoken</span></div>
-          <div class="stat spot"><span class="stat__n" data-count="10">10</span><span class="stat__l">+ technologies mastered</span></div>
+          <div class="stat spot"><span class="stat__n" data-count="6">6</span><span class="stat__l" data-i18n="about.stat1">AI / ML projects</span></div>
+          <div class="stat spot"><span class="stat__n" data-count="6">6</span><span class="stat__l" data-i18n="about.stat2">months pro internship</span></div>
+          <div class="stat spot"><span class="stat__n" data-count="3">3</span><span class="stat__l" data-i18n="about.stat3">languages spoken</span></div>
+          <div class="stat spot"><span class="stat__n" data-count="10">10</span><span class="stat__l" data-i18n="about.stat4">+ technologies mastered</span></div>
         </div>
       </div>
     </section>
@@ -176,42 +185,42 @@
     <section class="section" id="skills">
       <div class="section__head reveal">
         <span class="section__num">02</span>
-        <h2 class="section__title">Skills &amp; tools</h2>
-        <span class="section__ghost">02</span>
+        <h2 class="section__title" data-i18n="skills.title">Skills &amp; tools</h2>
+        <span class="section__ghost" aria-hidden="true">02</span>
       </div>
       <div class="skills">
         <div class="skill-card spot reveal">
-          <h3>Languages</h3>
+          <h3 data-i18n="skills.languages">Languages</h3>
           <div class="tags">
             <span>Python</span><span>JavaScript</span><span>Java</span><span>C#</span><span>C++</span>
           </div>
         </div>
         <div class="skill-card spot reveal">
-          <h3>Web &amp; Mobile</h3>
+          <h3 data-i18n="skills.web">Web &amp; Mobile</h3>
           <div class="tags">
             <span>React.js</span><span>React Native (Expo)</span><span>Node.js</span><span>FastAPI</span><span>HTML</span><span>CSS</span><span>Tailwind</span>
           </div>
         </div>
         <div class="skill-card spot reveal">
-          <h3>AI / Machine Learning</h3>
+          <h3 data-i18n="skills.ai">AI / Machine Learning</h3>
           <div class="tags">
             <span>TensorFlow</span><span>PyTorch</span><span>Keras</span><span>scikit-learn</span><span>YOLO</span><span>LLaMA 2</span><span>BART</span><span>OpenAI API</span><span>OpenRouter</span><span>Pandas</span><span>NumPy</span>
           </div>
         </div>
         <div class="skill-card spot reveal">
-          <h3>Databases</h3>
+          <h3 data-i18n="skills.databases">Databases</h3>
           <div class="tags">
             <span>PostgreSQL</span><span>MySQL</span><span>MSSQL</span><span>MongoDB</span><span>Firebase</span><span>Supabase</span><span>SQLAlchemy</span><span>Alembic</span>
           </div>
         </div>
         <div class="skill-card spot reveal">
-          <h3>DevOps &amp; Tools</h3>
+          <h3 data-i18n="skills.devops">DevOps &amp; Tools</h3>
           <div class="tags">
             <span>Docker</span><span>Docker Compose</span><span>nginx</span><span>Linux / Ubuntu</span><span>UFW</span><span>fail2ban</span><span>Git</span><span>GitHub</span>
           </div>
         </div>
         <div class="skill-card spot reveal">
-          <h3>Methods</h3>
+          <h3 data-i18n="skills.methods">Methods</h3>
           <div class="tags">
             <span>UML</span><span>Agile</span><span>Testing (JUnit)</span><span>Web scraping</span><span>i18n / RTL</span><span>Maven</span>
           </div>
@@ -223,8 +232,8 @@
     <section class="section" id="projects">
       <div class="section__head reveal">
         <span class="section__num">03</span>
-        <h2 class="section__title">Featured projects</h2>
-        <span class="section__ghost">03</span>
+        <h2 class="section__title" data-i18n="projects.title">Featured projects</h2>
+        <span class="section__ghost" aria-hidden="true">03</span>
       </div>
       <div class="projects">
 
@@ -233,8 +242,8 @@
             <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
             <span class="project__year">2025–2026</span>
           </div>
-          <h3>AppFullSport — Fitness coaching app</h3>
-          <p>
+          <h3 data-i18n="proj.fitness.title">AppFullSport — Fitness coaching app</h3>
+          <p data-i18n="proj.fitness.desc">
             Full mobile fitness app: workout sessions with per-set weight/rep tracking, rest timer and
             automatic personal-record detection (seeded with ~83 exercises). Step counting via HealthKit
             &amp; CoreMotion on iOS and the hardware sensor on Android. Hardened, self-managed VPS deploy.
@@ -243,7 +252,7 @@
             <span>React Native</span><span>FastAPI</span><span>PostgreSQL</span><span>Docker</span><span>nginx</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20AppFullSport" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> Code on request</a>
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20AppFullSport" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
@@ -252,8 +261,8 @@
             <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 5v14c0 1.7-4 3-9 3s-9-1.3-9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg></span>
             <span class="project__year">2025</span>
           </div>
-          <h3>Natural-language SQL Chatbot</h3>
-          <p>
+          <h3 data-i18n="proj.sql.title">Natural-language SQL Chatbot</h3>
+          <p data-i18n="proj.sql.desc">
             A web chatbot that turns plain-English questions into SQL, runs them against an MSSQL database
             and returns concise, readable answers through a modern interface.
           </p>
@@ -261,7 +270,7 @@
             <span>React.js</span><span>FastAPI</span><span>MSSQL</span><span>OpenRouter API</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20NL-to-SQL%20Chatbot" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> Code on request</a>
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20NL-to-SQL%20Chatbot" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
@@ -270,8 +279,8 @@
             <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-9 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.2A8.5 8.5 0 0 1 12 3a8.38 8.38 0 0 1 9 8.5z"/></svg></span>
             <span class="project__year">2025</span>
           </div>
-          <h3>Discord Automation &amp; Management</h3>
-          <p>
+          <h3 data-i18n="proj.discord.title">Discord Automation &amp; Management</h3>
+          <p data-i18n="proj.discord.desc">
             Web app to centrally manage multiple Discord accounts via tokens &amp; proxies, with a real-time
             admin dashboard. AI agents generate and post natural replies through Discord webhooks.
           </p>
@@ -279,7 +288,7 @@
             <span>React.js</span><span>FastAPI</span><span>Discord Webhooks</span><span>OpenAI API</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Discord%20Automation" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> Code on request</a>
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Discord%20Automation" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
@@ -288,8 +297,8 @@
             <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
             <span class="project__year">2024</span>
           </div>
-          <h3>IT Product Search Chatbot</h3>
-          <p>
+          <h3 data-i18n="proj.it.title">IT Product Search Chatbot</h3>
+          <p data-i18n="proj.it.desc">
             LLaMA-2-powered chatbot that helps users find IT products with personalized recommendations,
             kept fresh by a daily web scraper pulling the MyTek catalog.
           </p>
@@ -297,7 +306,7 @@
             <span>LLaMA 2</span><span>Python</span><span>Web scraping</span><span>NLP</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20IT%20Product%20Search%20Chatbot" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> Code on request</a>
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20IT%20Product%20Search%20Chatbot" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
@@ -306,8 +315,8 @@
             <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="14" y2="17"/></svg></span>
             <span class="project__year">2024</span>
           </div>
-          <h3>Text Summarization &amp; Translation</h3>
-          <p>
+          <h3 data-i18n="proj.sum.title">Text Summarization &amp; Translation</h3>
+          <p data-i18n="proj.sum.desc">
             Web app integrating BART for summarization and Helsinki-NLP for translation — faster
             summaries with support for 10+ languages.
           </p>
@@ -315,7 +324,7 @@
             <span>FastAPI</span><span>React.js</span><span>BART</span><span>Helsinki-NLP</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Text%20Summarization%20%26%20Translation" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> Code on request</a>
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Text%20Summarization%20%26%20Translation" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
@@ -324,8 +333,8 @@
             <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="3" y1="12" x2="21" y2="12"/></svg></span>
             <span class="project__year">Sep 2024</span>
           </div>
-          <h3>License Plate Detection (YOLO)</h3>
-          <p>
+          <h3 data-i18n="proj.yolo.title">License Plate Detection (YOLO)</h3>
+          <p data-i18n="proj.yolo.desc">
             Trained a YOLO model to detect and extract vehicle license plates from video, frame by frame,
             in real time.
           </p>
@@ -333,7 +342,7 @@
             <span>YOLO</span><span>PyTorch</span><span>Computer Vision</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20License%20Plate%20Detection" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> Code on request</a>
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20License%20Plate%20Detection" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
@@ -344,17 +353,17 @@
     <section class="section" id="experience">
       <div class="section__head reveal">
         <span class="section__num">04</span>
-        <h2 class="section__title">Experience &amp; education</h2>
-        <span class="section__ghost">04</span>
+        <h2 class="section__title" data-i18n="exp.title">Experience &amp; education</h2>
+        <span class="section__ghost" aria-hidden="true">04</span>
       </div>
 
       <div class="timeline">
         <div class="tl-item reveal">
           <div class="tl-dot"></div>
-          <span class="tl-date">Feb 2024 – Aug 2024</span>
-          <h3>Software Development Intern — AZ IT</h3>
-          <p class="tl-sub">Monastir, Tunisia</p>
-          <p>
+          <span class="tl-date" data-i18n="exp.intern.date">Feb 2024 – Aug 2024</span>
+          <h3 data-i18n="exp.intern.title">Software Development Intern — AZ IT</h3>
+          <p class="tl-sub" data-i18n="exp.intern.sub">Monastir, Tunisia</p>
+          <p data-i18n="exp.intern.desc">
             Six-month internship across two projects: a <strong>React Native mobile app</strong> + web
             dashboard for secure document exchange between accountants and clients, and a
             <strong>business-address platform</strong> (graduation project) letting companies register a
@@ -364,23 +373,23 @@
 
         <div class="tl-item reveal">
           <div class="tl-dot"></div>
-          <span class="tl-date">Sep 2024 – Present</span>
-          <h3>Master's in Data Science</h3>
-          <p class="tl-sub">Faculty of Sciences of Monastir, Tunisia</p>
+          <span class="tl-date" data-i18n="exp.master.date">Sep 2024 – Present</span>
+          <h3 data-i18n="exp.master.title">Master's in Data Science</h3>
+          <p class="tl-sub" data-i18n="exp.master.sub">Faculty of Sciences of Monastir, Tunisia</p>
         </div>
 
         <div class="tl-item reveal">
           <div class="tl-dot"></div>
-          <span class="tl-date">2021 – 2024</span>
-          <h3>Bachelor's in Software Engineering &amp; Information Systems</h3>
-          <p class="tl-sub">Faculty of Sciences of Monastir, Tunisia</p>
+          <span class="tl-date" data-i18n="exp.bachelor.date">2021 – 2024</span>
+          <h3 data-i18n="exp.bachelor.title">Bachelor's in Software Engineering &amp; Information Systems</h3>
+          <p class="tl-sub" data-i18n="exp.bachelor.sub">Faculty of Sciences of Monastir, Tunisia</p>
         </div>
 
         <div class="tl-item reveal">
           <div class="tl-dot"></div>
-          <span class="tl-date">2021</span>
-          <h3>Scientific Baccalaureate</h3>
-          <p class="tl-sub">Dhouiher High School, Zarzis, Tunisia</p>
+          <span class="tl-date" data-i18n="exp.bac.date">2021</span>
+          <h3 data-i18n="exp.bac.title">Scientific Baccalaureate</h3>
+          <p class="tl-sub" data-i18n="exp.bac.sub">Dhouiher High School, Zarzis, Tunisia</p>
         </div>
       </div>
     </section>
@@ -389,8 +398,8 @@
     <section class="section section--contact" id="contact">
       <div class="contact reveal">
         <span class="section__num">05</span>
-        <h2 class="contact__title">Let's build something together</h2>
-        <p class="contact__text">
+        <h2 class="contact__title" data-i18n="contact.title">Let's build something together</h2>
+        <p class="contact__text" data-i18n="contact.text">
           I'm open to developer and data-science opportunities. The fastest way to reach me is email —
           I usually reply within a day.
         </p>
@@ -398,16 +407,17 @@
         <div class="contact__alt">
           <a href="tel:+21622077542">+216 22 077 542</a>
           <span>·</span>
-          <a href="Raed_Ouiriemmi_CV.pdf" download>Download CV (PDF)</a>
+          <a href="Raed_Ouiriemmi_CV.pdf" download data-i18n="contact.cv">Download CV (PDF)</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <p>© <span id="year"></span> Raed Ouiriemmi · Designed &amp; built from scratch with HTML, CSS &amp; JavaScript.</p>
+    <p>© <span id="year"></span> Raed Ouiriemmi · <span data-i18n="footer">Designed &amp; built from scratch with HTML, CSS &amp; JavaScript.</span></p>
   </footer>
 
+  <script src="i18n.js"></script>
   <script src="script.js"></script>
   <script type="module" src="three-scene.js"></script>
 </body>

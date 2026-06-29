@@ -139,6 +139,7 @@ function init(host) {
   function tick() {
     requestAnimationFrame(tick);
     if (document.hidden) return;
+    if (!host.offsetParent) return;   // hidden (e.g. light theme) -> pause
     const t = clock.getElapsedTime();
     mx += (tx - mx) * 0.045;
     my += (ty - my) * 0.045;
