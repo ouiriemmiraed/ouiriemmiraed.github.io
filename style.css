@@ -14,7 +14,7 @@
   --text: #eaeff8;
   --muted: #93a0bd;
   --accent: #5b8cff;
-  --accent-2: #a06bff;
+  --accent-2: #9b73ff;
   --accent-3: #22d3ee;
   --ok: #34d399;
   --grad: linear-gradient(120deg, var(--accent), var(--accent-2));
@@ -493,3 +493,9 @@ body.webgl-on .aurora span { opacity: .32; }
 /* ---- Nav resume button ---- */
 .nav__cv { padding: 9px 18px; font-size: .9rem; }
 @media (max-width: 680px) { .nav__cv { display: none; } }
+
+/* ---- Readability: nudge body copy up from label size ---- */
+.about__text p, .project p, .tl-item p:not(.tl-sub), .contact__text {
+  font-size: .95rem; line-height: 1.7;
+}
+.about__text p { font-size: 1rem; }
