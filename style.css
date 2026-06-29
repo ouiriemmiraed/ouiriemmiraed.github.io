@@ -403,7 +403,9 @@ body.webgl-on .aurora span { opacity: .32; }
   font-size: clamp(2.6rem, 9.5vw, 6rem); letter-spacing: -1.5px; line-height: 1.04;
   filter: drop-shadow(0 8px 34px rgba(91, 140, 255, .25));
 }
-.hero__role { letter-spacing: -.3px; }
+.hero__role { letter-spacing: -.3px; color: color-mix(in srgb, var(--text) 55%, var(--muted)); }
+/* Brighter, theme-aware hero copy so it stays legible over the orb glow */
+.hero__tag { color: color-mix(in srgb, var(--text) 64%, var(--muted)); }
 
 /* ---- Bigger centered portrait, haloed by the nebula ---- */
 .hero__avatar {
