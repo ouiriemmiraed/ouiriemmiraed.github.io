@@ -648,6 +648,48 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
 [dir="rtl"] .contact__email:hover .contact__email-arrow { transform: scaleX(-1) translateX(5px); }
 
 /* ===================================================================
+   CONTACT — attractiveness pass (layered aurora, gradient ring, glow)
+   =================================================================== */
+.contact {
+  border-color: transparent;
+  background:
+    radial-gradient(120% 130% at 12% -10%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 55%),
+    radial-gradient(130% 130% at 90% 120%, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 58%),
+    var(--card);
+  box-shadow: var(--shadow), 0 0 70px -30px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+/* glowing gradient border ring */
+.contact::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; z-index: 0;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--accent) 75%, transparent),
+    color-mix(in srgb, var(--border) 60%, transparent) 45%,
+    color-mix(in srgb, var(--accent-2) 65%, transparent));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+/* soft drifting aurora glow behind the content */
+.contact::before {
+  background: radial-gradient(ellipse 52% 56% at 50% 8%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 70%);
+  animation: contactGlow 9s var(--ease) infinite alternate;
+}
+@keyframes contactGlow {
+  from { opacity: .65; transform: translateY(0) scale(1); }
+  to   { opacity: 1;   transform: translateY(10px) scale(1.07); }
+}
+/* email CTA — soft glow + livelier hover */
+.contact__email {
+  box-shadow: 0 12px 44px -18px color-mix(in srgb, var(--accent) 65%, transparent);
+}
+.contact__email:hover {
+  transform: translateY(-3px);
+  background: color-mix(in srgb, var(--accent) 9%, var(--card));
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--border));
+  box-shadow: 0 20px 56px -16px color-mix(in srgb, var(--accent) 75%, transparent);
+}
+
+/* ===================================================================
    Polish pass: GitHub CTA, softer light ring, 10+ stat
    =================================================================== */
 /* "View all on GitHub" under projects grid */
