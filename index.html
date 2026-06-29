@@ -7,11 +7,24 @@
   <meta name="description" content="Portfolio of Raed Ouiriemmi — Software Developer and Data Science Master's student building full-stack apps with AI, NLP and computer vision." />
   <meta name="author" content="Raed Ouiriemmi" />
 
+  <link rel="canonical" href="https://ouiriemmiraed.me/" />
+  <meta name="theme-color" content="#060912" />
+
   <!-- Open Graph / social preview -->
   <meta property="og:title" content="Raed Ouiriemmi — Software Developer & Data Scientist" />
   <meta property="og:description" content="Full-stack developer & Data Science student. AI chatbots, NLP, computer vision, mobile apps." />
   <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#060912" />
+  <meta property="og:url" content="https://ouiriemmiraed.me/" />
+  <meta property="og:image" content="https://ouiriemmiraed.me/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Raed Ouiriemmi — Software Developer & Data Science" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Raed Ouiriemmi — Software Developer & Data Scientist" />
+  <meta name="twitter:description" content="Full-stack developer & Data Science student. AI chatbots, NLP, computer vision, mobile apps." />
+  <meta name="twitter:image" content="https://ouiriemmiraed.me/og-image.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,6 +35,28 @@
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js" } }
   </script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%235b8cff'/><text x='50' y='73' font-size='62' font-family='monospace' font-weight='bold' text-anchor='middle' fill='white'>R</text></svg>" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="preload" as="image" href="profile.jpg" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Raed Ouiriemmi",
+    "url": "https://ouiriemmiraed.me/",
+    "image": "https://ouiriemmiraed.me/og-image.png",
+    "jobTitle": "Software Developer & Data Science Student",
+    "email": "mailto:ouiriemmiraed@gmail.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Monastir", "addressCountry": "Tunisia" },
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Faculty of Sciences of Monastir" },
+    "knowsAbout": ["Python", "Machine Learning", "NLP", "Computer Vision", "React", "FastAPI", "Docker"],
+    "sameAs": [
+      "https://github.com/ouiriemmiraed",
+      "https://www.linkedin.com/in/raed-ouiriemmi-9858b5242"
+    ]
+  }
+  </script>
 </head>
 <body>
   <!-- Top-of-page scroll progress -->
@@ -44,11 +79,8 @@
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav__actions">
-      <button id="themeToggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
-        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-      </button>
-      <button id="menuToggle" class="icon-btn menu-btn" aria-label="Menu">
+      <a href="Raed_Ouiriemmi_CV.pdf" class="nav__cv btn btn--primary" download>Resume</a>
+      <button id="menuToggle" class="icon-btn menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
     </div>
@@ -83,7 +115,7 @@
           </a>
         </div>
         <div class="hero__socials">
-          <a href="https://github.com/Ouiriemmiraed" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+          <a href="https://github.com/ouiriemmiraed" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
           </a>
           <a href="https://www.linkedin.com/in/raed-ouiriemmi-9858b5242" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
@@ -198,7 +230,7 @@
 
         <article class="project spot reveal" data-tilt>
           <div class="project__top">
-            <span class="project__icon">🏋️</span>
+            <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
             <span class="project__year">2025–2026</span>
           </div>
           <h3>AppFullSport — Fitness coaching app</h3>
@@ -210,11 +242,14 @@
           <div class="tags">
             <span>React Native</span><span>FastAPI</span><span>PostgreSQL</span><span>Docker</span><span>nginx</span>
           </div>
+          <div class="project__links">
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20AppFullSport" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> Code on request</a>
+          </div>
         </article>
 
         <article class="project spot reveal" data-tilt>
           <div class="project__top">
-            <span class="project__icon">🤖</span>
+            <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 5v14c0 1.7-4 3-9 3s-9-1.3-9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg></span>
             <span class="project__year">2025</span>
           </div>
           <h3>Natural-language SQL Chatbot</h3>
@@ -225,11 +260,14 @@
           <div class="tags">
             <span>React.js</span><span>FastAPI</span><span>MSSQL</span><span>OpenRouter API</span>
           </div>
+          <div class="project__links">
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20NL-to-SQL%20Chatbot" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> Code on request</a>
+          </div>
         </article>
 
         <article class="project spot reveal" data-tilt>
           <div class="project__top">
-            <span class="project__icon">💬</span>
+            <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-9 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.2A8.5 8.5 0 0 1 12 3a8.38 8.38 0 0 1 9 8.5z"/></svg></span>
             <span class="project__year">2025</span>
           </div>
           <h3>Discord Automation &amp; Management</h3>
@@ -240,11 +278,14 @@
           <div class="tags">
             <span>React.js</span><span>FastAPI</span><span>Discord Webhooks</span><span>OpenAI API</span>
           </div>
+          <div class="project__links">
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Discord%20Automation" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> Code on request</a>
+          </div>
         </article>
 
         <article class="project spot reveal" data-tilt>
           <div class="project__top">
-            <span class="project__icon">🛒</span>
+            <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
             <span class="project__year">2024</span>
           </div>
           <h3>IT Product Search Chatbot</h3>
@@ -255,11 +296,14 @@
           <div class="tags">
             <span>LLaMA 2</span><span>Python</span><span>Web scraping</span><span>NLP</span>
           </div>
+          <div class="project__links">
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20IT%20Product%20Search%20Chatbot" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> Code on request</a>
+          </div>
         </article>
 
         <article class="project spot reveal" data-tilt>
           <div class="project__top">
-            <span class="project__icon">📝</span>
+            <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="14" y2="17"/></svg></span>
             <span class="project__year">2024</span>
           </div>
           <h3>Text Summarization &amp; Translation</h3>
@@ -270,11 +314,14 @@
           <div class="tags">
             <span>FastAPI</span><span>React.js</span><span>BART</span><span>Helsinki-NLP</span>
           </div>
+          <div class="project__links">
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Text%20Summarization%20%26%20Translation" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> Code on request</a>
+          </div>
         </article>
 
         <article class="project spot reveal" data-tilt>
           <div class="project__top">
-            <span class="project__icon">🚗</span>
+            <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="3" y1="12" x2="21" y2="12"/></svg></span>
             <span class="project__year">Sep 2024</span>
           </div>
           <h3>License Plate Detection (YOLO)</h3>
@@ -284,6 +331,9 @@
           </p>
           <div class="tags">
             <span>YOLO</span><span>PyTorch</span><span>Computer Vision</span>
+          </div>
+          <div class="project__links">
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20License%20Plate%20Detection" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> Code on request</a>
           </div>
         </article>
 
