@@ -148,7 +148,7 @@ body.has-cursor .cursor-glow { opacity: 1; }
 /* ===== Hero ===== */
 .hero {
   min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; padding: 130px clamp(20px, 5vw, 48px) 90px; position: relative;
+  text-align: center; padding: 120px clamp(20px, 5vw, 48px) 70px; position: relative;
 }
 .hero__inner { max-width: 800px; }
 
@@ -227,7 +227,7 @@ body.has-cursor .cursor-glow { opacity: 1; }
 
 /* ===== Marquee ===== */
 .marquee {
-  position: relative; overflow: hidden; padding: 22px 0; margin: 10px 0 30px;
+  position: relative; overflow: hidden; padding: 20px 0; margin: 2px 0 16px;
   border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);
   background: color-mix(in srgb, var(--bg-soft) 50%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
@@ -244,7 +244,7 @@ body.has-cursor .cursor-glow { opacity: 1; }
 @keyframes scrollx { to { transform: translateX(-50%); } }
 
 /* ===== Sections ===== */
-.section { max-width: var(--maxw); margin: 0 auto; padding: 96px clamp(20px, 5vw, 48px); position: relative; }
+.section { max-width: var(--maxw); margin: 0 auto; padding: 82px clamp(20px, 5vw, 48px); position: relative; }
 .section__head { position: relative; display: flex; align-items: baseline; gap: 14px; margin-bottom: 46px; }
 .section__num { font-family: "Space Grotesk"; color: var(--accent); font-weight: 600; font-size: 1rem; }
 .section__title { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 700; letter-spacing: -.5px; }
@@ -659,3 +659,29 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
 .contact__email:hover .contact__email-arrow { transform: translateX(5px); }
 [dir="rtl"] .contact__email-arrow { transform: scaleX(-1); }
 [dir="rtl"] .contact__email:hover .contact__email-arrow { transform: scaleX(-1) translateX(5px); }
+
+/* ===================================================================
+   Polish pass: GitHub CTA, softer light ring, 10+ stat
+   =================================================================== */
+/* "View all on GitHub" under projects grid */
+.projects__more { text-align: center; margin-top: 34px; }
+.projects__more-link {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: .95rem;
+  color: var(--text); padding: 12px 22px; border-radius: 13px;
+  border: 1px solid var(--border); background: color-mix(in srgb, var(--card) 55%, transparent);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  transition: border-color .2s, background .2s, transform .25s var(--ease), gap .2s var(--ease);
+}
+.projects__more-link svg { color: var(--accent); transition: transform .2s var(--ease); }
+.projects__more-link:hover { border-color: var(--accent); background: var(--card); transform: translateY(-2px); gap: 13px; }
+.projects__more-link:hover svg { transform: translateX(3px); }
+[dir="rtl"] .projects__more-link svg { transform: scaleX(-1); }
+[dir="rtl"] .projects__more-link:hover svg { transform: scaleX(-1) translateX(3px); }
+
+/* Softer avatar glow ring in light mode */
+:root[data-theme="light"] .hero__avatar::before { opacity: .3; filter: blur(12px); }
+:root[data-theme="light"] .hero__avatar { box-shadow: 0 20px 60px -20px rgba(34, 87, 204, .4); }
+
+/* "10+" — append the plus to the last stat number */
+.about__stats .stat:last-child .stat__n::after { content: "+"; }
