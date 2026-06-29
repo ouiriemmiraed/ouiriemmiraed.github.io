@@ -425,7 +425,17 @@ body.webgl-on .aurora span { opacity: .32; }
   filter: drop-shadow(0 8px 34px rgba(91, 140, 255, .28));
 }
 .hero__role { letter-spacing: -.3px; }
-.hero__avatar { box-shadow: 0 18px 60px -10px rgba(91, 140, 255, .6); }
+
+/* ---- Bigger centered portrait, haloed by the nebula ---- */
+.hero__avatar {
+  width: clamp(200px, 22vw, 286px);
+  height: clamp(200px, 22vw, 286px);
+  margin: 0 auto 32px;
+  padding: 5px;
+  box-shadow: 0 26px 80px -14px rgba(91, 140, 255, .65);
+}
+.hero__avatar::before { inset: -5px; filter: blur(16px); opacity: .65; }
+.hero__avatar-fallback { font-size: clamp(3rem, 7vw, 5rem); }
 
 /* ---- Glassmorphism cards ---- */
 .skill-card, .project, .stat {
