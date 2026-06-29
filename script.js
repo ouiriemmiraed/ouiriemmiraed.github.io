@@ -62,6 +62,17 @@ function applyLang(lang) {
   if (dict["doc.title"]) document.title = dict["doc.title"];
   const md = document.querySelector('meta[name="description"]');
   if (md && dict["doc.desc"]) md.setAttribute("content", dict["doc.desc"].replace(/<[^>]+>/g, ""));
+  // Serve the CV in the active language.
+  const CV = {
+    en: "Raed_Ouiriemmi_CV.pdf",
+    fr: "Raed_Ouiriemmi_CV_FR.pdf",
+    ar: "Raed_Ouiriemmi_CV_AR.pdf",
+  };
+  const cvFile = CV[lang] || CV.en;
+  document.querySelectorAll(".cv-link").forEach((a) => {
+    a.setAttribute("href", cvFile);
+    a.setAttribute("download", cvFile);
+  });
   if (langSelect) langSelect.value = lang;
   localStorage.setItem("lang", lang);
 }
