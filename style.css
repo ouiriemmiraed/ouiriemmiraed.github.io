@@ -685,3 +685,7 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
 
 /* "10+" — append the plus to the last stat number */
 .about__stats .stat:last-child .stat__n::after { content: "+"; }
+
+/* About fact icons -> SVG (consistent with the rest of the site) */
+.fact__k { display: inline-flex; align-items: center; color: var(--accent); }
+.fact__k svg { width: 18px; height: 18px; }
