@@ -29,7 +29,7 @@ function applyTheme(theme) {
   themeToggle.setAttribute("aria-pressed", String(theme === "light"));
   localStorage.setItem("theme", theme);
 }
-applyTheme(localStorage.getItem("theme") || "dark");
+applyTheme(localStorage.getItem("theme") || "light");
 themeToggle.addEventListener("click", () => {
   applyTheme(root.getAttribute("data-theme") === "light" ? "dark" : "light");
 });

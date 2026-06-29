@@ -6,8 +6,7 @@
   <script>
     (function () {
       try {
-        var t = localStorage.getItem("theme");
-        if (t) document.documentElement.setAttribute("data-theme", t);
+        document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "light");
         var l = localStorage.getItem("lang");
         if (l) {
           document.documentElement.setAttribute("lang", l);
@@ -22,7 +21,7 @@
   <meta name="author" content="Raed Ouiriemmi" />
 
   <link rel="canonical" href="https://ouiriemmiraed.me/" />
-  <meta name="theme-color" content="#060912" />
+  <meta name="theme-color" content="#f5f7fc" />
 
   <!-- Open Graph / social preview -->
   <meta property="og:title" content="Raed Ouiriemmi — Software Developer & Data Scientist" />
@@ -51,7 +50,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%235b8cff'/><text x='50' y='73' font-size='62' font-family='monospace' font-weight='bold' text-anchor='middle' fill='white'>R</text></svg>" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="manifest" href="site.webmanifest" />
-  <link rel="preload" as="image" href="profile.webp" type="image/webp" />
+  <link rel="preload" as="image" href="profile-cutout.webp" type="image/webp" />
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -119,8 +118,8 @@
         <span class="badge"><span class="badge__dot"></span> <span data-i18n="hero.badge">Available for developer &amp; data-science roles</span></span>
         <div class="hero__avatar">
           <picture>
-            <source srcset="profile.webp" type="image/webp">
-            <img src="profile.jpg" alt="Raed Ouiriemmi" width="150" height="150" loading="eager" decoding="async">
+            <source srcset="profile-cutout.webp" type="image/webp">
+            <img src="profile-cutout.png" alt="Raed Ouiriemmi" width="150" height="150" loading="eager" decoding="async">
           </picture>
           <span class="hero__avatar-fallback">RO</span>
         </div>

@@ -689,3 +689,6 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
 /* About fact icons -> SVG (consistent with the rest of the site) */
 .fact__k { display: inline-flex; align-items: center; color: var(--accent); }
 .fact__k svg { width: 18px; height: 18px; }
+
+/* Transparent avatar cut-out sits on a theme-aware disc (dark disc in dark, light in light) */
+.hero__avatar img { background: var(--bg-soft); }
