@@ -65,8 +65,8 @@ function applyLang(lang) {
   if (langSelect) langSelect.value = lang;
   localStorage.setItem("lang", lang);
 }
-const browserLang = (navigator.language || "en").slice(0, 2);
-const startLang = localStorage.getItem("lang") || (["en", "fr", "ar"].includes(browserLang) ? browserLang : "en");
+// Default to English on first visit; only honour an explicit saved choice.
+const startLang = localStorage.getItem("lang") || "en";
 applyLang(["en", "fr", "ar"].includes(startLang) ? startLang : "en");
 if (langSelect) langSelect.addEventListener("change", (e) => applyLang(e.target.value));
 
