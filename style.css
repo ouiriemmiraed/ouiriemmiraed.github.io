@@ -631,10 +631,6 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
    CONTACT — editorial CTA redesign
    =================================================================== */
 .contact { max-width: 780px; padding: clamp(40px, 7vw, 76px) clamp(24px, 5vw, 60px); }
-.contact__eyebrow {
-  text-transform: uppercase; letter-spacing: 2.5px; font-size: .8rem; font-weight: 600;
-  color: var(--accent); margin-bottom: 14px;
-}
 .contact__title {
   font-size: clamp(2rem, 6.5vw, 3.4rem); font-weight: 700; line-height: 1.08;
   letter-spacing: -1px; margin: 0 0 16px;
@@ -663,28 +659,3 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
 .contact__email:hover .contact__email-arrow { transform: translateX(5px); }
 [dir="rtl"] .contact__email-arrow { transform: scaleX(-1); }
 [dir="rtl"] .contact__email:hover .contact__email-arrow { transform: scaleX(-1) translateX(5px); }
-
-/* Hireability chips */
-.contact__chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 26px 0 4px; }
-.chip {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 8px 15px; border-radius: 100px; font-size: .82rem; font-weight: 500;
-  color: color-mix(in srgb, var(--text) 55%, var(--muted));
-  background: color-mix(in srgb, var(--card) 55%, transparent);
-  border: 1px solid var(--border);
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-}
-.chip svg { width: 14px; height: 14px; color: var(--accent); flex: none; }
-.chip--live { border-color: color-mix(in srgb, var(--ok) 35%, var(--border)); }
-.chip__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); position: relative; flex: none; }
-.chip__dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--ok); animation: ping 1.8s var(--ease) infinite; }
-
-/* Action row */
-.contact__links { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; margin-top: 30px; }
-.contact__icon {
-  display: grid; place-items: center; width: 46px; height: 46px; border-radius: 13px;
-  border: 1px solid var(--border); background: color-mix(in srgb, var(--card) 50%, transparent);
-  color: var(--muted);
-  transition: color .2s, transform .25s var(--ease), border-color .2s, background .2s;
-}
-.contact__icon:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-3px); background: var(--card); }
