@@ -2,6 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- Apply saved theme + language before paint (no flash of wrong theme/direction) -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+        var l = localStorage.getItem("lang");
+        if (l) {
+          document.documentElement.setAttribute("lang", l);
+          document.documentElement.setAttribute("dir", l === "ar" ? "rtl" : "ltr");
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Raed Ouiriemmi — Software Developer & Data Scientist</title>
   <meta name="description" content="Portfolio of Raed Ouiriemmi — Software Developer and Data Science Master's student building full-stack apps with AI, NLP and computer vision." />
