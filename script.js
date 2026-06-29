@@ -19,25 +19,43 @@ navLinks.querySelectorAll("a").forEach((a) =>
   })
 );
 
-// ===== Theme toggle (persists in localStorage) =====
+// ===== Theme toggle (persists; syncs browser UI color) =====
 const themeToggle = document.getElementById("themeToggle");
-const savedTheme = localStorage.getItem("theme");
-if (savedTheme) root.setAttribute("data-theme", savedTheme);
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+const THEME_COLOR = { dark: "#060912", light: "#f5f7fc" };
+function applyTheme(theme) {
+  root.setAttribute("data-theme", theme);
+  if (themeMeta) themeMeta.setAttribute("content", THEME_COLOR[theme] || THEME_COLOR.dark);
+  themeToggle.setAttribute("aria-pressed", String(theme === "light"));
+  localStorage.setItem("theme", theme);
+}
+applyTheme(localStorage.getItem("theme") || "dark");
 themeToggle.addEventListener("click", () => {
-  const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
-  root.setAttribute("data-theme", next);
-  localStorage.setItem("theme", next);
+  applyTheme(root.getAttribute("data-theme") === "light" ? "dark" : "light");
 });
 
 // ===== Language switch (EN / FR / AR, with RTL for Arabic) =====
 const langSelect = document.getElementById("langSelect");
 const RTL_LANGS = ["ar"];
+function ensureArabicFont() {
+  if (document.getElementById("cairoFont")) return;
+  const l = document.createElement("link");
+  l.id = "cairoFont";
+  l.rel = "stylesheet";
+  l.href = "https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap";
+  document.head.appendChild(l);
+}
 function applyLang(lang) {
   const dict = typeof I18N !== "undefined" ? I18N[lang] : null;
   if (!dict) return;
+  if (lang === "ar") ensureArabicFont();
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const v = dict[el.getAttribute("data-i18n")];
     if (v != null) el.innerHTML = v;
+  });
+  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+    const v = dict[el.getAttribute("data-i18n-aria")];
+    if (v != null) el.setAttribute("aria-label", v);
   });
   root.setAttribute("lang", lang);
   root.setAttribute("dir", RTL_LANGS.includes(lang) ? "rtl" : "ltr");
