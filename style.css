@@ -567,3 +567,16 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
 [dir="rtl"] .hero__cta .btn--ghost svg { transform: scaleX(-1); }
 [dir="rtl"] .scroll-progress { left: auto; right: 0; border-radius: 3px 0 0 3px; }
 [dir="rtl"] .marquee__track { animation-direction: reverse; }
+
+/* ---- Skip-to-content link (a11y) ---- */
+.skip-link {
+  position: fixed; top: -64px; left: 12px; z-index: 200;
+  background: var(--accent); color: #fff; padding: 10px 16px;
+  border-radius: 10px; font-weight: 600; box-shadow: var(--shadow);
+  transition: top .22s var(--ease);
+}
+.skip-link:focus { top: 12px; }
+[dir="rtl"] .skip-link { left: auto; right: 12px; }
+
+/* ---- <picture> shouldn't affect avatar layout ---- */
+.hero__avatar picture { display: contents; }

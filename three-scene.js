@@ -1,25 +1,28 @@
 // ===================================================================
 //  Aurora Lab — interactive WebGL particle nebula (hero backdrop)
-//  Loads only on desktop with motion allowed. Falls back to the CSS
-//  aurora if WebGL is unavailable or anything throws.
+//  Three.js is dynamically imported only when the browser is idle,
+//  on desktop with motion allowed. Falls back to the CSS aurora.
 // ===================================================================
-import * as THREE from "three";
-
 const host = document.getElementById("webgl");
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const touch = matchMedia("(hover: none)").matches;
 const small = matchMedia("(max-width: 760px)").matches;
 
 if (host && !reduce && !touch && !small) {
-  try {
-    init(host);
-    document.body.classList.add("webgl-on");
-  } catch (e) {
-    /* keep the CSS aurora fallback */
-  }
+  const start = () =>
+    import("three")
+      .then((THREE) => {
+        init(THREE, host);
+        document.body.classList.add("webgl-on");
+      })
+      .catch(() => {
+        /* keep the CSS aurora fallback */
+      });
+  if ("requestIdleCallback" in window) requestIdleCallback(start, { timeout: 2500 });
+  else setTimeout(start, 800);
 }
 
-function softSprite() {
+function softSprite(THREE) {
   const c = document.createElement("canvas");
   c.width = c.height = 64;
   const ctx = c.getContext("2d");
@@ -35,7 +38,7 @@ function softSprite() {
   return tex;
 }
 
-function init(host) {
+function init(THREE, host) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 100);
   camera.position.z = 13;
@@ -48,7 +51,7 @@ function init(host) {
   renderer.setClearColor(0x000000, 0);
   host.appendChild(renderer.domElement);
 
-  const sprite = softSprite();
+  const sprite = softSprite(THREE);
   const group = new THREE.Group();
   scene.add(group);
 
@@ -71,7 +74,7 @@ function init(host) {
       pos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
       pos[i * 3 + 1] = y;
       pos[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
-      const f = (y / radius + 1) / 2; // 0..1 by height
+      const f = (y / radius + 1) / 2;
       const c =
         f < 0.5
           ? palette[0].clone().lerp(palette[1], f * 2)
@@ -100,7 +103,6 @@ function init(host) {
   const inner = cloud(1800, 3.9, 1.7, 0.13, 1.0);
   group.add(outer, inner);
 
-  // faint wireframe core for structure
   const ring = new THREE.Points(
     new THREE.IcosahedronGeometry(5.3, 5),
     new THREE.PointsMaterial({
@@ -139,7 +141,7 @@ function init(host) {
   function tick() {
     requestAnimationFrame(tick);
     if (document.hidden) return;
-    if (!host.offsetParent) return;   // hidden (e.g. light theme) -> pause
+    if (!host.offsetParent) return; // hidden (e.g. light theme) -> pause
     const t = clock.getElapsedTime();
     mx += (tx - mx) * 0.045;
     my += (ty - my) * 0.045;
