@@ -50,7 +50,7 @@
   </script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%235b8cff'/><text x='50' y='73' font-size='62' font-family='monospace' font-weight='bold' text-anchor='middle' fill='white'>R</text></svg>" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <link rel="preload" as="image" href="profile.jpg" />
+  <link rel="preload" as="image" href="profile.webp" type="image/webp" />
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -73,6 +73,7 @@
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#hero" data-i18n="skip">Skip to content</a>
   <!-- Top-of-page scroll progress -->
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
@@ -99,12 +100,12 @@
         <option value="ar">ع</option>
       </select>
       <button id="themeToggle" class="icon-btn" aria-label="Toggle theme" data-i18n-aria="aria.theme" aria-pressed="false" title="Toggle theme">
-        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="icon-sun" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+        <svg class="icon-moon" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </button>
       <a href="Raed_Ouiriemmi_CV.pdf" class="nav__cv btn btn--primary" download data-i18n="nav.resume">Resume</a>
       <button id="menuToggle" class="icon-btn menu-btn" aria-label="Open menu" data-i18n-aria="aria.menu" aria-expanded="false" aria-controls="navLinks">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
     </div>
   </header>
@@ -116,8 +117,10 @@
       <div class="hero__inner reveal">
         <span class="badge"><span class="badge__dot"></span> <span data-i18n="hero.badge">Available for developer &amp; data-science roles</span></span>
         <div class="hero__avatar">
-          <img src="profile.jpg" alt="Raed Ouiriemmi" width="150" height="150"
-               loading="eager" decoding="async">
+          <picture>
+            <source srcset="profile.webp" type="image/webp">
+            <img src="profile.jpg" alt="Raed Ouiriemmi" width="150" height="150" loading="eager" decoding="async">
+          </picture>
           <span class="hero__avatar-fallback">RO</span>
         </div>
         <p class="hero__hi" data-i18n="hero.hi">Hi, I'm</p>
@@ -133,19 +136,19 @@
         <div class="hero__cta">
           <a href="mailto:ouiriemmiraed@gmail.com" class="btn btn--primary magnetic" data-i18n="hero.contact">Get in touch</a>
           <a href="Raed_Ouiriemmi_CV.pdf" class="btn btn--ghost" download>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
             <span data-i18n="hero.cv">Download CV</span>
           </a>
         </div>
         <div class="hero__socials">
           <a href="https://github.com/ouiriemmiraed" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
           </a>
           <a href="https://www.linkedin.com/in/raed-ouiriemmi-9858b5242" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.2V9h3.4v1.6h.1c.5-.9 1.7-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.4H3.5V9h3.6v11.4zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.5c0 1 .8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg>
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.2V9h3.4v1.6h.1c.5-.9 1.7-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.4H3.5V9h3.6v11.4zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.5c0 1 .8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg>
           </a>
           <a href="mailto:ouiriemmiraed@gmail.com" aria-label="Email" title="Email">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
           </a>
         </div>
       </div>
@@ -253,7 +256,7 @@
 
         <article class="project spot reveal" data-tilt>
           <div class="project__top">
-            <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+            <span class="project__icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
             <span class="project__year">2025–2026</span>
           </div>
           <h3 data-i18n="proj.fitness.title">AppFullSport — Fitness coaching app</h3>
@@ -266,13 +269,13 @@
             <span>React Native</span><span>FastAPI</span><span>PostgreSQL</span><span>Docker</span><span>nginx</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20AppFullSport" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20AppFullSport" class="project__link"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
         <article class="project spot reveal" data-tilt>
           <div class="project__top">
-            <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 5v14c0 1.7-4 3-9 3s-9-1.3-9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg></span>
+            <span class="project__icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 5v14c0 1.7-4 3-9 3s-9-1.3-9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg></span>
             <span class="project__year">2025</span>
           </div>
           <h3 data-i18n="proj.sql.title">Natural-language SQL Chatbot</h3>
@@ -284,13 +287,13 @@
             <span>React.js</span><span>FastAPI</span><span>MSSQL</span><span>OpenRouter API</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20NL-to-SQL%20Chatbot" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20NL-to-SQL%20Chatbot" class="project__link"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
         <article class="project spot reveal" data-tilt>
           <div class="project__top">
-            <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-9 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.2A8.5 8.5 0 0 1 12 3a8.38 8.38 0 0 1 9 8.5z"/></svg></span>
+            <span class="project__icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-9 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.2A8.5 8.5 0 0 1 12 3a8.38 8.38 0 0 1 9 8.5z"/></svg></span>
             <span class="project__year">2025</span>
           </div>
           <h3 data-i18n="proj.discord.title">Discord Automation &amp; Management</h3>
@@ -302,13 +305,13 @@
             <span>React.js</span><span>FastAPI</span><span>Discord Webhooks</span><span>OpenAI API</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Discord%20Automation" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Discord%20Automation" class="project__link"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
         <article class="project spot reveal" data-tilt>
           <div class="project__top">
-            <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+            <span class="project__icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
             <span class="project__year">2024</span>
           </div>
           <h3 data-i18n="proj.it.title">IT Product Search Chatbot</h3>
@@ -320,13 +323,13 @@
             <span>LLaMA 2</span><span>Python</span><span>Web scraping</span><span>NLP</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20IT%20Product%20Search%20Chatbot" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20IT%20Product%20Search%20Chatbot" class="project__link"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
         <article class="project spot reveal" data-tilt>
           <div class="project__top">
-            <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="14" y2="17"/></svg></span>
+            <span class="project__icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="14" y2="17"/></svg></span>
             <span class="project__year">2024</span>
           </div>
           <h3 data-i18n="proj.sum.title">Text Summarization &amp; Translation</h3>
@@ -338,13 +341,13 @@
             <span>FastAPI</span><span>React.js</span><span>BART</span><span>Helsinki-NLP</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Text%20Summarization%20%26%20Translation" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Text%20Summarization%20%26%20Translation" class="project__link"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
         <article class="project spot reveal" data-tilt>
           <div class="project__top">
-            <span class="project__icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="3" y1="12" x2="21" y2="12"/></svg></span>
+            <span class="project__icon"><svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="3" y1="12" x2="21" y2="12"/></svg></span>
             <span class="project__year">Sep 2024</span>
           </div>
           <h3 data-i18n="proj.yolo.title">License Plate Detection (YOLO)</h3>
@@ -356,7 +359,7 @@
             <span>YOLO</span><span>PyTorch</span><span>Computer Vision</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20License%20Plate%20Detection" class="project__link"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20License%20Plate%20Detection" class="project__link"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
