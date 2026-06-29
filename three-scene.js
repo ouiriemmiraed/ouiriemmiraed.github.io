@@ -38,7 +38,7 @@ function softSprite() {
 function init(host) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 100);
-  camera.position.z = 14;
+  camera.position.z = 13;
 
   const renderer = new THREE.WebGLRenderer({
     alpha: true,
@@ -96,18 +96,18 @@ function init(host) {
     return new THREE.Points(geo, mat);
   }
 
-  const outer = cloud(3200, 6.6, 2.4, 0.135, 0.9);
-  const inner = cloud(1500, 3.3, 1.5, 0.1, 0.95);
+  const outer = cloud(3800, 7.7, 2.7, 0.17, 1.0);
+  const inner = cloud(1800, 3.9, 1.7, 0.13, 1.0);
   group.add(outer, inner);
 
   // faint wireframe core for structure
   const ring = new THREE.Points(
-    new THREE.IcosahedronGeometry(4.6, 5),
+    new THREE.IcosahedronGeometry(5.3, 5),
     new THREE.PointsMaterial({
-      size: 0.04,
+      size: 0.05,
       color: 0x9fc1ff,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.5,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     })

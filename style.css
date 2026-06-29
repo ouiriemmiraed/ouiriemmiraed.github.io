@@ -405,8 +405,8 @@ body.has-cursor .cursor-glow { opacity: 1; }
 .hero__canvas {
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
   mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(ellipse 64% 64% at 50% 44%, #000 52%, transparent 82%);
-  mask-image: radial-gradient(ellipse 64% 64% at 50% 44%, #000 52%, transparent 82%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 44%, #000 60%, transparent 90%);
+  mask-image: radial-gradient(ellipse 75% 75% at 50% 44%, #000 60%, transparent 90%);
 }
 .hero__canvas canvas { width: 100% !important; height: 100% !important; display: block; }
 .hero__inner { position: relative; z-index: 2; }
