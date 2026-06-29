@@ -23,14 +23,23 @@ navLinks.querySelectorAll("a").forEach((a) =>
   a.addEventListener("click", () => navLinks.classList.remove("open"))
 );
 
-// ===== Navbar state + scroll progress =====
+// ===== Navbar state + scroll progress + ghost parallax =====
 const nav = document.getElementById("nav");
 const progress = document.getElementById("scrollProgress");
+const ghosts = [...document.querySelectorAll(".section__ghost")];
 const onScroll = () => {
   const y = window.scrollY;
   nav.classList.toggle("scrolled", y > 20);
   const max = document.documentElement.scrollHeight - window.innerHeight;
   progress.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
+  if (!reduceMotion) {
+    const vh = window.innerHeight;
+    ghosts.forEach((g) => {
+      const r = g.getBoundingClientRect();
+      const off = (r.top + r.height / 2 - vh / 2) / vh; // -1..1 through viewport
+      g.style.transform = `translateY(calc(-58% + ${(-off * 42).toFixed(1)}px))`;
+    });
+  }
 };
 window.addEventListener("scroll", onScroll, { passive: true });
 onScroll();
