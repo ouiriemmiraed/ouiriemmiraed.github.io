@@ -679,6 +679,21 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
   border-color: color-mix(in srgb, var(--accent) 70%, var(--border));
   box-shadow: 0 20px 56px -16px color-mix(in srgb, var(--accent) 75%, transparent);
 }
+/* secondary contact channels */
+.contact__socials { display: flex; gap: 14px; justify-content: center; align-items: center; margin-top: 26px; }
+.contact__social {
+  width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--card) 60%, transparent);
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  transition: transform .25s var(--ease), color .25s, border-color .25s, box-shadow .3s, background .25s;
+}
+.contact__social svg { width: 24px; height: 24px; display: block; }
+.contact__social:hover { transform: translateY(-4px); }
+.contact__social--wa:hover { color: #25d366; border-color: #25d366; box-shadow: 0 14px 38px -12px color-mix(in srgb, #25d366 70%, transparent); }
+.contact__social--tg:hover { color: #229ed9; border-color: #229ed9; box-shadow: 0 14px 38px -12px color-mix(in srgb, #229ed9 70%, transparent); }
+.contact__social--dc:hover { color: #5865f2; border-color: #5865f2; box-shadow: 0 14px 38px -12px color-mix(in srgb, #5865f2 70%, transparent); }
 
 /* ===================================================================
    Polish pass: GitHub CTA, softer light ring, 10+ stat
