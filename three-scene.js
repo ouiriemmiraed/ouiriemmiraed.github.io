@@ -56,9 +56,9 @@ function init(THREE, host) {
   scene.add(group);
 
   const palette = [
-    new THREE.Color("#22d3ee"), // cyan
-    new THREE.Color("#5b8cff"), // blue
-    new THREE.Color("#a06bff"), // violet
+    new THREE.Color("#4f7bf0"), // soft blue (was cyan — calmer, on-brand)
+    new THREE.Color("#6f8dff"), // blue
+    new THREE.Color("#9b73ff"), // violet
   ];
 
   function cloud(count, radius, jitter, size, opacity) {
@@ -99,8 +99,8 @@ function init(THREE, host) {
     return new THREE.Points(geo, mat);
   }
 
-  const outer = cloud(3800, 7.7, 2.7, 0.17, 1.0);
-  const inner = cloud(1800, 3.9, 1.7, 0.13, 1.0);
+  const outer = cloud(3400, 7.4, 2.6, 0.15, 0.7);
+  const inner = cloud(1600, 3.8, 1.6, 0.12, 0.8);
   group.add(outer, inner);
 
   const ring = new THREE.Points(
@@ -109,7 +109,7 @@ function init(THREE, host) {
       size: 0.05,
       color: 0x9fc1ff,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.3,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     })

@@ -392,8 +392,8 @@ body.has-cursor .cursor-glow { opacity: 1; }
 /* hero vignette frames the orb + keeps text crisp */
 .hero::after {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: radial-gradient(ellipse 78% 62% at 50% 42%, transparent 44%,
-              color-mix(in srgb, var(--bg) 62%, transparent) 90%);
+  background: radial-gradient(ellipse 80% 70% at 50% 44%, transparent 30%,
+              color-mix(in srgb, var(--bg) 82%, transparent) 78%);
 }
 /* tone the CSS aurora down once the real nebula is live */
 body.webgl-on .aurora span { opacity: .32; }
