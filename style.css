@@ -15,7 +15,6 @@
   --muted: #93a0bd;
   --accent: #5b8cff;
   --accent-2: #9b73ff;
-  --accent-3: #22d3ee;
   --ok: #34d399;
   --grad: linear-gradient(120deg, var(--accent), var(--accent-2));
   --grad-soft: linear-gradient(120deg, rgba(91,140,255,.15), rgba(160,107,255,.15));
@@ -514,7 +513,6 @@ body.webgl-on .aurora span { opacity: .32; }
   --muted: #475069;
   --accent: #2257cc;
   --accent-2: #6d3bd6;
-  --accent-3: #0e9bb5;
   --ok: #0a9d6e;
   --shadow: 0 24px 60px -28px rgba(40, 60, 120, .20);
   --shadow-glow: 0 18px 50px -22px rgba(34, 87, 204, .28);
@@ -567,3 +565,5 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
 [dir="rtl"] .lang-select { padding: 0 13px 0 30px; background-position: left 10px center; }
 [dir="rtl"] .project__link svg,
 [dir="rtl"] .hero__cta .btn--ghost svg { transform: scaleX(-1); }
+[dir="rtl"] .scroll-progress { left: auto; right: 0; border-radius: 3px 0 0 3px; }
+[dir="rtl"] .marquee__track { animation-direction: reverse; }
