@@ -396,3 +396,96 @@ body.has-cursor .cursor-glow { opacity: 1; }
   .reveal { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ===================================================================
+   AURORA LAB — cinematic 3D upgrade
+   =================================================================== */
+
+/* ---- WebGL hero backdrop ---- */
+.hero__canvas {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(ellipse 64% 64% at 50% 44%, #000 52%, transparent 82%);
+  mask-image: radial-gradient(ellipse 64% 64% at 50% 44%, #000 52%, transparent 82%);
+}
+.hero__canvas canvas { width: 100% !important; height: 100% !important; display: block; }
+.hero__inner { position: relative; z-index: 2; }
+/* hero vignette frames the orb + keeps text crisp */
+.hero::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse 78% 62% at 50% 42%, transparent 44%,
+              color-mix(in srgb, var(--bg) 62%, transparent) 90%);
+}
+/* tone the CSS aurora down once the real nebula is live */
+body.webgl-on .aurora span { opacity: .32; }
+
+/* ---- Oversized hero type ---- */
+.hero__name {
+  font-size: clamp(3rem, 12vw, 7.2rem); letter-spacing: -3px;
+  filter: drop-shadow(0 8px 34px rgba(91, 140, 255, .28));
+}
+.hero__role { letter-spacing: -.3px; }
+.hero__avatar { box-shadow: 0 18px 60px -10px rgba(91, 140, 255, .6); }
+
+/* ---- Glassmorphism cards ---- */
+.skill-card, .project, .stat {
+  background:
+    linear-gradient(160deg,
+      color-mix(in srgb, var(--card) 74%, transparent),
+      color-mix(in srgb, var(--bg-soft) 66%, transparent)) padding-box,
+    linear-gradient(150deg,
+      color-mix(in srgb, var(--accent) 42%, transparent),
+      transparent 42%,
+      color-mix(in srgb, var(--accent-2) 32%, transparent)) border-box;
+  border: 1px solid transparent;
+  -webkit-backdrop-filter: blur(13px) saturate(125%);
+  backdrop-filter: blur(13px) saturate(125%);
+}
+.contact {
+  background:
+    linear-gradient(160deg,
+      color-mix(in srgb, var(--card) 70%, transparent),
+      color-mix(in srgb, var(--bg-soft) 60%, transparent)) padding-box,
+    linear-gradient(150deg,
+      color-mix(in srgb, var(--accent) 45%, transparent),
+      transparent 45%,
+      color-mix(in srgb, var(--accent-2) 35%, transparent)) border-box;
+  border: 1px solid transparent;
+  -webkit-backdrop-filter: blur(14px) saturate(125%);
+  backdrop-filter: blur(14px) saturate(125%);
+}
+.badge, .icon-btn, .project__icon, .project__year, .tags span, .nav.scrolled {
+  -webkit-backdrop-filter: blur(9px); backdrop-filter: blur(9px);
+}
+.tags span { background-color: color-mix(in srgb, var(--bg-soft) 55%, transparent); }
+
+/* ---- Stronger cursor-proximity glow ---- */
+.spot::before {
+  background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 0%),
+              color-mix(in srgb, var(--accent) 30%, transparent), transparent 62%);
+}
+.project:hover, .skill-card:hover, .stat:hover { box-shadow: var(--shadow-glow); }
+
+/* ---- Section title flourish ---- */
+.section__title { position: relative; }
+.section__num { letter-spacing: 1px; }
+
+/* ---- Light theme: keep glass readable ---- */
+:root[data-theme="light"] .hero::after {
+  background: radial-gradient(ellipse 78% 62% at 50% 42%, transparent 50%,
+              color-mix(in srgb, var(--bg) 55%, transparent) 92%);
+}
+:root[data-theme="light"] .skill-card,
+:root[data-theme="light"] .project,
+:root[data-theme="light"] .stat,
+:root[data-theme="light"] .contact {
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+
+@media (max-width: 760px) {
+  .hero__canvas { display: none; }   /* JS also skips WebGL on small screens */
+  .hero__name { letter-spacing: -1.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__canvas { display: none; }
+}
