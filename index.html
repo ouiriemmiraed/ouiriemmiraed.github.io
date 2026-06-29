@@ -17,17 +17,23 @@
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Raed Ouiriemmi, Software Developer & Data Scientist</title>
-  <meta name="description" content="Portfolio of Raed Ouiriemmi, Software Developer and Data Science Master's student building full-stack apps with AI, NLP and computer vision." />
+  <meta name="description" content="Portfolio of Raed Ouiriemmi, Software Developer and Data Science Master's student in Tunisia building full-stack web and mobile apps with AI, NLP, RAG chatbots and computer vision." />
   <meta name="author" content="Raed Ouiriemmi" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
   <link rel="canonical" href="https://ouiriemmiraed.me/" />
   <meta name="theme-color" content="#f5f7fc" />
 
   <!-- Open Graph / social preview -->
+  <meta property="og:site_name" content="Raed Ouiriemmi" />
   <meta property="og:title" content="Raed Ouiriemmi, Software Developer & Data Scientist" />
   <meta property="og:description" content="Full-stack developer & Data Science student. AI chatbots, NLP, computer vision, mobile apps." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ouiriemmiraed.me/" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="fr_FR" />
+  <meta property="og:locale:alternate" content="ar_AR" />
   <meta property="og:image" content="https://ouiriemmiraed.me/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -38,6 +44,7 @@
   <meta name="twitter:title" content="Raed Ouiriemmi, Software Developer & Data Scientist" />
   <meta name="twitter:description" content="Full-stack developer & Data Science student. AI chatbots, NLP, computer vision, mobile apps." />
   <meta name="twitter:image" content="https://ouiriemmiraed.me/og-image.jpg" />
+  <meta name="twitter:image:alt" content="Raed Ouiriemmi, Software Developer & Data Science" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -56,18 +63,45 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Raed Ouiriemmi",
-    "url": "https://ouiriemmiraed.me/",
-    "image": "https://ouiriemmiraed.me/og-image.jpg",
-    "jobTitle": "Software Developer & Data Science Student",
-    "email": "mailto:ouiriemmiraed@gmail.com",
-    "address": { "@type": "PostalAddress", "addressLocality": "Monastir", "addressCountry": "Tunisia" },
-    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Faculty of Sciences of Monastir" },
-    "knowsAbout": ["Python", "Machine Learning", "NLP", "Computer Vision", "React", "FastAPI", "Docker"],
-    "sameAs": [
-      "https://github.com/ouiriemmiraed",
-      "https://www.linkedin.com/in/raed-ouiriemmi-9858b5242"
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://ouiriemmiraed.me/#person",
+        "name": "Raed Ouiriemmi",
+        "alternateName": "Raed Ouiriemmi",
+        "url": "https://ouiriemmiraed.me/",
+        "image": "https://ouiriemmiraed.me/og-image.jpg",
+        "description": "Software Developer and Data Science Master's student based in Tunisia, building full-stack web and mobile apps with AI, NLP, RAG chatbots and computer vision.",
+        "jobTitle": "Software Developer & Data Science Student",
+        "email": "mailto:ouiriemmiraed@gmail.com",
+        "nationality": "Tunisian",
+        "knowsLanguage": ["Arabic", "French", "English"],
+        "address": { "@type": "PostalAddress", "addressLocality": "Monastir", "addressCountry": "Tunisia" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Faculty of Sciences of Monastir" },
+        "knowsAbout": ["Python", "Machine Learning", "Deep Learning", "Data Science", "NLP", "Computer Vision", "RAG", "Large Language Models", "React", "Next.js", "React Native", "FastAPI", "MongoDB", "PostgreSQL", "Docker"],
+        "sameAs": [
+          "https://github.com/ouiriemmiraed",
+          "https://www.linkedin.com/in/raed-ouiriemmi-9858b5242"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://ouiriemmiraed.me/#website",
+        "url": "https://ouiriemmiraed.me/",
+        "name": "Raed Ouiriemmi, Software Developer & Data Scientist",
+        "description": "Portfolio of Raed Ouiriemmi, Software Developer and Data Science Master's student.",
+        "inLanguage": ["en", "fr", "ar"],
+        "publisher": { "@id": "https://ouiriemmiraed.me/#person" }
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://ouiriemmiraed.me/#webpage",
+        "url": "https://ouiriemmiraed.me/",
+        "name": "Raed Ouiriemmi, Software Developer & Data Scientist",
+        "isPartOf": { "@id": "https://ouiriemmiraed.me/#website" },
+        "about": { "@id": "https://ouiriemmiraed.me/#person" },
+        "primaryImageOfPage": "https://ouiriemmiraed.me/og-image.jpg"
+      }
     ]
   }
   </script>
