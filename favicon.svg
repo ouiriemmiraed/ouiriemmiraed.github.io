@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="ed" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5b8cff"/>
+      <stop offset="1" stop-color="#9b73ff"/>
+    </linearGradient>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16203a"/>
+      <stop offset="1" stop-color="#0a0f1c"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="26" fill="url(#tile)"/>
+  <rect x="2.6" y="2.6" width="94.8" height="94.8" rx="23.5" fill="none" stroke="url(#ed)" stroke-width="5"/>
+  <g transform="translate(50 50.5) scale(0.0504 -0.0504) translate(-632 -350)" fill="#eef2fb">
+    <path d="M66 0V700H370Q436 700 485.0 677.0Q534 654 561.0 612.0Q588 570 588 513V501Q588 438 558.0 399.0Q528 360 484 342V324Q524 322 546.0 296.5Q568 271 568 229V0H436V210Q436 234 423.5 249.0Q411 264 382 264H198V0ZM198 384H356Q403 384 429.5 409.5Q456 435 456 477V487Q456 529 430.0 554.5Q404 580 356 580H198Z"/>
+    <path d="M910 -14Q778 -14 700.0 58.5Q622 131 622 266V434Q622 569 700.0 641.5Q778 714 910 714Q1042 714 1120.0 641.5Q1198 569 1198 434V266Q1198 131 1120.0 58.5Q1042 -14 910 -14ZM910 104Q984 104 1025.0 147.0Q1066 190 1066 262V438Q1066 510 1025.0 553.0Q984 596 910 596Q837 596 795.5 553.0Q754 510 754 438V262Q754 190 795.5 147.0Q837 104 910 104Z"/>
+  </g>
+</svg>
