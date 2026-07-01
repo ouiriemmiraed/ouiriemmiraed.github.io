@@ -19,6 +19,13 @@
         if (l) {
           document.documentElement.setAttribute("lang", l);
           document.documentElement.setAttribute("dir", l === "ar" ? "rtl" : "ltr");
+          if (l === "ar") {
+            var f = document.createElement("link");
+            f.id = "cairoFont";
+            f.rel = "stylesheet";
+            f.href = "https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap";
+            document.head.appendChild(f);
+          }
         }
       } catch (e) {}
     })();
@@ -41,18 +48,18 @@
   <meta property="og:url" content="https://ouiriemmiraed.me/" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:locale:alternate" content="fr_FR" />
-  <meta property="og:locale:alternate" content="ar_AR" />
+  <meta property="og:locale:alternate" content="ar_TN" />
   <meta property="og:image" content="https://ouiriemmiraed.me/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Raed Ouiriemmi, Software Developer & Data Science" />
+  <meta property="og:image:alt" content="Raed Ouiriemmi, Software Developer & Data Scientist" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Raed Ouiriemmi, Software Developer & Data Scientist" />
   <meta name="twitter:description" content="Full-stack developer & Data Science student. AI chatbots, NLP, computer vision, mobile apps." />
   <meta name="twitter:image" content="https://ouiriemmiraed.me/og-image.jpg" />
-  <meta name="twitter:image:alt" content="Raed Ouiriemmi, Software Developer & Data Science" />
+  <meta name="twitter:image:alt" content="Raed Ouiriemmi, Software Developer & Data Scientist" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -333,6 +340,21 @@
         </article>
 
         <article class="project spot reveal" data-tilt>
+          <div class="project__media"><img src="cover-tryon.webp" alt="Virtual try-on app" loading="lazy" decoding="async" width="1200" height="600"><span class="project__year">2026</span></div>
+          <h3 data-i18n="proj.tryon.title">Virtual Try-On App</h3>
+          <p data-i18n="proj.tryon.desc">
+            Mobile app that takes a photo of you and a garment and generates a photorealistic try-on image using a
+            hosted IDM-VTON diffusion model. React Native (Expo) client with a FastAPI backend.
+          </p>
+          <div class="tags">
+            <span>React Native</span><span>FastAPI</span><span>IDM-VTON</span><span>Computer Vision</span>
+          </div>
+          <div class="project__links">
+            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Virtual%20Try-On" class="project__link"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
+          </div>
+        </article>
+
+        <article class="project spot reveal" data-tilt>
           <div class="project__media"><img src="cover-sql.webp" alt="Natural-language SQL chatbot" loading="lazy" decoding="async" width="1200" height="600"><span class="project__year">2025</span></div>
           <h3 data-i18n="proj.sql.title">Natural-language SQL Chatbot</h3>
           <p data-i18n="proj.sql.desc">
@@ -351,8 +373,9 @@
           <div class="project__media"><img src="cover-discord.webp" alt="Discord automation tool" loading="lazy" decoding="async" width="1200" height="600"><span class="project__year">2025</span></div>
           <h3 data-i18n="proj.discord.title">Discord Automation &amp; Management</h3>
           <p data-i18n="proj.discord.desc">
-            Web app to centrally manage multiple Discord accounts via tokens &amp; proxies, with a real-time
-            admin dashboard. AI agents generate and post natural replies through Discord webhooks.
+            Web app to centrally manage multiple Discord bots and servers from a real-time admin
+            dashboard. AI agents generate natural, context-aware replies and post them through
+            Discord webhooks.
           </p>
           <div class="tags">
             <span>React.js</span><span>FastAPI</span><span>Discord Webhooks</span><span>OpenAI API</span>
@@ -409,7 +432,7 @@
         </article>
 
         <article class="project spot reveal" data-tilt>
-          <div class="project__media"><img src="cover-yolo.webp" alt="License plate detection with YOLO" loading="lazy" decoding="async" width="1200" height="600"><span class="project__year">Sep 2024</span></div>
+          <div class="project__media"><img src="cover-yolo.webp" alt="License plate detection with YOLO" loading="lazy" decoding="async" width="1200" height="600"><span class="project__year">2024</span></div>
           <h3 data-i18n="proj.yolo.title">License Plate Detection (YOLO)</h3>
           <p data-i18n="proj.yolo.desc">
             Trained a YOLO model to detect and extract vehicle license plates from video, frame by frame,
@@ -420,21 +443,6 @@
           </div>
           <div class="project__links">
             <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20License%20Plate%20Detection" class="project__link"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
-          </div>
-        </article>
-
-        <article class="project spot reveal" data-tilt>
-          <div class="project__media"><img src="cover-tryon.webp" alt="Virtual try-on app" loading="lazy" decoding="async" width="1200" height="600"><span class="project__year">2026</span></div>
-          <h3 data-i18n="proj.tryon.title">Virtual Try-On App</h3>
-          <p data-i18n="proj.tryon.desc">
-            Mobile app that takes a photo of you and a garment and generates a photorealistic try-on image using a
-            hosted IDM-VTON diffusion model. React Native (Expo) client with a FastAPI backend.
-          </p>
-          <div class="tags">
-            <span>React Native</span><span>FastAPI</span><span>IDM-VTON</span><span>Computer Vision</span>
-          </div>
-          <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Virtual%20Try-On" class="project__link"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
           </div>
         </article>
 
@@ -511,8 +519,8 @@
         <span class="section__num">05</span>
         <h2 class="contact__title" data-i18n="contact.title">Let's build something <span class="grad">together</span></h2>
         <p class="contact__text" data-i18n="contact.text">
-          I'm open to developer and data-science opportunities. The fastest way to reach me is email,
-          I usually reply within a day.
+          I'm open to developer and data-science opportunities. The fastest way to reach me is email
+          &mdash; I usually reply within a day.
         </p>
         <a href="mailto:ouiriemmiraed@gmail.com" class="contact__email magnetic" aria-label="Email Raed">
           <svg class="contact__email-ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>

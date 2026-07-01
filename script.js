@@ -8,15 +8,16 @@ const isTouch = window.matchMedia("(hover: none)").matches;
 // ===== Mobile menu =====
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
-menuToggle.addEventListener("click", () => {
-  const open = navLinks.classList.toggle("open");
+function setMenuState(open) {
+  navLinks.classList.toggle("open", open);
   menuToggle.setAttribute("aria-expanded", String(open));
-});
+  const dict = typeof I18N !== "undefined" ? I18N[root.getAttribute("lang")] || I18N.en : null;
+  const label = dict && dict[open ? "aria.menuClose" : "aria.menu"];
+  if (label) menuToggle.setAttribute("aria-label", label);
+}
+menuToggle.addEventListener("click", () => setMenuState(!navLinks.classList.contains("open")));
 navLinks.querySelectorAll("a").forEach((a) =>
-  a.addEventListener("click", () => {
-    navLinks.classList.remove("open");
-    menuToggle.setAttribute("aria-expanded", "false");
-  })
+  a.addEventListener("click", () => setMenuState(false))
 );
 
 // ===== Theme toggle (persists; syncs browser UI color) =====
