@@ -75,12 +75,24 @@ function applyLang(lang) {
     a.setAttribute("download", cvFile);
   });
   if (langSelect) langSelect.value = lang;
-  localStorage.setItem("lang", lang);
 }
-// Default to English on first visit; only honour an explicit saved choice.
-const startLang = localStorage.getItem("lang") || "en";
-applyLang(["en", "fr", "ar"].includes(startLang) ? startLang : "en");
-if (langSelect) langSelect.addEventListener("change", (e) => applyLang(e.target.value));
+// /fr/ and /ar/ are static pre-rendered pages locked to their language (data-default-lang);
+// the root page honours an explicit saved choice and defaults to English on first visit.
+const PAGE_LANG_URLS = { en: "/", fr: "/fr/", ar: "/ar/" };
+const pageDefaultLang = root.getAttribute("data-default-lang");
+const savedLang = localStorage.getItem("lang");
+applyLang(pageDefaultLang || (["en", "fr", "ar"].includes(savedLang) ? savedLang : "en"));
+if (langSelect) langSelect.addEventListener("change", (e) => {
+  const lang = e.target.value;
+  localStorage.setItem("lang", lang);
+  const target = PAGE_LANG_URLS[lang];
+  // Each language lives at its own URL; navigate unless already there (or previewing via file://).
+  if (location.protocol.indexOf("http") === 0 && target && location.pathname !== target) {
+    location.href = target + location.hash;
+    return;
+  }
+  applyLang(lang);
+});
 
 // ===== Navbar state + scroll progress + ghost parallax =====
 const nav = document.getElementById("nav");
