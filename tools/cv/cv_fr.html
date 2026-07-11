@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Raed Ouiriemmi CV</title>
+<style>
+  @page { size: Letter; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Helvetica Neue", Arial, "DejaVu Sans", sans-serif; color: #232a33; font-size: 10.5pt; line-height: 1.42; }
+  .page { padding: 46px 54px 40px; }
+  .name { font-size: 23pt; font-weight: 700; color: #14181d; letter-spacing: .5px; text-transform: uppercase; }
+  .role { font-size: 12pt; font-weight: 700; color: #2563eb; margin-top: 3px; }
+  .contact { font-size: 10pt; color: #555c66; margin-top: 7px; }
+  .contact .sep { color: #b9c0cb; margin: 0 8px; }
+  .contact a { color: #2563eb; text-decoration: none; }
+  h2 { font-size: 11pt; font-weight: 700; color: #2563eb; text-transform: uppercase; letter-spacing: .8px;
+       border-bottom: 1px solid #cbd3e0; padding-bottom: 3px; margin: 17px 0 8px; }
+  p.summary { color: #2f3640; }
+  .skills { width: 100%; border-collapse: collapse; }
+  .skills td { vertical-align: top; padding: 1.8px 0; }
+  .skills td.k { font-weight: 700; color: #14181d; width: 178px; padding-right: 10px; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; }
+  .title { font-weight: 700; color: #14181d; }
+  .date { font-style: italic; color: #6a727c; font-size: 9.8pt; white-space: nowrap; padding-left: 16px; }
+  .sub { font-style: italic; color: #6a727c; margin-bottom: 1px; }
+  .job { margin-bottom: 8px; }
+  .subblock { margin: 5px 0 5px 16px; }
+  ul { list-style: disc; margin: 2px 0 7px 19px; }
+  ul li { margin-bottom: 3px; padding-left: 2px; }
+  .edu .row { margin-top: 8px; }
+  .proj { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="name">Raed Ouiriemmi</div>
+  <div class="role">Développeur logiciel / Étudiant en science des données</div>
+  <div class="contact">Zarzis, Tunisie <span class="sep">|</span> +216 22 077 542 <span class="sep">|</span> ouiriemmiraed@gmail.com <span class="sep">|</span> <a href="https://ouiriemmiraed.me/fr/">ouiriemmiraed.me</a></div>
+
+  <h2>Profil</h2>
+  <p class="summary">Je suis étudiant en Master de science des données, titulaire d'une licence en génie logiciel. Ces deux dernières années, j'ai développé plusieurs applications associant une interface web ou mobile à un backend Python et une composante d'IA (modèles de langage, NLP ou vision par ordinateur). Je suis à l'aise pour mener seul un projet, du premier commit jusqu'au serveur qui l'héberge. Je recherche actuellement un poste de développeur ou de data au Canada.</p>
+
+  <h2>Compétences techniques</h2>
+  <table class="skills">
+    <tr><td class="k">Programmation :</td><td>Python, JavaScript, Java, C#, C++</td></tr>
+    <tr><td class="k">Web &amp; Mobile :</td><td>React, React Native (Expo), Node.js, FastAPI, HTML, CSS, Tailwind</td></tr>
+    <tr><td class="k">Machine Learning :</td><td>TensorFlow, scikit-learn, Pandas, NumPy, Matplotlib, Seaborn</td></tr>
+    <tr><td class="k">Deep Learning &amp; IA :</td><td>PyTorch, Keras, YOLO, LLaMA 2, BART, Helsinki-NLP, OpenAI API, OpenRouter API</td></tr>
+    <tr><td class="k">Bases de données :</td><td>PostgreSQL, MySQL, MSSQL, MongoDB, Firebase, Supabase (avec SQLAlchemy et Alembic)</td></tr>
+    <tr><td class="k">DevOps :</td><td>Docker, Docker Compose, nginx, Linux / Ubuntu, UFW, fail2ban, Git, GitHub</td></tr>
+    <tr><td class="k">Autres outils :</td><td>Maven, JUnit, Jupyter, Android Studio, Visual Studio</td></tr>
+    <tr><td class="k">Méthodes :</td><td>UML, Agile, tests, web scraping, localisation (anglais / français / arabe RTL)</td></tr>
+  </table>
+
+  <h2>Expérience professionnelle</h2>
+
+  <div class="job">
+    <div class="row"><span class="title">Stagiaire ingénieur IA / full-stack, AKR Smart Consulting</span><span class="date">Févr. 2026 - Mai 2026</span></div>
+    <div class="sub">Projet de fin d'études (PFE)</div>
+    <ul>
+      <li>Conception d'une plateforme de chatbots IA multi-tenant (SaaS). Les administrateurs créent des assistants entraînés sur leur propre contenu, comme des documents importés et des sites web explorés, à l'aide d'un pipeline RAG (embeddings sentence-transformers avec recherche vectorielle ChromaDB).</li>
+      <li>Réalisation d'un backend FastAPI + MongoDB, d'un tableau de bord d'administration React, d'un widget de chat intégrable et d'un crawler web Celery / Redis / Playwright.</li>
+      <li>Authentification JWT avec 2FA (TOTP), limitation de débit par IP et déploiement conteneurisé avec Docker.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="row"><span class="title">Stagiaire en développement logiciel, AZ IT</span><span class="date">Févr. 2024 - Août 2024</span></div>
+    <div class="sub">Monastir, Tunisie</div>
+    <ul>
+      <li>Stage de six mois sur deux projets menés successivement : une application mobile pour comptables et une plateforme web pour les adresses d'entreprise.</li>
+    </ul>
+    <div class="subblock">
+      <div class="row"><span class="title">Application mobile pour comptables et clients (React Native)</span><span class="date">Juin 2024 - Août 2024</span></div>
+      <ul>
+        <li>Développement d'une application mobile et d'un petit tableau de bord web pour que les comptables et leurs clients partagent des documents sans utiliser l'e-mail.</li>
+        <li>Ajout d'un téléversement de fichiers sécurisé et d'un tableau de bord donnant au comptable une vue d'ensemble de tous ses clients.</li>
+      </ul>
+    </div>
+    <div class="subblock">
+      <div class="row"><span class="title">Plateforme d'adresses d'entreprise (projet de fin d'études)</span><span class="date">Févr. 2024 - Mai 2024</span></div>
+      <ul>
+        <li>Projet de fin d'études avec AZ IT. Une application web permettant aux petites entreprises de domicilier un siège social légal sans louer de local physique.</li>
+        <li>Frontend en React.js et backend en Node.js, ainsi que le formulaire de déclaration d'adresse.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Projets</h2>
+
+  <div class="proj">
+    <div class="row"><span class="title">AppFullSport, application de coaching fitness</span><span class="date">2025 - 2026</span></div>
+    <ul>
+      <li>Projet personnel. Une application mobile pour les sportifs, avec un client React Native, un backend FastAPI et un petit panneau d'administration React. L'ensemble tourne dans Docker sur un VPS que je gère moi-même.</li>
+      <li>Séances d'entraînement avec suivi du poids et des répétitions par série, un minuteur de repos et la détection automatique des records personnels. J'ai initialisé la base avec environ 83 exercices.</li>
+      <li>Le comptage des pas fonctionne sur les deux plateformes : sur iOS via HealthKit et CoreMotion, sur Android via le capteur matériel.</li>
+      <li>Beaucoup de travail côté serveur : règles iptables UFW et DOCKER-USER, fail2ban, connexion par clé SSH uniquement, limitation de débit côté nginx et FastAPI, en-têtes CSP et HSTS, secrets renouvelés. Les changements de schéma sont gérés par des migrations Alembic.</li>
+      <li>L'application est entièrement traduite en anglais, français et arabe (de droite à gauche). Même les messages d'erreur du backend sont traduits selon l'en-tête Accept-Language.</li>
+      <li>Stack : React Native (Expo SDK 54), FastAPI, SQLAlchemy, Alembic, PostgreSQL 16, Docker Compose, nginx, React, Tailwind.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">Chatbot qui répond aux questions depuis une base SQL</span><span class="date">2025</span></div>
+    <ul>
+      <li>Projet personnel. Un petit chatbot web où l'on pose une question en langage courant et qui exécute la bonne requête SQL sur une base MSSQL pour renvoyer une réponse concise.</li>
+      <li>Stack : React, FastAPI, MSSQL, OpenRouter API.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">Outil de gestion multi-comptes Discord</span><span class="date">2025</span></div>
+    <ul>
+      <li>Application web qui gère plusieurs comptes Discord avec des tokens et des proxys. Un tableau de bord d'administration permet de suivre en temps réel l'activité de chaque compte.</li>
+      <li>Les bots répondent automatiquement via l'API OpenAI, et les messages sont envoyés via les webhooks Discord.</li>
+      <li>Stack : React, FastAPI, webhooks Discord, OpenAI API.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">Chatbot de recherche de produits IT avec LLaMA 2</span><span class="date">2024</span></div>
+    <ul>
+      <li>Chatbot qui aide l'utilisateur à trouver des ordinateurs portables, téléphones et autres produits IT. Il utilise LLaMA 2 pour comprendre la question et un scraper qui récupère le catalogue de MyTek une fois par jour.</li>
+      <li>Donne des suggestions personnalisées selon le budget et l'usage.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">Application web de résumé et de traduction de texte</span><span class="date">2024</span></div>
+    <ul>
+      <li>Application web construite avec FastAPI et React. Utilise BART pour le résumé et Helsinki-NLP pour la traduction. Prend en charge plus de 10 langues.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">Détection de plaques d'immatriculation dans des vidéos (YOLO)</span><span class="date">Sep 2024</span></div>
+    <ul>
+      <li>Entraînement d'un modèle YOLO pour détecter et extraire les plaques d'immatriculation d'une vidéo, image par image, en temps réel.</li>
+    </ul>
+  </div>
+
+  <h2>Formation</h2>
+  <div class="edu">
+    <div class="row"><span class="title">Master en science des données</span><span class="date">Sep. 2024 - présent</span></div>
+    <div class="sub">Faculté des Sciences de Monastir, Tunisie</div>
+    <div class="row"><span class="title">Licence en génie logiciel et systèmes d'information</span><span class="date">2021 - 2024</span></div>
+    <div class="sub">Faculté des Sciences de Monastir, Tunisie</div>
+    <div class="row"><span class="title">Baccalauréat scientifique</span><span class="date">2021</span></div>
+    <div class="sub">Lycée Dhouiher, Zarzis, Tunisie</div>
+  </div>
+
+  <h2>Langues</h2>
+  <table class="skills">
+    <tr><td class="k">Arabe :</td><td>natif</td></tr>
+    <tr><td class="k">Français :</td><td>intermédiaire supérieur (TCF 400/699, B2)</td></tr>
+    <tr><td class="k">Anglais :</td><td>intermédiaire (B1, je peux travailler en anglais au quotidien)</td></tr>
+  </table>
+
+  <h2>Qualités personnelles</h2>
+  <p class="summary">Résolution de problèmes, esprit critique, adaptabilité, leadership, créativité, travail en équipe.</p>
+
+</div>
+</body>
+</html>

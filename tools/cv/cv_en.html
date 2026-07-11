@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Raed Ouiriemmi CV</title>
+<style>
+  @page { size: Letter; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Helvetica Neue", Arial, "DejaVu Sans", sans-serif; color: #232a33; font-size: 10.5pt; line-height: 1.42; }
+  .page { padding: 46px 54px 40px; }
+
+  .name { font-size: 23pt; font-weight: 700; color: #14181d; letter-spacing: .5px; text-transform: uppercase; }
+  .role { font-size: 12pt; font-weight: 700; color: #2563eb; margin-top: 3px; }
+  .contact { font-size: 10pt; color: #555c66; margin-top: 7px; }
+  .contact .sep { color: #b9c0cb; margin: 0 8px; }
+  .contact a { color: #2563eb; text-decoration: none; }
+
+  h2 { font-size: 11pt; font-weight: 700; color: #2563eb; text-transform: uppercase; letter-spacing: .8px;
+       border-bottom: 1px solid #cbd3e0; padding-bottom: 3px; margin: 17px 0 8px; }
+
+  p.summary { color: #2f3640; }
+
+  .skills { width: 100%; border-collapse: collapse; }
+  .skills td { vertical-align: top; padding: 1.8px 0; }
+  .skills td.k { font-weight: 700; color: #14181d; width: 165px; padding-right: 10px; }
+
+  .row { display: flex; justify-content: space-between; align-items: baseline; }
+  .title { font-weight: 700; color: #14181d; }
+  .date { font-style: italic; color: #6a727c; font-size: 9.8pt; white-space: nowrap; padding-left: 16px; }
+  .sub { font-style: italic; color: #6a727c; margin-bottom: 1px; }
+
+  .job { margin-bottom: 8px; }
+  .subblock { margin: 5px 0 5px 16px; }
+
+  ul { list-style: disc; margin: 2px 0 7px 19px; }
+  ul li { margin-bottom: 3px; padding-left: 2px; }
+
+  .edu .row { margin-top: 8px; }
+  .proj { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="name">Raed Ouiriemmi</div>
+  <div class="role">Software Developer / Data Science Student</div>
+  <div class="contact">Zarzis, Tunisia <span class="sep">|</span> +216 22 077 542 <span class="sep">|</span> ouiriemmiraed@gmail.com <span class="sep">|</span> <a href="https://ouiriemmiraed.me">ouiriemmiraed.me</a></div>
+
+  <h2>Profile</h2>
+  <p class="summary">I am a Data Science Master's student with a Bachelor's in Software Engineering. Over the past two years I have built several applications that combine a web or mobile frontend with a Python backend and some AI component (language models, NLP, or computer vision). I am comfortable working alone on a project from the first commit to the server it runs on. I am currently looking for a developer or data role based in Canada.</p>
+
+  <h2>Technical Skills</h2>
+  <table class="skills">
+    <tr><td class="k">Programming:</td><td>Python, JavaScript, Java, C#, C++</td></tr>
+    <tr><td class="k">Web &amp; Mobile:</td><td>React, React Native (Expo), Node.js, FastAPI, HTML, CSS, Tailwind</td></tr>
+    <tr><td class="k">Machine Learning:</td><td>TensorFlow, scikit-learn, Pandas, NumPy, Matplotlib, Seaborn</td></tr>
+    <tr><td class="k">Deep Learning &amp; AI:</td><td>PyTorch, Keras, YOLO, LLaMA 2, BART, Helsinki-NLP, OpenAI API, OpenRouter API</td></tr>
+    <tr><td class="k">Databases:</td><td>PostgreSQL, MySQL, MSSQL, MongoDB, Firebase, Supabase (with SQLAlchemy and Alembic)</td></tr>
+    <tr><td class="k">DevOps:</td><td>Docker, Docker Compose, nginx, Linux / Ubuntu, UFW, fail2ban, Git, GitHub</td></tr>
+    <tr><td class="k">Other tools:</td><td>Maven, JUnit, Jupyter, Android Studio, Visual Studio</td></tr>
+    <tr><td class="k">Methods:</td><td>UML, Agile, testing, web scraping, localization (English / French / Arabic RTL)</td></tr>
+  </table>
+
+  <h2>Work Experience</h2>
+
+  <div class="job">
+    <div class="row"><span class="title">AI / Full-Stack Engineer Intern, AKR Smart Consulting</span><span class="date">Feb 2026 - May 2026</span></div>
+    <div class="sub">Master's final-year project (PFE)</div>
+    <ul>
+      <li>Built a multi-tenant AI chatbot platform (SaaS). Admins create assistants trained on their own content, such as uploaded documents and crawled websites, using a RAG pipeline with sentence-transformers embeddings and ChromaDB vector search.</li>
+      <li>Delivered a FastAPI + MongoDB backend, a React admin dashboard, an embeddable JavaScript chat widget, and a Celery / Redis / Playwright web crawler.</li>
+      <li>JWT authentication with 2FA (TOTP), per-IP rate limiting, and Dockerized deployment.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="row"><span class="title">Software Development Intern, AZ IT</span><span class="date">Feb 2024 - Aug 2024</span></div>
+    <div class="sub">Monastir, Tunisia</div>
+    <ul>
+      <li>Six-month internship where I worked on two projects back to back: a mobile app for accountants and a web platform for business addresses.</li>
+    </ul>
+    <div class="subblock">
+      <div class="row"><span class="title">Mobile app for accountants and clients (React Native)</span><span class="date">Jun 2024 - Aug 2024</span></div>
+      <ul>
+        <li>Built a mobile app and a small web dashboard so accountants and their clients could share documents without using email.</li>
+        <li>Added secure file upload and a dashboard where the accountant can see all clients at a glance.</li>
+      </ul>
+    </div>
+    <div class="subblock">
+      <div class="row"><span class="title">Business address platform (graduation project)</span><span class="date">Feb 2024 - May 2024</span></div>
+      <ul>
+        <li>Final-year project with AZ IT. A web app that lets small companies register a legal office address without renting a physical office.</li>
+        <li>Did the frontend in React.js and the backend in Node.js, plus the address declaration form.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Projects</h2>
+
+  <div class="proj">
+    <div class="row"><span class="title">AppFullSport, a fitness coaching app</span><span class="date">2025 - 2026</span></div>
+    <ul>
+      <li>Personal project. A mobile app for people who work out, with a React Native client, a FastAPI backend and a small React admin panel. The whole thing runs in Docker on a VPS I manage myself.</li>
+      <li>Workout sessions with weight and rep tracking per set, a rest timer, and automatic detection of personal records. I seeded the database with around 83 exercises.</li>
+      <li>Step counting works on both platforms: on iOS through HealthKit and CoreMotion, on Android through the hardware step sensor.</li>
+      <li>Spent a good amount of time on the server side: UFW and DOCKER-USER iptables rules, fail2ban, SSH keys only, rate limits at both nginx and FastAPI level, CSP and HSTS headers, rotated secrets. Schema changes are handled with Alembic migrations.</li>
+      <li>The app is fully translated into English, French and Arabic (right to left). Even backend error messages are translated based on the Accept-Language header.</li>
+      <li>Stack: React Native (Expo SDK 54), FastAPI, SQLAlchemy, Alembic, PostgreSQL 16, Docker Compose, nginx, React, Tailwind.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">Chatbot that answers questions from an SQL database</span><span class="date">2025</span></div>
+    <ul>
+      <li>Personal project. A small web chatbot where you ask a question in plain English and it runs the right SQL query against an MSSQL database and gives you back a short answer.</li>
+      <li>Stack: React, FastAPI, MSSQL, OpenRouter API.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">Discord multi-account management tool</span><span class="date">2025</span></div>
+    <ul>
+      <li>Web app that manages several Discord accounts with tokens and proxies. There is an admin dashboard to follow what each account is doing in real time.</li>
+      <li>The bots can reply on their own using the OpenAI API, and messages are sent through Discord webhooks.</li>
+      <li>Stack: React, FastAPI, Discord webhooks, OpenAI API.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">IT product search chatbot with LLaMA 2</span><span class="date">2024</span></div>
+    <ul>
+      <li>Chatbot that helps the user find laptops, phones and other IT products. It uses LLaMA 2 to understand the question and a scraper that pulls the catalog from MyTek once a day.</li>
+      <li>Gives personal suggestions based on budget and use case.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">Text summarization and translation web app</span><span class="date">2024</span></div>
+    <ul>
+      <li>Web app built with FastAPI and React. Uses BART for summarization and Helsinki-NLP for translation. Supports more than 10 languages.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">License plate detection in videos (YOLO)</span><span class="date">Sep 2024</span></div>
+    <ul>
+      <li>Trained a YOLO model to find and extract car license plates from a video, frame by frame, in real time.</li>
+    </ul>
+  </div>
+
+  <h2>Education</h2>
+  <div class="edu">
+    <div class="row"><span class="title">Master's in Data Science</span><span class="date">Sep 2024 - present</span></div>
+    <div class="sub">Faculty of Sciences of Monastir, Tunisia</div>
+    <div class="row"><span class="title">Bachelor's in Software Engineering and Information Systems</span><span class="date">2021 - 2024</span></div>
+    <div class="sub">Faculty of Sciences of Monastir, Tunisia</div>
+    <div class="row"><span class="title">Scientific Baccalaureate</span><span class="date">2021</span></div>
+    <div class="sub">Dhouiher High School, Zarzis, Tunisia</div>
+  </div>
+
+  <h2>Languages</h2>
+  <table class="skills">
+    <tr><td class="k">Arabic:</td><td>native</td></tr>
+    <tr><td class="k">French:</td><td>upper intermediate (TCF 400/699, B2)</td></tr>
+    <tr><td class="k">English:</td><td>intermediate (B1, I can work in English on a daily basis)</td></tr>
+  </table>
+
+  <h2>Personal Qualities</h2>
+  <p class="summary">Problem solving, critical thinking, adaptability, leadership, creativity, teamwork.</p>
+
+</div>
+</body>
+</html>

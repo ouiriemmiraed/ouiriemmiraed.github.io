@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>رائد الويريمي - السيرة الذاتية</title>
+<style>
+  @page { size: Letter; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Noto Sans Arabic", "Cairo", sans-serif; direction: rtl; text-align: right;
+         color: #232a33; font-size: 10pt; line-height: 1.45; }
+  .page { padding: 40px 50px 32px; }
+  .name { font-size: 23pt; font-weight: 700; color: #14181d; }
+  .role { font-size: 12.5pt; font-weight: 700; color: #2563eb; margin-top: 3px; }
+  .contact { font-size: 10.5pt; color: #555c66; margin-top: 7px; direction: ltr; text-align: right; }
+  .contact .sep { color: #b9c0cb; margin: 0 8px; }
+  .contact a { color: #2563eb; text-decoration: none; }
+  h2 { font-size: 11.5pt; font-weight: 700; color: #2563eb;
+       border-bottom: 1px solid #cbd3e0; padding-bottom: 3px; margin: 12px 0 6px; }
+  p.summary { color: #2f3640; }
+  .skills { width: 100%; border-collapse: collapse; }
+  .skills td { vertical-align: top; padding: 1.8px 0; }
+  .skills td.k { font-weight: 700; color: #14181d; width: 190px; padding-left: 12px; white-space: nowrap; }
+  .row { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
+  .title { font-weight: 700; color: #14181d; flex: 1 1 auto; min-width: 0; }
+  .date { font-style: italic; color: #6a727c; font-size: 10pt; white-space: nowrap; flex: 0 0 auto; direction: ltr; }
+  .sub { font-style: italic; color: #6a727c; margin-bottom: 1px; }
+  .job { margin-bottom: 7px; }
+  .subblock { margin: 4px 16px 4px 0; }
+  ul { list-style: disc; margin: 2px 20px 6px 0; }
+  ul li { margin-bottom: 2px; }
+  .edu .row { margin-top: 6px; }
+  .proj { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="name">رائد الويريمي</div>
+  <div class="role">مطوّر برمجيات / طالب علوم البيانات</div>
+  <div class="contact">ouiriemmiraed@gmail.com <span class="sep">|</span> +216 22 077 542 <span class="sep">|</span> Zarzis, Tunisia <span class="sep">|</span> <a href="https://ouiriemmiraed.me/ar/">ouiriemmiraed.me</a></div>
+
+  <h2>الملف الشخصي</h2>
+  <p class="summary">أنا طالب ماجستير في علوم البيانات، حاصل على إجازة في هندسة البرمجيات. خلال العامين الماضيين طوّرتُ عدّة تطبيقات تجمع بين واجهة ويب أو جوال وخلفية بلغة Python ومكوّن ذكاء اصطناعي (نماذج لغوية أو معالجة لغة طبيعية أو رؤية حاسوبية). أستطيع إدارة المشروع بمفردي من أول سطر برمجي حتى الخادم الذي يشغّله. أبحث حاليًا عن وظيفة مطوّر أو في مجال البيانات في كندا.</p>
+
+  <h2>المهارات التقنية</h2>
+  <table class="skills">
+    <tr><td class="k">البرمجة:</td><td>Python, JavaScript, Java, C#, C++</td></tr>
+    <tr><td class="k">الويب والجوال:</td><td>React, React Native (Expo), Node.js, FastAPI, HTML, CSS, Tailwind</td></tr>
+    <tr><td class="k">تعلّم الآلة:</td><td>TensorFlow, scikit-learn, Pandas, NumPy, Matplotlib, Seaborn</td></tr>
+    <tr><td class="k">التعلّم العميق والذكاء الاصطناعي:</td><td>PyTorch, Keras, YOLO, LLaMA 2, BART, Helsinki-NLP, OpenAI API, OpenRouter API</td></tr>
+    <tr><td class="k">قواعد البيانات:</td><td>PostgreSQL, MySQL, MSSQL, MongoDB, Firebase, Supabase (مع SQLAlchemy وAlembic)</td></tr>
+    <tr><td class="k">DevOps:</td><td>Docker, Docker Compose, nginx, Linux / Ubuntu, UFW, fail2ban, Git, GitHub</td></tr>
+    <tr><td class="k">أدوات أخرى:</td><td>Maven, JUnit, Jupyter, Android Studio, Visual Studio</td></tr>
+    <tr><td class="k">المنهجيات:</td><td>UML، Agile، الاختبارات، استخلاص بيانات الويب، التعريب (الإنجليزية / الفرنسية / العربية RTL)</td></tr>
+  </table>
+
+  <h2>الخبرة المهنية</h2>
+
+  <div class="job">
+    <div class="row"><span class="title">متدرّب مهندس ذكاء اصطناعي / full-stack، AKR Smart Consulting</span><span class="date">Feb 2026 - May 2026</span></div>
+    <div class="sub">مشروع التخرّج (PFE)</div>
+    <ul>
+      <li>تصميم منصّة روبوتات محادثة بالذكاء الاصطناعي متعدّدة المستأجرين (SaaS). ينشئ المشرفون مساعدين مدرَّبين على محتواهم الخاص، مثل المستندات المرفوعة والمواقع المفهرسة، عبر خط أنابيب RAG (تضمينات sentence-transformers مع بحث متجهي في ChromaDB).</li>
+      <li>إنجاز واجهة خلفية بـ FastAPI وMongoDB، ولوحة تحكّم إدارية بـ React، وودجت محادثة قابلة للدمج، وزاحف ويب بـ Celery / Redis / Playwright.</li>
+      <li>مصادقة JWT مع تحقّق بخطوتين (TOTP)، وتحديد المعدّل لكل عنوان IP، ونشر عبر Docker.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="row"><span class="title">متدرّب تطوير برمجيات، AZ IT</span><span class="date">Feb 2024 - Aug 2024</span></div>
+    <div class="sub">المنستير، تونس</div>
+    <ul>
+      <li>تدريب لمدة ستة أشهر على مشروعين متتاليين: تطبيق جوال للمحاسبين ومنصّة ويب لعناوين الشركات.</li>
+    </ul>
+    <div class="subblock">
+      <div class="row"><span class="title">تطبيق جوال للمحاسبين والعملاء (React Native)</span><span class="date">Jun 2024 - Aug 2024</span></div>
+      <ul>
+        <li>تطوير تطبيق جوال ولوحة تحكّم ويب صغيرة ليتمكّن المحاسبون وعملاؤهم من تبادل المستندات دون استخدام البريد الإلكتروني.</li>
+        <li>إضافة رفع ملفات آمن ولوحة تحكّم تتيح للمحاسب رؤية جميع عملائه في لمحة.</li>
+      </ul>
+    </div>
+    <div class="subblock">
+      <div class="row"><span class="title">منصّة عناوين الشركات (مشروع التخرّج)</span><span class="date">Feb 2024 - May 2024</span></div>
+      <ul>
+        <li>مشروع تخرّج مع AZ IT. تطبيق ويب يتيح للشركات الصغيرة تسجيل مقر قانوني دون استئجار مكتب فعلي.</li>
+        <li>الواجهة الأمامية بـ React.js والخلفية بـ Node.js، إضافة إلى نموذج التصريح بالعنوان.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>المشاريع</h2>
+
+  <div class="proj">
+    <div class="row"><span class="title">AppFullSport، تطبيق تدريب رياضي</span><span class="date">2025 - 2026</span></div>
+    <ul>
+      <li>مشروع شخصي. تطبيق جوال للرياضيين، بواجهة React Native وخلفية FastAPI ولوحة تحكّم إدارية صغيرة بـ React. يعمل كل ذلك داخل Docker على خادم VPS أُديره بنفسي.</li>
+      <li>جلسات تدريب مع تتبّع الأوزان والتكرارات لكل مجموعة، ومؤقّت راحة، وكشف تلقائي للأرقام القياسية الشخصية. عبّأتُ قاعدة البيانات بنحو 83 تمرينًا.</li>
+      <li>يعمل عدّ الخطوات على المنصّتين: على iOS عبر HealthKit وCoreMotion، وعلى Android عبر مستشعر الجهاز.</li>
+      <li>عمل كبير على جانب الخادم: قواعد iptables عبر UFW وDOCKER-USER، وfail2ban، والدخول بمفتاح SSH فقط، وتحديد المعدّل على مستوى nginx وFastAPI، وترويسات CSP وHSTS، وتدوير الأسرار. تُدار تغييرات المخطّط عبر ترحيلات Alembic.</li>
+      <li>التطبيق مترجم بالكامل إلى الإنجليزية والفرنسية والعربية (من اليمين إلى اليسار). حتى رسائل الخطأ في الخلفية تُترجم وفق ترويسة Accept-Language.</li>
+      <li>التقنيات: React Native (Expo SDK 54)، FastAPI، SQLAlchemy، Alembic، PostgreSQL 16، Docker Compose، nginx، React، Tailwind.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">روبوت محادثة يجيب عن الأسئلة من قاعدة بيانات SQL</span><span class="date">2025</span></div>
+    <ul>
+      <li>مشروع شخصي. روبوت محادثة ويب صغير تطرح فيه سؤالًا بلغة بسيطة فيشغّل استعلام SQL المناسب على قاعدة MSSQL ويعيد إجابة موجزة.</li>
+      <li>التقنيات: React، FastAPI، MSSQL، OpenRouter API.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">أداة إدارة حسابات Discord المتعدّدة</span><span class="date">2025</span></div>
+    <ul>
+      <li>تطبيق ويب يدير عدّة حسابات Discord عبر الرموز والوكلاء. توجد لوحة تحكّم إدارية لمتابعة نشاط كل حساب في الوقت الحقيقي.</li>
+      <li>يمكن للروبوتات الردّ تلقائيًا عبر OpenAI API، وتُرسَل الرسائل عبر Webhooks الخاصة بـ Discord.</li>
+      <li>التقنيات: React، FastAPI، Webhooks الخاصة بـ Discord، OpenAI API.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">روبوت محادثة للبحث عن منتجات تقنية بـ LLaMA 2</span><span class="date">2024</span></div>
+    <ul>
+      <li>روبوت محادثة يساعد المستخدم على إيجاد حواسيب محمولة وهواتف ومنتجات تقنية أخرى. يستخدم LLaMA 2 لفهم السؤال وكاشطًا يسحب الكتالوج من MyTek مرّة يوميًا.</li>
+      <li>يقدّم اقتراحات مخصّصة حسب الميزانية والاستخدام.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">تطبيق ويب لتلخيص النصوص وترجمتها</span><span class="date">2024</span></div>
+    <ul>
+      <li>تطبيق ويب مبني بـ FastAPI وReact. يستخدم BART للتلخيص وHelsinki-NLP للترجمة. يدعم أكثر من 10 لغات.</li>
+    </ul>
+  </div>
+
+  <div class="proj">
+    <div class="row"><span class="title">كشف لوحات السيارات في الفيديو (YOLO)</span><span class="date">Sep 2024</span></div>
+    <ul>
+      <li>تدريب نموذج YOLO لاكتشاف لوحات ترقيم السيارات واستخراجها من الفيديو، إطارًا بإطار، في الوقت الحقيقي.</li>
+    </ul>
+  </div>
+
+  <h2>التعليم</h2>
+  <div class="edu">
+    <div class="row"><span class="title">ماجستير في علوم البيانات</span><span class="date">Sep 2024 - present</span></div>
+    <div class="sub">كلية العلوم بالمنستير، تونس</div>
+    <div class="row"><span class="title">إجازة في هندسة البرمجيات ونظم المعلومات</span><span class="date">2021 - 2024</span></div>
+    <div class="sub">كلية العلوم بالمنستير، تونس</div>
+    <div class="row"><span class="title">البكالوريا العلمية</span><span class="date">2021</span></div>
+    <div class="sub">معهد الذهيبر، جرجيس، تونس</div>
+  </div>
+
+  <h2>اللغات</h2>
+  <table class="skills">
+    <tr><td class="k">العربية:</td><td>اللغة الأم</td></tr>
+    <tr><td class="k">الفرنسية:</td><td>متوسّط متقدّم (TCF 400/699، B2)</td></tr>
+    <tr><td class="k">الإنجليزية:</td><td>متوسّط (B1، أستطيع العمل بالإنجليزية يوميًا)</td></tr>
+  </table>
+
+  <h2>الصفات الشخصية</h2>
+  <p class="summary">حلّ المشكلات، التفكير النقدي، القدرة على التكيّف، القيادة، الإبداع، العمل الجماعي.</p>
+
+</div>
+</body>
+</html>

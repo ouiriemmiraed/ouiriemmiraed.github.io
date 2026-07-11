@@ -9,7 +9,8 @@ dependencies — just static files, perfect for GitHub Pages.
 - `script.js` — theme toggle, mobile menu, scroll reveals, count-up
 - `i18n.js` — EN/FR/AR dictionary (keep the three languages in key parity)
 - `fr/index.html`, `ar/index.html` — GENERATED French/Arabic pages, do not edit by hand
-- `Raed_Ouiriemmi_CV.pdf` — downloadable CV (linked from the hero + contact)
+- `Raed_Ouiriemmi_CV.pdf` (+ `_FR`/`_AR`) — downloadable CVs, GENERATED from
+  `tools/cv/*.html` via `tools/cv/build_cv.sh` (wkhtmltopdf for EN/FR, Chromium for AR)
 - `.nojekyll` — tells GitHub Pages to serve files as-is
 
 ## Languages / SEO
