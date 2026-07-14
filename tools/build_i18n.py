@@ -8,7 +8,9 @@ translations baked in, so search engines can index all three languages
 Run from the repo root after ANY content change to index.html or i18n.js:
     python3 tools/build_i18n.py   (needs beautifulsoup4 + node on PATH)
 """
+import datetime
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -144,11 +146,23 @@ def build(lang, dict_, src_html):
     print(f"wrote {out.relative_to(ROOT)} ({out.stat().st_size} bytes)")
 
 
+def stamp_sitemap():
+    """Keep <lastmod> honest: stamp today's date whenever the site is rebuilt."""
+    sm = ROOT / "sitemap.xml"
+    today = datetime.date.today().isoformat()
+    txt = sm.read_text(encoding="utf-8")
+    new = re.sub(r"<lastmod>\d{4}-\d{2}-\d{2}</lastmod>", f"<lastmod>{today}</lastmod>", txt)
+    if new != txt:
+        sm.write_text(new, encoding="utf-8")
+        print(f"stamped sitemap.xml lastmod -> {today}")
+
+
 def main():
     i18n = load_i18n()
     src_html = (ROOT / "index.html").read_text(encoding="utf-8")
     for lang in LANGS:
         build(lang, i18n[lang], src_html)
+    stamp_sitemap()
 
 
 if __name__ == "__main__":

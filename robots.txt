@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /tools/
+Disallow: /README.md
 
 Sitemap: https://ouiriemmiraed.me/sitemap.xml

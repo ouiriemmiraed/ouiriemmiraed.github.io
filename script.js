@@ -93,6 +93,13 @@ if (langSelect) langSelect.addEventListener("change", (e) => {
   }
   applyLang(lang);
 });
+// Footer language links mirror the selector: remember the choice on the way out.
+document.querySelectorAll(".footer__langs a").forEach((a) =>
+  a.addEventListener("click", () => {
+    const lang = a.getAttribute("hreflang");
+    if (["en", "fr", "ar"].includes(lang)) localStorage.setItem("lang", lang);
+  })
+);
 
 // ===== Navbar state + scroll progress + ghost parallax =====
 const nav = document.getElementById("nav");

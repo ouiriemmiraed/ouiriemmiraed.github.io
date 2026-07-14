@@ -350,6 +350,9 @@ body.has-cursor .cursor-glow { opacity: 1; }
 /* ===== Footer ===== */
 .footer { text-align: center; padding: 44px 20px; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--border); margin-top: 40px; }
 .footer a { color: var(--accent); }
+.footer__langs { margin-top: 10px; font-size: .85rem; }
+.footer__langs a { color: var(--muted); text-decoration: none; }
+.footer__langs a:hover { color: var(--accent); }
 
 /* ===== Reveal animation ===== */
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s var(--ease), transform .8s var(--ease); }

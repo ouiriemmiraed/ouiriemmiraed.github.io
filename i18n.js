@@ -5,7 +5,7 @@
 const I18N = {
   en: {
     "doc.title": "Raed Ouiriemmi — Software Developer & Data Scientist in Zarzis, Tunisia",
-    "doc.desc": "Raed Ouiriemmi is a Software Developer with a Master's in Data Science, based in Zarzis, Tunisia, building full-stack web & mobile apps with AI, NLP, RAG chatbots and computer vision.",
+    "doc.desc": "Raed Ouiriemmi is a Software Developer with a Master's in Data Science, based in Zarzis, Tunisia — full-stack web & mobile apps with AI and RAG chatbots.",
     "nav.about": "About",
     "nav.skills": "Skills",
     "nav.projects": "Projects",
@@ -86,7 +86,7 @@ const I18N = {
 
   fr: {
     "doc.title": "Raed Ouiriemmi — Développeur logiciel & Data Scientist à Zarzis, Tunisie",
-    "doc.desc": "Raed Ouiriemmi, développeur logiciel titulaire d'un Master en Data Science, basé à Zarzis, Tunisie — applications web & mobiles full-stack avec IA, NLP, chatbots RAG et vision par ordinateur.",
+    "doc.desc": "Raed Ouiriemmi, développeur logiciel titulaire d'un Master en Data Science à Zarzis, Tunisie — applications web et mobiles full-stack avec IA et chatbots RAG.",
     "nav.about": "À propos",
     "nav.skills": "Compétences",
     "nav.projects": "Projets",
@@ -167,7 +167,7 @@ const I18N = {
 
   ar: {
     "doc.title": "رائد الويريمي — مطوّر برمجيات وعالم بيانات في جرجيس، تونس",
-    "doc.desc": "رائد الويريمي، مطوّر برمجيات حاصل على ماجستير في علوم البيانات من جرجيس، تونس — يبني تطبيقات ويب وجوال متكاملة بالذكاء الاصطناعي ومعالجة اللغة وروبوتات محادثة RAG والرؤية الحاسوبية.",
+    "doc.desc": "رائد الويريمي، مطوّر برمجيات حاصل على ماجستير في علوم البيانات من جرجيس، تونس — يبني تطبيقات ويب وجوال متكاملة بالذكاء الاصطناعي وروبوتات محادثة RAG.",
     "nav.about": "نبذة",
     "nav.skills": "المهارات",
     "nav.projects": "المشاريع",

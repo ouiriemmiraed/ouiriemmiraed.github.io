@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net; object-src 'none'; base-uri 'self'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MPLFTZPCCY"></script>
   <script>
@@ -32,7 +34,7 @@
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Raed Ouiriemmi — Software Developer & Data Scientist in Zarzis, Tunisia</title>
-  <meta name="description" content="Raed Ouiriemmi is a Software Developer with a Master's in Data Science, based in Zarzis, Tunisia, building full-stack web & mobile apps with AI, NLP, RAG chatbots and computer vision." />
+  <meta name="description" content="Raed Ouiriemmi is a Software Developer with a Master's in Data Science, based in Zarzis, Tunisia — full-stack web & mobile apps with AI and RAG chatbots." />
   <meta name="author" content="Raed Ouiriemmi" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -67,11 +69,10 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <script type="importmap">
-    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js" } }
+    { "imports": { "three": "/vendor/three.module.min.js" } }
   </script>
   <link rel="icon" href="favicon.ico?v=2" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2" />
@@ -92,7 +93,7 @@
         "givenName": "Raed",
         "familyName": "Ouiriemmi",
         "url": "https://ouiriemmiraed.me/",
-        "image": "https://ouiriemmiraed.me/og-image.jpg",
+        "image": ["https://ouiriemmiraed.me/profile-cutout.png", "https://ouiriemmiraed.me/og-image.jpg"],
         "description": "Software Developer with a Master's in Data Science, based in Zarzis, Tunisia, building full-stack web and mobile apps with AI, NLP, RAG chatbots and computer vision.",
         "jobTitle": ["Software Developer", "Data Scientist", "AI Engineer", "Machine Learning Engineer", "Data Engineer"],
         "email": "mailto:ouiriemmiraed@gmail.com",
@@ -100,6 +101,10 @@
         "knowsLanguage": ["Arabic", "French", "English"],
         "address": { "@type": "PostalAddress", "addressLocality": "Zarzis", "addressCountry": "Tunisia" },
         "alumniOf": { "@type": "CollegeOrUniversity", "name": "Faculty of Sciences of Monastir" },
+        "hasCredential": [
+          { "@type": "EducationalOccupationalCredential", "credentialCategory": "degree", "educationalLevel": "Master's degree", "name": "Master's in Data Science", "recognizedBy": { "@type": "CollegeOrUniversity", "name": "Faculty of Sciences of Monastir" } },
+          { "@type": "EducationalOccupationalCredential", "credentialCategory": "degree", "educationalLevel": "Bachelor's degree", "name": "Bachelor's in Software Engineering and Information Systems", "recognizedBy": { "@type": "CollegeOrUniversity", "name": "Faculty of Sciences of Monastir" } }
+        ],
         "knowsAbout": ["Python", "Machine Learning", "Deep Learning", "Data Science", "NLP", "Computer Vision", "RAG", "Large Language Models", "React", "Next.js", "React Native", "FastAPI", "MongoDB", "PostgreSQL", "Docker"],
         "sameAs": [
           "https://github.com/ouiriemmiraed",
@@ -547,6 +552,9 @@
 
   <footer class="footer">
     <p>© <span id="year"></span> Raed Ouiriemmi · <span data-i18n="footer">Designed &amp; built from scratch with HTML, CSS &amp; JavaScript.</span></p>
+    <nav class="footer__langs" aria-label="Language" data-i18n-aria="aria.lang">
+      <a href="/" hreflang="en" lang="en">English</a> · <a href="/fr/" hreflang="fr" lang="fr">Français</a> · <a href="/ar/" hreflang="ar" lang="ar">العربية</a>
+    </nav>
   </footer>
 
   <script src="i18n.js"></script>

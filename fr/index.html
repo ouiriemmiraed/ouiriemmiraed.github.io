@@ -3,6 +3,8 @@
 <html data-default-lang="fr" dir="ltr" lang="fr">
 <head>
 <meta charset="utf-8"/>
+<meta content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net; object-src 'none'; base-uri 'self'; upgrade-insecure-requests" http-equiv="Content-Security-Policy"/>
+<meta content="strict-origin-when-cross-origin" name="referrer"/>
 <!-- Google tag (gtag.js) -->
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-MPLFTZPCCY"></script>
 <script>
@@ -21,7 +23,7 @@
   </script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Raed Ouiriemmi — Développeur logiciel &amp; Data Scientist à Zarzis, Tunisie</title>
-<meta content="Raed Ouiriemmi, développeur logiciel titulaire d'un Master en Data Science, basé à Zarzis, Tunisie — applications web &amp; mobiles full-stack avec IA, NLP, chatbots RAG et vision par ordinateur." name="description"/>
+<meta content="Raed Ouiriemmi, développeur logiciel titulaire d'un Master en Data Science à Zarzis, Tunisie — applications web et mobiles full-stack avec IA et chatbots RAG." name="description"/>
 <meta content="Raed Ouiriemmi" name="author"/>
 <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/>
 <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="googlebot"/>
@@ -34,7 +36,7 @@
 <!-- Open Graph / social preview -->
 <meta content="Raed Ouiriemmi" property="og:site_name"/>
 <meta content="Raed Ouiriemmi — Développeur logiciel &amp; Data Scientist à Zarzis, Tunisie" property="og:title"/>
-<meta content="Raed Ouiriemmi, développeur logiciel titulaire d'un Master en Data Science, basé à Zarzis, Tunisie — applications web &amp; mobiles full-stack avec IA, NLP, chatbots RAG et vision par ordinateur." property="og:description"/>
+<meta content="Raed Ouiriemmi, développeur logiciel titulaire d'un Master en Data Science à Zarzis, Tunisie — applications web et mobiles full-stack avec IA et chatbots RAG." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="https://ouiriemmiraed.me/fr/" property="og:url"/>
 <meta content="fr_FR" property="og:locale"/>
@@ -47,16 +49,15 @@
 <!-- Twitter -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Raed Ouiriemmi — Développeur logiciel &amp; Data Scientist à Zarzis, Tunisie" name="twitter:title"/>
-<meta content="Raed Ouiriemmi, développeur logiciel titulaire d'un Master en Data Science, basé à Zarzis, Tunisie — applications web &amp; mobiles full-stack avec IA, NLP, chatbots RAG et vision par ordinateur." name="twitter:description"/>
+<meta content="Raed Ouiriemmi, développeur logiciel titulaire d'un Master en Data Science à Zarzis, Tunisie — applications web et mobiles full-stack avec IA et chatbots RAG." name="twitter:description"/>
 <meta content="https://ouiriemmiraed.me/og-image.jpg" name="twitter:image"/>
 <meta content="Raed Ouiriemmi — Développeur logiciel &amp; Data Scientist à Zarzis, Tunisie" name="twitter:image:alt"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="/style.css" rel="stylesheet"/>
 <script type="importmap">
-    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js" } }
+    { "imports": { "three": "/vendor/three.module.min.js" } }
   </script>
 <link href="/favicon.ico?v=2" rel="icon" sizes="any"/>
 <link href="/favicon.svg?v=2" rel="icon" type="image/svg+xml"/>
@@ -83,7 +84,10 @@
       "givenName": "Raed",
       "familyName": "Ouiriemmi",
       "url": "https://ouiriemmiraed.me/",
-      "image": "https://ouiriemmiraed.me/og-image.jpg",
+      "image": [
+        "https://ouiriemmiraed.me/profile-cutout.png",
+        "https://ouiriemmiraed.me/og-image.jpg"
+      ],
       "description": "Software Developer with a Master's in Data Science, based in Zarzis, Tunisia, building full-stack web and mobile apps with AI, NLP, RAG chatbots and computer vision.",
       "jobTitle": [
         "Software Developer",
@@ -108,6 +112,28 @@
         "@type": "CollegeOrUniversity",
         "name": "Faculty of Sciences of Monastir"
       },
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "degree",
+          "educationalLevel": "Master's degree",
+          "name": "Master's in Data Science",
+          "recognizedBy": {
+            "@type": "CollegeOrUniversity",
+            "name": "Faculty of Sciences of Monastir"
+          }
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "credentialCategory": "degree",
+          "educationalLevel": "Bachelor's degree",
+          "name": "Bachelor's in Software Engineering and Information Systems",
+          "recognizedBy": {
+            "@type": "CollegeOrUniversity",
+            "name": "Faculty of Sciences of Monastir"
+          }
+        }
+      ],
       "knowsAbout": [
         "Python",
         "Machine Learning",
@@ -498,6 +524,9 @@
 </main>
 <footer class="footer">
 <p>© <span id="year"></span> Raed Ouiriemmi · <span data-i18n="footer">Conçu &amp; développé de zéro en HTML, CSS &amp; JavaScript.</span></p>
+<nav aria-label="Langue" class="footer__langs" data-i18n-aria="aria.lang">
+<a href="/" hreflang="en" lang="en">English</a> · <a href="/fr/" hreflang="fr" lang="fr">Français</a> · <a href="/ar/" hreflang="ar" lang="ar">العربية</a>
+</nav>
 </footer>
 <script src="/i18n.js"></script>
 <script src="/script.js"></script>
