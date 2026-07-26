@@ -4,6 +4,10 @@
 const root = document.documentElement;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isTouch = window.matchMedia("(hover: none)").matches;
+// Scroll-story animations only run under html.fx; without it every .reveal
+// stays visible (no-JS visitors, crawlers and reduced-motion users).
+const fx = !reduceMotion;
+if (fx) root.classList.add("fx");
 
 // ===== Mobile menu =====
 const menuToggle = document.getElementById("menuToggle");
@@ -101,48 +105,108 @@ document.querySelectorAll(".footer__langs a").forEach((a) =>
   })
 );
 
-// ===== Navbar state + scroll progress + ghost parallax =====
+// ===== Navbar state + scroll progress + scroll-linked effects =====
 const nav = document.getElementById("nav");
 const progress = document.getElementById("scrollProgress");
 const ghosts = [...document.querySelectorAll(".section__ghost")];
+const heroInner = document.querySelector(".hero__inner");
+const timelineEl = document.querySelector(".timeline");
+const covers = [...document.querySelectorAll(".project__media img")];
 const onScroll = () => {
   const y = window.scrollY;
   nav.classList.toggle("scrolled", y > 20);
   const max = document.documentElement.scrollHeight - window.innerHeight;
   progress.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
-  if (!reduceMotion) {
-    const vh = window.innerHeight;
-    ghosts.forEach((g) => {
-      const r = g.getBoundingClientRect();
-      const off = (r.top + r.height / 2 - vh / 2) / vh; // -1..1 through viewport
-      g.style.transform = `translateY(calc(-58% + ${(-off * 42).toFixed(1)}px))`;
+  if (!fx) return;
+  const vh = window.innerHeight;
+  ghosts.forEach((g) => {
+    const r = g.getBoundingClientRect();
+    const off = (r.top + r.height / 2 - vh / 2) / vh; // -1..1 through viewport
+    g.style.transform = `translateY(calc(-58% + ${(-off * 42).toFixed(1)}px))`;
+  });
+  // Timeline draws its ink as the reader moves through it.
+  if (timelineEl) {
+    const r = timelineEl.getBoundingClientRect();
+    const p = Math.min(1, Math.max(0, (vh * 0.72 - r.top) / r.height));
+    timelineEl.style.setProperty("--tlp", p.toFixed(3));
+  }
+  if (!isTouch) {
+    // Hero recedes and dissolves as you scroll into the page.
+    if (heroInner && y <= vh * 1.2) {
+      const k = Math.min(y / vh, 1);
+      heroInner.style.transform = `translate3d(0, ${(y * 0.24).toFixed(1)}px, 0)`;
+      heroInner.style.opacity = (1 - k * 0.9).toFixed(3);
+    }
+    // Depth: project covers drift against their cards.
+    covers.forEach((img) => {
+      const r = img.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      const off = (r.top + r.height / 2 - vh / 2) / vh;
+      img.style.setProperty("--py", (off * -12).toFixed(1) + "px");
     });
   }
 };
 window.addEventListener("scroll", onScroll, { passive: true });
 onScroll();
 
-// ===== Reveal on scroll (with stagger inside grids) =====
-const groups = [".about__stats", ".skills", ".projects", ".timeline"];
-groups.forEach((sel) => {
-  const parent = document.querySelector(sel);
-  if (!parent) return;
-  [...parent.children].forEach((child, i) => {
-    if (child.classList.contains("reveal")) child.style.transitionDelay = i * 80 + "ms";
-  });
-});
-const io = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) {
-        e.target.classList.add("in");
-        io.unobserve(e.target);
-      }
+// ===== Scroll story: staged reveals (direction, depth, cascades) =====
+if (fx) {
+  // Hero enters as a cascade of its pieces rather than one block.
+  if (heroInner) {
+    heroInner.classList.remove("reveal");
+    [...heroInner.children].forEach((el, i) => {
+      el.classList.add("reveal");
+      el.style.transitionDelay = i * 90 + "ms";
     });
-  },
-  { threshold: 0.12 }
-);
-document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  }
+  // About: the text slides from the reading side, stat cards materialize.
+  const about = document.querySelector(".about");
+  if (about) about.classList.remove("reveal");
+  const variant = (sel, cls) =>
+    document.querySelectorAll(sel).forEach((el) => el.classList.add("reveal", cls));
+  variant(".about__text", "reveal--side");
+  variant(".about__stats .stat", "reveal--zoom");
+  variant(".project", "reveal--zoom");
+  variant(".tl-item", "reveal--side");
+  variant(".contact", "reveal--zoom");
+  // Chip cascade indices (chips animate relative to their card's delay).
+  document.querySelectorAll(".reveal .tags").forEach((tags) =>
+    [...tags.children].forEach((s, i) => s.style.setProperty("--i", i))
+  );
+  // Stagger inside grids.
+  [".about__stats", ".skills", ".projects", ".timeline"].forEach((sel) => {
+    const parent = document.querySelector(sel);
+    if (!parent) return;
+    [...parent.children].forEach((child, i) => {
+      if (!child.classList.contains("reveal")) return;
+      child.style.transitionDelay = i * 80 + "ms";
+      child.style.setProperty("--d", i * 80 + "ms");
+    });
+  });
+  const REVEAL_CLASSES = ["reveal", "reveal--side", "reveal--zoom", "in"];
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        el.classList.add("in");
+        io.unobserve(el);
+        // Once the entrance is over, hand the element back to its own
+        // stylesheet rules (restores per-component hover transitions).
+        setTimeout(() => {
+          el.classList.remove(...REVEAL_CLASSES);
+          el.style.transitionDelay = "";
+          el.style.removeProperty("--d");
+        }, 2000 + (parseFloat(el.style.transitionDelay) || 0));
+      });
+    },
+    // Root extends far ABOVE the viewport: anything already scrolled past
+    // (deep links, fast scrolls with skipped frames) reveals instantly instead
+    // of staying hidden; entrances still trigger at the bottom edge (-7%).
+    { threshold: 0.12, rootMargin: "9999px 0px -7% 0px" }
+  );
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+}
 
 // ===== Scroll-spy: highlight active nav link =====
 const navAnchors = [...navLinks.querySelectorAll("a")];
@@ -168,16 +232,18 @@ const countIO = new IntersectionObserver(
     entries.forEach((e) => {
       if (!e.isIntersecting) return;
       const el = e.target;
-      const target = parseInt(el.dataset.count, 10);
-      let cur = 0;
-      const step = Math.max(1, Math.ceil(target / 30));
-      const tick = () => {
-        cur = Math.min(target, cur + step);
-        el.textContent = cur;
-        if (cur < target) requestAnimationFrame(tick);
-      };
-      tick();
       countIO.unobserve(el);
+      const target = parseInt(el.dataset.count, 10);
+      if (!fx) { el.textContent = target; return; }
+      const dur = 1300;
+      let t0;
+      const tick = (ts) => {
+        if (t0 === undefined) t0 = ts;
+        const p = Math.min((ts - t0) / dur, 1);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
     });
   },
   { threshold: 0.5 }
@@ -228,9 +294,11 @@ if (!reduceMotion && !isTouch) {
     });
   });
 
-  // -- Cursor-following ambient glow (lerped) --
+  // -- Cursor-following ambient glow + marquee shear (one rAF loop) --
   const glow = document.getElementById("cursorGlow");
+  const marquee = document.querySelector(".marquee");
   let tx = window.innerWidth / 2, ty = window.innerHeight / 2, cx = tx, cy = ty;
+  let lastY = window.scrollY, shear = 0;
   window.addEventListener("pointermove", (e) => {
     tx = e.clientX; ty = e.clientY;
     document.body.classList.add("has-cursor");
@@ -239,6 +307,11 @@ if (!reduceMotion && !isTouch) {
     cx += (tx - cx) * 0.12;
     cy += (ty - cy) * 0.12;
     glow.style.transform = `translate(${cx}px, ${cy}px)`;
+    // The tech marquee shears with scroll velocity, then settles back.
+    const yNow = window.scrollY;
+    shear += (Math.max(-4, Math.min(4, (yNow - lastY) * 0.14)) - shear) * 0.1;
+    lastY = yNow;
+    if (marquee) marquee.style.transform = `skewX(${shear.toFixed(2)}deg)`;
     requestAnimationFrame(raf);
   };
   raf();

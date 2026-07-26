@@ -354,9 +354,59 @@ body.has-cursor .cursor-glow { opacity: 1; }
 .footer__langs a { color: var(--muted); text-decoration: none; }
 .footer__langs a:hover { color: var(--accent); }
 
-/* ===== Reveal animation ===== */
-.reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
-.reveal.in { opacity: 1; transform: none; }
+/* ===== Scroll story — entrances & scroll-linked motion =====
+   Gated on html.fx (set by JS only when motion is allowed), so content is
+   always visible for no-JS visitors, crawlers and reduced-motion users. */
+:root { --flip: 1; --spring: cubic-bezier(.34, 1.56, .64, 1); }
+[dir="rtl"] { --flip: -1; }
+
+/* Hidden state carries NO transition (so applying it never animates);
+   the entrance transition lives on .in only. */
+.fx .reveal {
+  opacity: 0;
+  transform: translateY(34px);
+  filter: blur(6px);
+  transition: none;
+  will-change: opacity, transform, filter;
+}
+.fx .reveal--side { transform: translateX(calc(var(--flip) * -44px)); }
+.fx .reveal--zoom { transform: translateY(24px) scale(.94); }
+.fx .reveal.in {
+  opacity: 1; transform: none; filter: none;
+  transition: opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease);
+}
+
+/* Chips cascade in after their card lands (--d = card stagger, --i = chip index) */
+.fx .reveal .tags span { opacity: 0; transform: translateY(10px) scale(.9); transition: none; }
+.fx .reveal.in .tags span {
+  opacity: 1; transform: none;
+  transition: opacity .5s var(--ease), transform .5s var(--spring);
+  transition-delay: calc(var(--d, 0s) + .18s + var(--i, 0) * 32ms);
+}
+
+/* Timeline: the line inks in with scroll, dots pop as items land */
+.fx .timeline::before { transform: scaleY(var(--tlp, 0)); transform-origin: top; }
+.fx .tl-item.reveal .tl-dot { transform: scale(0); opacity: 0; }
+.fx .tl-item.reveal.in .tl-dot {
+  transform: none; opacity: 1;
+  transition: transform .55s var(--spring) calc(var(--d, 0s) + .15s),
+              opacity .25s ease calc(var(--d, 0s) + .15s);
+}
+
+/* Section titles: gradient bar sweeps in under the heading */
+.section__title::after {
+  content: ""; position: absolute; inset-inline-start: 2px; bottom: -10px;
+  width: 58px; height: 4px; border-radius: 4px; background: var(--grad);
+  transform-origin: left; transition: transform .7s var(--ease) .3s;
+}
+[dir="rtl"] .section__title::after { transform-origin: right; }
+.fx .section__head.reveal:not(.in) .section__title::after { transform: scaleX(0); transition: none; }
+
+/* Project covers drift against their cards while scrolling (desktop depth) */
+@media (hover: hover) {
+  .fx .project__media img { transform: translateY(var(--py, 0px)) scale(1.1); }
+  .fx .project:hover .project__media img { transform: translateY(var(--py, 0px)) scale(1.16); }
+}
 
 /* ===== Responsive ===== */
 @media (max-width: 860px) {

@@ -78,10 +78,15 @@ function init(THREE, host) {
   resize();
   addEventListener("resize", resize);
 
+  // Pause rendering while the hero is off-screen (saves CPU/GPU when reading
+  // the rest of the page; the rAF keeps looping cheaply so it resumes itself).
+  let heroVisible = true;
+  new IntersectionObserver((es) => { heroVisible = es[0].isIntersecting; }).observe(host);
+
   const clock = new THREE.Clock();
   function tick() {
     requestAnimationFrame(tick);
-    if (document.hidden || !host.offsetParent) return;
+    if (document.hidden || !heroVisible || !host.offsetParent) return;
     const t = clock.getElapsedTime();
     mx += (tx - mx) * 0.045; my += (ty - my) * 0.045;
     if (content) content.update(t, mx, my);
