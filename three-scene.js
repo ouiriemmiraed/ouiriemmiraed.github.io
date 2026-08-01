@@ -75,9 +75,11 @@ function init(THREE, host) {
   if (!touch) {
     addEventListener("pointermove", (e) => { tx = e.clientX / innerWidth - 0.5; ty = e.clientY / innerHeight - 0.5; }, { passive: true });
   }
-  // Scroll dolly: the camera pulls back and the scene tips away as you leave the hero.
-  let scrollK = 0;
-  addEventListener("scroll", () => { scrollK = Math.min(scrollY / innerHeight, 1); }, { passive: true });
+  // Scroll dolly: the camera pulls back and the scene tips away as you leave
+  // the hero. Clamped ≥0 (iOS rubber-band) and smoothed in tick() so URL-bar
+  // viewport jumps never kick the camera.
+  let scrollK = 0, sk = 0;
+  addEventListener("scroll", () => { scrollK = Math.min(Math.max(scrollY, 0) / innerHeight, 1); }, { passive: true });
 
   function resize() {
     const w = host.clientWidth || innerWidth, h = host.clientHeight || innerHeight;
@@ -101,13 +103,14 @@ function init(THREE, host) {
     const tilt = window.__tilt;
     if (touch && tilt && tilt.active) { tx = tilt.x * 0.4; ty = tilt.y * 0.4; }
     mx += (tx - mx) * 0.045; my += (ty - my) * 0.045;
+    sk += (scrollK - sk) * 0.08;
     // True positional parallax: the camera itself strafes with the pointer
     // and dollies back with scroll, always looking at the scene core.
     camera.position.x = mx * 2.4;
-    camera.position.y = -my * 1.8 - scrollK * 1.4;
-    camera.position.z = 14 + scrollK * 8;
+    camera.position.y = -my * 1.8 - sk * 1.4;
+    camera.position.z = 14 + sk * 8;
     camera.lookAt(0, 0, 0);
-    if (content) content.update(t, mx, my, scrollK);
+    if (content) content.update(t, mx, my, sk);
     renderer.render(scene, camera);
   }
   tick();

@@ -113,15 +113,43 @@ const heroInner = document.querySelector(".hero__inner");
 const timelineEl = document.querySelector(".timeline");
 const covers = [...document.querySelectorAll(".project__media img")];
 const scrollCards = isTouch
-  ? [...document.querySelectorAll(".project, .skill-card, .stat, .contact")]
+  ? [...document.querySelectorAll(".project, .skill-card, .stat")]
   : [];
+// Touch: the URL bar collapse resizes the viewport mid-scroll — anchor all
+// scroll math to a stable vh, updated only on real rotations (>150px jumps).
+let vhTouch = window.innerHeight;
+window.addEventListener("resize", () => {
+  if (!isTouch || Math.abs(window.innerHeight - vhTouch) > 150) vhTouch = window.innerHeight;
+});
+// Scroll-tilt state: cards ease back flat when scrolling pauses.
+const cardTilt = new Map();
+let cardsIdleTimer = null, cardsSettleRAF = null, settleLast = null;
+const settleCards = () => {
+  settleLast = null;
+  const step = (now) => {
+    const dt = settleLast === null ? 1 : Math.min(3, (now - settleLast) / 16.7);
+    settleLast = now;
+    const decay = Math.pow(0.85, dt);
+    let busy = false;
+    cardTilt.forEach((a, el) => {
+      const na = a * decay;
+      if (Math.abs(na) < 0.04) { el.style.transform = ""; cardTilt.delete(el); return; }
+      cardTilt.set(el, na);
+      el.style.transform =
+        `perspective(900px) rotateX(${na.toFixed(2)}deg) scale(${(1 - Math.abs(na) * 0.00375).toFixed(3)})`;
+      busy = true;
+    });
+    cardsSettleRAF = busy ? requestAnimationFrame(step) : null;
+  };
+  cardsSettleRAF = requestAnimationFrame(step);
+};
 const onScroll = () => {
-  const y = window.scrollY;
+  const y = Math.max(0, window.scrollY); // iOS rubber-band reports negative
   nav.classList.toggle("scrolled", y > 20);
   const max = document.documentElement.scrollHeight - window.innerHeight;
-  progress.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
+  progress.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + "%";
   if (!fx) return;
-  const vh = window.innerHeight;
+  const vh = isTouch ? vhTouch : window.innerHeight;
   // Ghost numbers lean in 3D and pivot slightly as they drift past.
   const flip = root.getAttribute("dir") === "rtl" ? -1 : 1;
   ghosts.forEach((g) => {
@@ -153,16 +181,22 @@ const onScroll = () => {
     img.style.setProperty("--py", (off * -12).toFixed(1) + "px");
   });
   // Touch has no hover tilt, so cards ride a curved plane while scrolling:
-  // tipped back entering from the bottom, flat at center, tipped out on top.
+  // tipped back entering from the bottom, flat at center, tipped out on top;
+  // they settle flat shortly after the scroll stops.
   if (isTouch) {
+    if (cardsSettleRAF) { cancelAnimationFrame(cardsSettleRAF); cardsSettleRAF = null; }
+    clearTimeout(cardsIdleTimer);
     scrollCards.forEach((el) => {
       if (el.classList.contains("reveal")) return; // entrance still playing
       const r = el.getBoundingClientRect();
       if (r.bottom < -60 || r.top > vh + 60) return;
       const off = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / (vh / 2)));
+      const a = off * 4;
+      cardTilt.set(el, a);
       el.style.transform =
-        `perspective(900px) rotateX(${(off * 5).toFixed(2)}deg) scale(${(1 - Math.abs(off) * 0.02).toFixed(3)})`;
+        `perspective(900px) rotateX(${a.toFixed(2)}deg) scale(${(1 - Math.abs(a) * 0.00375).toFixed(3)})`;
     });
+    cardsIdleTimer = setTimeout(settleCards, 160);
   }
 };
 window.addEventListener("scroll", onScroll, { passive: true });

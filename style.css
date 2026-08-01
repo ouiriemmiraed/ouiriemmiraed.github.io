@@ -895,11 +895,27 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
   }
   /* covers keep their scroll parallax (the desktop rule lives under hover:hover) */
   .fx .project__media img { transform: translateY(var(--py, 0px)) scale(1.08); }
-  /* tactile 3D press — cards physically give under the finger */
-  .fx .project:active, .fx .skill-card:active, .fx .stat:active {
-    transform: perspective(800px) rotateX(2.5deg) scale(.975) !important;
-    transition: transform .12s ease-out !important;
+  /* Per-frame transforms + backdrop blur = flicker and jank on iOS Safari —
+     mobile cards go near-opaque and drop the blur (look barely changes) */
+  .skill-card, .project, .stat {
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    background:
+      linear-gradient(160deg,
+        color-mix(in srgb, var(--card) 96%, transparent),
+        color-mix(in srgb, var(--bg-soft) 94%, transparent)) padding-box,
+      linear-gradient(150deg,
+        color-mix(in srgb, var(--accent) 42%, transparent),
+        transparent 42%,
+        color-mix(in srgb, var(--accent-2) 32%, transparent)) border-box;
   }
+  .contact, .badge { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .tags span { -webkit-backdrop-filter: none; backdrop-filter: none; background-color: var(--bg-soft); }
+  .project__media .project__year {
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    background: rgba(10, 16, 30, .78);
+  }
+  /* tactile 3D press on genuinely interactive elements ONLY — a press on the
+     cards themselves flashes every time a scroll gesture starts on one */
   .fx .contact__email:active, .fx .contact__social:active, .fx .projects__more-link:active,
   .fx .hero__socials a:active {
     transform: perspective(600px) translateY(1px) rotateX(6deg) scale(.96) !important;
