@@ -112,6 +112,9 @@ const ghosts = [...document.querySelectorAll(".section__ghost")];
 const heroInner = document.querySelector(".hero__inner");
 const timelineEl = document.querySelector(".timeline");
 const covers = [...document.querySelectorAll(".project__media img")];
+const scrollCards = isTouch
+  ? [...document.querySelectorAll(".project, .skill-card, .stat, .contact")]
+  : [];
 const onScroll = () => {
   const y = window.scrollY;
   nav.classList.toggle("scrolled", y > 20);
@@ -134,21 +137,31 @@ const onScroll = () => {
     const p = Math.min(1, Math.max(0, (vh * 0.72 - r.top) / r.height));
     timelineEl.style.setProperty("--tlp", p.toFixed(3));
   }
-  if (!isTouch) {
-    // Hero recedes, tips away and dissolves as you scroll into the page.
-    if (heroInner && y <= vh * 1.2) {
-      const k = Math.min(y / vh, 1);
-      heroInner.style.transform =
-        `perspective(900px) translate3d(0, ${(y * 0.24).toFixed(1)}px, 0) ` +
-        `rotateX(${(k * 5).toFixed(2)}deg) scale(${(1 - k * 0.05).toFixed(3)})`;
-      heroInner.style.opacity = (1 - k * 0.9).toFixed(3);
-    }
-    // Depth: project covers drift against their cards.
-    covers.forEach((img) => {
-      const r = img.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > vh) return;
-      const off = (r.top + r.height / 2 - vh / 2) / vh;
-      img.style.setProperty("--py", (off * -12).toFixed(1) + "px");
+  // Hero recedes, tips away and dissolves as you scroll into the page.
+  if (heroInner && y <= vh * 1.2) {
+    const k = Math.min(y / vh, 1);
+    heroInner.style.transform =
+      `perspective(900px) translate3d(0, ${(y * 0.24).toFixed(1)}px, 0) ` +
+      `rotateX(${(k * 5).toFixed(2)}deg) scale(${(1 - k * 0.05).toFixed(3)})`;
+    heroInner.style.opacity = (1 - k * 0.9).toFixed(3);
+  }
+  // Depth: project covers drift against their cards.
+  covers.forEach((img) => {
+    const r = img.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > vh) return;
+    const off = (r.top + r.height / 2 - vh / 2) / vh;
+    img.style.setProperty("--py", (off * -12).toFixed(1) + "px");
+  });
+  // Touch has no hover tilt, so cards ride a curved plane while scrolling:
+  // tipped back entering from the bottom, flat at center, tipped out on top.
+  if (isTouch) {
+    scrollCards.forEach((el) => {
+      if (el.classList.contains("reveal")) return; // entrance still playing
+      const r = el.getBoundingClientRect();
+      if (r.bottom < -60 || r.top > vh + 60) return;
+      const off = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / (vh / 2)));
+      el.style.transform =
+        `perspective(900px) rotateX(${(off * 5).toFixed(2)}deg) scale(${(1 - Math.abs(off) * 0.02).toFixed(3)})`;
     });
   }
 };
@@ -259,6 +272,97 @@ document.querySelectorAll(".stat__n").forEach((c) => countIO.observe(c));
 // ===== Footer year =====
 document.getElementById("year").textContent = new Date().getFullYear();
 
+// ===== CSS gyroscopes: decorative 3D rings (desktop: stats + contact;
+//       touch: a single quiet ring behind the contact card) =====
+if (fx) {
+  const addGyro = (host, css) => {
+    if (!host) return;
+    const g = document.createElement("div");
+    g.className = "gyro";
+    g.setAttribute("aria-hidden", "true");
+    g.style.cssText = css;
+    g.innerHTML = "<i></i><i></i><i></i><b></b>";
+    host.appendChild(g);
+  };
+  if (!isTouch && window.matchMedia("(min-width: 861px)").matches) {
+    addGyro(document.querySelector(".about__stats"),
+      "width:300px; top:50%; left:50%; margin:-150px 0 0 -150px;");
+    addGyro(document.querySelector(".section--contact"),
+      "width:760px; top:50%; left:50%; margin:-380px 0 0 -380px;");
+  } else if (isTouch) {
+    addGyro(document.querySelector(".section--contact"),
+      "width:min(340px, 88vw); top:50%; left:50%; transform:translate(-50%,-50%);");
+  }
+}
+
+// ===================================================================
+//  Device-tilt 3D rig (touch devices): tilting the phone moves the hero
+//  layers in depth and steers the WebGL scene (via window.__tilt, read
+//  by three-scene.js). iOS needs a user-gesture permission — hooked to
+//  the first tap, silent if denied.
+// ===================================================================
+if (fx && isTouch) {
+  // empty touchstart listener: enables :active styling on iOS Safari
+  document.addEventListener("touchstart", () => {}, { passive: true });
+
+  const layers = [];
+  if (heroInner) {
+    [[".badge", 10], [".hero__avatar img", 26], [".hero__avatar-fallback", 26],
+     [".hero__hi", 8], [".hero__name", 19], [".hero__role", 13], [".hero__tag", 7],
+     [".hero__cta", 15], [".hero__socials", 9]].forEach(([sel, d]) =>
+      heroInner.querySelectorAll(sel).forEach((el) => layers.push({ el, d }))
+    );
+  }
+
+  const tilt = (window.__tilt = { x: 0, y: 0, active: false });
+  let base = null, gx = 0, gy = 0, running = false;
+
+  const step = () => {
+    if (document.hidden || window.scrollY > window.innerHeight * 1.15) { running = false; return; }
+    tilt.x += (gx - tilt.x) * 0.1;
+    tilt.y += (gy - tilt.y) * 0.1;
+    layers.forEach((l) => {
+      if (l.el.closest(".reveal")) return; // entrance still playing
+      l.el.style.transform =
+        `translate3d(${(tilt.x * l.d).toFixed(1)}px, ${(tilt.y * l.d * 0.7).toFixed(1)}px, 0)`;
+    });
+    requestAnimationFrame(step);
+  };
+  const start = () => { if (!running) { running = true; requestAnimationFrame(step); } };
+
+  const onOri = (e) => {
+    if (e.beta == null || e.gamma == null) return;
+    // remap axes when the device is held in landscape
+    const ang = (screen.orientation ? screen.orientation.angle : window.orientation) || 0;
+    let px, py;
+    if (ang === 90) { px = e.beta; py = -e.gamma; }
+    else if (ang === -90 || ang === 270) { px = -e.beta; py = e.gamma; }
+    else { px = e.gamma; py = e.beta; }
+    if (!base) base = { x: px, y: py };
+    // the neutral pose slowly re-centers so posture changes don't stick
+    base.x += (px - base.x) * 0.006;
+    base.y += (py - base.y) * 0.006;
+    gx = Math.max(-1, Math.min(1, (px - base.x) / 16));
+    gy = Math.max(-1, Math.min(1, (py - base.y) / 16));
+    tilt.active = true;
+    start();
+  };
+  addEventListener("orientationchange", () => { base = null; });
+  addEventListener("scroll", () => { if (tilt.active) start(); }, { passive: true });
+
+  const attach = () => addEventListener("deviceorientation", onOri, { passive: true });
+  if (typeof DeviceOrientationEvent !== "undefined" &&
+      typeof DeviceOrientationEvent.requestPermission === "function") {
+    addEventListener("touchend", () => {
+      DeviceOrientationEvent.requestPermission()
+        .then((s) => { if (s === "granted") attach(); })
+        .catch(() => {});
+    }, { once: true, passive: true });
+  } else {
+    attach();
+  }
+}
+
 // ===================================================================
 //  Pointer-driven effects (desktop, motion-allowed only)
 // ===================================================================
@@ -336,22 +440,6 @@ if (!reduceMotion && !isTouch) {
     })
   );
 
-  // -- CSS gyroscopes: decorative 3D rings behind the stats and contact card --
-  if (window.matchMedia("(min-width: 861px)").matches) {
-    const addGyro = (host, css) => {
-      if (!host) return;
-      const g = document.createElement("div");
-      g.className = "gyro";
-      g.setAttribute("aria-hidden", "true");
-      g.style.cssText = css;
-      g.innerHTML = "<i></i><i></i><i></i><b></b>";
-      host.appendChild(g);
-    };
-    addGyro(document.querySelector(".about__stats"),
-      "width:300px; top:50%; left:50%; margin:-150px 0 0 -150px;");
-    addGyro(document.querySelector(".section--contact"),
-      "width:760px; top:50%; left:50%; margin:-380px 0 0 -380px;");
-  }
 
   // -- Magnetic buttons --
   document.querySelectorAll(".magnetic").forEach((btn) => {

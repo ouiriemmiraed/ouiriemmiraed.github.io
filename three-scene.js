@@ -9,8 +9,11 @@ const host = document.getElementById("webgl");
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const touch = matchMedia("(hover: none)").matches;
 const small = matchMedia("(max-width: 760px)").matches;
+// Desktop gets the full scene; touch/small screens get a LITE build
+// (fewer particles, capped DPR, no antialias) instead of nothing.
+const LITE = touch || small;
 
-if (host && !reduce && !touch && !small) {
+if (host && !reduce) {
   const start = () =>
     import("three")
       .then((THREE) => {
@@ -51,14 +54,14 @@ function init(THREE, host) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 100);
   camera.position.z = 14;
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !LITE, powerPreference: "high-performance" });
   renderer.setClearColor(0x000000, 0);
   host.appendChild(renderer.domElement);
 
   let content = null;
   function setMode() {
     if (content) { scene.remove(content.group); content.dispose(); content = null; }
-    content = isLight() ? buildNetwork(THREE) : buildNebula(THREE);
+    content = isLight() ? buildNetwork(THREE, LITE) : buildNebula(THREE, LITE);
     scene.add(content.group);
   }
   setMode();
@@ -67,14 +70,18 @@ function init(THREE, host) {
   });
 
   let mx = 0, my = 0, tx = 0, ty = 0;
-  addEventListener("pointermove", (e) => { tx = e.clientX / innerWidth - 0.5; ty = e.clientY / innerHeight - 0.5; }, { passive: true });
+  // Desktop: the pointer steers the scene. Touch: the physical device tilt
+  // does (script.js publishes it on window.__tilt), read each tick below.
+  if (!touch) {
+    addEventListener("pointermove", (e) => { tx = e.clientX / innerWidth - 0.5; ty = e.clientY / innerHeight - 0.5; }, { passive: true });
+  }
   // Scroll dolly: the camera pulls back and the scene tips away as you leave the hero.
   let scrollK = 0;
   addEventListener("scroll", () => { scrollK = Math.min(scrollY / innerHeight, 1); }, { passive: true });
 
   function resize() {
     const w = host.clientWidth || innerWidth, h = host.clientHeight || innerHeight;
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(devicePixelRatio, LITE ? 1.5 : 2));
     renderer.setSize(w, h, false);
     camera.aspect = w / h; camera.updateProjectionMatrix();
   }
@@ -91,6 +98,8 @@ function init(THREE, host) {
     requestAnimationFrame(tick);
     if (document.hidden || !heroVisible || !host.offsetParent) return;
     const t = clock.getElapsedTime();
+    const tilt = window.__tilt;
+    if (touch && tilt && tilt.active) { tx = tilt.x * 0.4; ty = tilt.y * 0.4; }
     mx += (tx - mx) * 0.045; my += (ty - my) * 0.045;
     // True positional parallax: the camera itself strafes with the pointer
     // and dollies back with scroll, always looking at the scene core.
@@ -105,9 +114,9 @@ function init(THREE, host) {
 }
 
 // ---------- LIGHT: data network (nodes + edges) ----------
-function buildNetwork(THREE) {
+function buildNetwork(THREE, lite) {
   const group = new THREE.Group();
-  const N = 80, R = 7.4, TH = 3.4;
+  const N = lite ? 48 : 80, R = 7.4, TH = 3.4;
   const pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
   const v = [];
   const blue = new THREE.Color("#2257cc"), violet = new THREE.Color("#6d3bd6");
@@ -142,7 +151,7 @@ function buildNetwork(THREE) {
   group.add(lines);
 
   // Far dust shell: counter-rotates against the pointer for depth parallax.
-  const DN = 220;
+  const DN = lite ? 90 : 220;
   const dp = new Float32Array(DN * 3), dc = new Float32Array(DN * 3);
   for (let i = 0; i < DN; i++) {
     const u = Math.random(), w = Math.random();
@@ -176,7 +185,7 @@ function buildNetwork(THREE) {
 }
 
 // ---------- DARK: glowing particle nebula ----------
-function buildNebula(THREE) {
+function buildNebula(THREE, lite) {
   const group = new THREE.Group();
   const soft = sprite(THREE, false);
   const palette = [new THREE.Color("#4f7bf0"), new THREE.Color("#6f8dff"), new THREE.Color("#9b73ff")];
@@ -197,9 +206,9 @@ function buildNebula(THREE) {
     const m = new THREE.PointsMaterial({ size, map: soft, vertexColors: true, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true });
     return new THREE.Points(g, m);
   }
-  const outer = cloud(3400, 7.4, 2.6, 0.15, 0.7);
-  const inner = cloud(1600, 3.8, 1.6, 0.12, 0.8);
-  const far = cloud(1200, 13.5, 5, 0.1, 0.5); // distant starfield for depth parallax
+  const outer = cloud(lite ? 1100 : 3400, 7.4, 2.6, 0.15, 0.7);
+  const inner = cloud(lite ? 500 : 1600, 3.8, 1.6, 0.12, 0.8);
+  const far = cloud(lite ? 350 : 1200, 13.5, 5, 0.1, 0.5); // distant starfield for depth parallax
   group.add(outer, inner, far);
   return {
     group,
