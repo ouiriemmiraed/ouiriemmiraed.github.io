@@ -119,10 +119,14 @@ const onScroll = () => {
   progress.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
   if (!fx) return;
   const vh = window.innerHeight;
+  // Ghost numbers lean in 3D and pivot slightly as they drift past.
+  const flip = root.getAttribute("dir") === "rtl" ? -1 : 1;
   ghosts.forEach((g) => {
     const r = g.getBoundingClientRect();
     const off = (r.top + r.height / 2 - vh / 2) / vh; // -1..1 through viewport
-    g.style.transform = `translateY(calc(-58% + ${(-off * 42).toFixed(1)}px))`;
+    g.style.transform =
+      `perspective(600px) translateY(calc(-58% + ${(-off * 42).toFixed(1)}px)) ` +
+      `rotateY(${(flip * (-13 + off * 7)).toFixed(1)}deg)`;
   });
   // Timeline draws its ink as the reader moves through it.
   if (timelineEl) {
@@ -131,10 +135,12 @@ const onScroll = () => {
     timelineEl.style.setProperty("--tlp", p.toFixed(3));
   }
   if (!isTouch) {
-    // Hero recedes and dissolves as you scroll into the page.
+    // Hero recedes, tips away and dissolves as you scroll into the page.
     if (heroInner && y <= vh * 1.2) {
       const k = Math.min(y / vh, 1);
-      heroInner.style.transform = `translate3d(0, ${(y * 0.24).toFixed(1)}px, 0)`;
+      heroInner.style.transform =
+        `perspective(900px) translate3d(0, ${(y * 0.24).toFixed(1)}px, 0) ` +
+        `rotateX(${(k * 5).toFixed(2)}deg) scale(${(1 - k * 0.05).toFixed(3)})`;
       heroInner.style.opacity = (1 - k * 0.9).toFixed(3);
     }
     // Depth: project covers drift against their cards.
@@ -266,19 +272,86 @@ if (!reduceMotion && !isTouch) {
     });
   });
 
-  // -- 3D tilt on project cards --
-  document.querySelectorAll("[data-tilt]").forEach((card) => {
-    const MAX = 6; // degrees
-    card.addEventListener("pointermove", (e) => {
-      const r = card.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - 0.5;
-      const py = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transform = `perspective(900px) rotateX(${(-py * MAX).toFixed(2)}deg) rotateY(${(px * MAX).toFixed(2)}deg) translateY(-6px)`;
+  // -- 3D tilt engine: lerped tilt + inner parallax + glare, on every card --
+  // JS writes the card transform each frame and exposes --rx/--ry/--glare;
+  // the stylesheet turns those into layered parallax and a moving highlight.
+  const TILT = [
+    { sel: ".project", max: 7, lift: -6, scale: 1.012 },
+    { sel: ".skill-card", max: 6, lift: -5, scale: 1.01 },
+    { sel: ".stat", max: 8, lift: -4, scale: 1.02 },
+    { sel: ".contact", max: 2.6, lift: 0, scale: 1.004 },
+  ];
+  const tiltCards = [];
+  let tiltRAF = null, tiltLast = null;
+  const tiltWake = () => { if (tiltRAF === null) { tiltLast = null; tiltRAF = requestAnimationFrame(tiltStep); } };
+  function tiltStep(now) {
+    // Frame-rate independent easing: normalize decay to 60fps-equivalent steps.
+    const dt = tiltLast === null ? 1 : Math.min(3, (now - tiltLast) / 16.7);
+    tiltLast = now;
+    const ease = (base) => 1 - Math.pow(1 - base, dt);
+    let busy = false;
+    tiltCards.forEach((st) => {
+      const k = ease(st.on ? 0.14 : 0.24); // ease back out faster than in
+      st.cx += (st.tx - st.cx) * k;
+      st.cy += (st.ty - st.cy) * k;
+      st.p += ((st.on ? 1 : 0) - st.p) * ease(st.on ? 0.12 : 0.22);
+      if (!st.on && st.p < 0.02 && Math.abs(st.cx) < 0.01 && Math.abs(st.cy) < 0.01) {
+        if (st.live) {
+          st.live = false;
+          st.el.classList.remove("is-tilting");
+          st.el.style.transform = "";
+          ["--rx", "--ry", "--glare"].forEach((v) => st.el.style.removeProperty(v));
+        }
+        return;
+      }
+      busy = true;
+      if (!st.live) { st.live = true; st.el.classList.add("is-tilting"); }
+      const rx = -st.cy * st.max * st.p;
+      const ry = st.cx * st.max * st.p;
+      st.el.style.transform =
+        `perspective(1000px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) ` +
+        `translateY(${(st.lift * st.p).toFixed(1)}px) scale(${(1 + (st.scale - 1) * st.p).toFixed(4)})`;
+      st.el.style.setProperty("--rx", rx.toFixed(2));
+      st.el.style.setProperty("--ry", ry.toFixed(2));
+      st.el.style.setProperty("--glare", Math.min(1, Math.hypot(st.cx, st.cy) * 2.4 * st.p).toFixed(2));
     });
-    card.addEventListener("pointerleave", () => {
-      card.style.transform = "";
-    });
-  });
+    tiltRAF = busy ? requestAnimationFrame(tiltStep) : null;
+  }
+  TILT.forEach(({ sel, max, lift, scale }) =>
+    document.querySelectorAll(sel).forEach((el) => {
+      el.classList.add("tilt3d");
+      const glare = document.createElement("i");
+      glare.className = "card-glare";
+      glare.setAttribute("aria-hidden", "true");
+      el.appendChild(glare);
+      const st = { el, max, lift, scale, tx: 0, ty: 0, cx: 0, cy: 0, p: 0, on: false, live: false };
+      el.addEventListener("pointerenter", () => { st.on = true; tiltWake(); });
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        st.tx = (e.clientX - r.left) / r.width - 0.5;
+        st.ty = (e.clientY - r.top) / r.height - 0.5;
+      });
+      el.addEventListener("pointerleave", () => { st.on = false; st.tx = 0; st.ty = 0; });
+      tiltCards.push(st);
+    })
+  );
+
+  // -- CSS gyroscopes: decorative 3D rings behind the stats and contact card --
+  if (window.matchMedia("(min-width: 861px)").matches) {
+    const addGyro = (host, css) => {
+      if (!host) return;
+      const g = document.createElement("div");
+      g.className = "gyro";
+      g.setAttribute("aria-hidden", "true");
+      g.style.cssText = css;
+      g.innerHTML = "<i></i><i></i><i></i><b></b>";
+      host.appendChild(g);
+    };
+    addGyro(document.querySelector(".about__stats"),
+      "width:300px; top:50%; left:50%; margin:-150px 0 0 -150px;");
+    addGyro(document.querySelector(".section--contact"),
+      "width:760px; top:50%; left:50%; margin:-380px 0 0 -380px;");
+  }
 
   // -- Magnetic buttons --
   document.querySelectorAll(".magnetic").forEach((btn) => {
@@ -294,11 +367,21 @@ if (!reduceMotion && !isTouch) {
     });
   });
 
-  // -- Cursor-following ambient glow + marquee shear (one rAF loop) --
+  // -- Cursor glow + marquee shear + hero depth rig (one rAF loop) --
   const glow = document.getElementById("cursorGlow");
   const marquee = document.querySelector(".marquee");
+  // Hero pieces float at different depths and follow the pointer; the rig
+  // waits until each element's entrance reveal is done (classes cleaned up).
+  const heroLayers = [];
+  if (heroInner) {
+    [[".badge", 18], [".hero__avatar img", 46], [".hero__avatar-fallback", 46],
+     [".hero__hi", 15], [".hero__name", 34], [".hero__role", 22], [".hero__tag", 12],
+     [".hero__cta", 26], [".hero__socials", 16]].forEach(([sel, d]) =>
+      heroInner.querySelectorAll(sel).forEach((el) => heroLayers.push({ el, d }))
+    );
+  }
   let tx = window.innerWidth / 2, ty = window.innerHeight / 2, cx = tx, cy = ty;
-  let lastY = window.scrollY, shear = 0;
+  let lastY = window.scrollY, shear = 0, hx = 0, hy = 0;
   window.addEventListener("pointermove", (e) => {
     tx = e.clientX; ty = e.clientY;
     document.body.classList.add("has-cursor");
@@ -307,11 +390,20 @@ if (!reduceMotion && !isTouch) {
     cx += (tx - cx) * 0.12;
     cy += (ty - cy) * 0.12;
     glow.style.transform = `translate(${cx}px, ${cy}px)`;
-    // The tech marquee shears with scroll velocity, then settles back.
+    // The tech marquee rides a tilted plane and shears with scroll velocity.
     const yNow = window.scrollY;
     shear += (Math.max(-4, Math.min(4, (yNow - lastY) * 0.14)) - shear) * 0.1;
     lastY = yNow;
-    if (marquee) marquee.style.transform = `skewX(${shear.toFixed(2)}deg)`;
+    if (marquee) marquee.style.transform = `perspective(800px) rotateX(4deg) skewX(${shear.toFixed(2)}deg)`;
+    // Hero parallax (only while the hero is on screen).
+    if (heroLayers.length && yNow < window.innerHeight) {
+      hx += (tx / window.innerWidth - 0.5 - hx) * 0.06;
+      hy += (ty / window.innerHeight - 0.5 - hy) * 0.06;
+      heroLayers.forEach((l) => {
+        if (l.el.closest(".reveal")) return; // entrance still playing
+        l.el.style.transform = `translate3d(${(hx * l.d).toFixed(1)}px, ${(hy * l.d * 0.7).toFixed(1)}px, 0)`;
+      });
+    }
     requestAnimationFrame(raf);
   };
   raf();

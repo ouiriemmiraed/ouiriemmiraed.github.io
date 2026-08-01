@@ -361,16 +361,21 @@ body.has-cursor .cursor-glow { opacity: 1; }
 [dir="rtl"] { --flip: -1; }
 
 /* Hidden state carries NO transition (so applying it never animates);
-   the entrance transition lives on .in only. */
+   the entrance transition lives on .in only. Entrances are true 3D:
+   perspective() is baked into the transform so no parent setup is needed. */
 .fx .reveal {
   opacity: 0;
-  transform: translateY(34px);
+  transform: perspective(1000px) translateY(42px) rotateX(9deg) scale(.985);
+  transform-origin: 50% 100%;
   filter: blur(6px);
   transition: none;
   will-change: opacity, transform, filter;
 }
-.fx .reveal--side { transform: translateX(calc(var(--flip) * -44px)); }
-.fx .reveal--zoom { transform: translateY(24px) scale(.94); }
+.fx .reveal--side {
+  transform: perspective(1000px) translateX(calc(var(--flip) * -48px)) rotateY(calc(var(--flip) * 8deg));
+  transform-origin: 50% 50%;
+}
+.fx .reveal--zoom { transform: perspective(1000px) translateY(26px) rotateX(8deg) scale(.93); }
 .fx .reveal.in {
   opacity: 1; transform: none; filter: none;
   transition: opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease);
@@ -402,10 +407,16 @@ body.has-cursor .cursor-glow { opacity: 1; }
 [dir="rtl"] .section__title::after { transform-origin: right; }
 .fx .section__head.reveal:not(.in) .section__title::after { transform: scaleX(0); transition: none; }
 
-/* Project covers drift against their cards while scrolling (desktop depth) */
+/* Project covers drift against their cards while scrolling (desktop depth);
+   while a card tilts, --rx/--ry add pointer parallax (deep layer moves
+   AGAINST the pointer, like looking through a window). */
 @media (hover: hover) {
-  .fx .project__media img { transform: translateY(var(--py, 0px)) scale(1.1); }
-  .fx .project:hover .project__media img { transform: translateY(var(--py, 0px)) scale(1.16); }
+  .fx .project__media img {
+    transform: translate(calc(var(--ry, 0) * -1.6px), calc(var(--py, 0px) + var(--rx, 0) * 1.3px)) scale(1.1);
+  }
+  .fx .project:hover .project__media img {
+    transform: translate(calc(var(--ry, 0) * -1.6px), calc(var(--py, 0px) + var(--rx, 0) * 1.3px)) scale(1.16);
+  }
 }
 
 /* ===== Responsive ===== */
@@ -789,3 +800,81 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
 
 /* Transparent avatar cut-out sits on a theme-aware disc (dark disc in dark, light in light) */
 .hero__avatar img { background: var(--bg-soft); }
+
+/* ===================================================================
+   TRUE-3D pass — unified tilt engine, layered parallax, specular glare,
+   CSS gyroscopes. JS drives --rx/--ry (unitless degrees) + --glare (0..1)
+   on .tilt3d cards; everything below defaults to identity when idle.
+   =================================================================== */
+
+/* ---- Tiltable cards (class + glare element added by JS, desktop only) ---- */
+.tilt3d { position: relative; }
+.is-tilting {
+  will-change: transform;
+  /* the JS lerp does the smoothing — a transform transition here would fight it */
+  transition-property: border-color, box-shadow, background, background-color;
+}
+.is-tilting .project__media img { transition: transform .25s ease-out; }
+
+/* Specular highlight that slides across the card face as it tilts
+   (selector doubled so it outranks `.contact > *`'s position/z rules) */
+.tilt3d .card-glare {
+  position: absolute; inset: 0; border-radius: inherit; overflow: hidden;
+  pointer-events: none; z-index: 4; opacity: var(--glare, 0);
+  background: radial-gradient(120% 85% at calc(50% + var(--ry, 0) * 6%) calc(50% - var(--rx, 0) * 8%),
+              rgba(255, 255, 255, .15), transparent 55%);
+  transition: opacity .35s var(--ease);
+}
+:root[data-theme="light"] .card-glare {
+  background: radial-gradient(120% 85% at calc(50% + var(--ry, 0) * 6%) calc(50% - var(--rx, 0) * 8%),
+              rgba(34, 87, 204, .10), transparent 60%);
+}
+
+/* Layers "above" the card face drift WITH the pointer (fake translateZ that
+   survives overflow/backdrop-filter flattening) */
+.tilt3d h3,
+.tilt3d .tags,
+.tilt3d .stat__n,
+.tilt3d .contact__title,
+.tilt3d .contact__email {
+  transform: translate(calc(var(--ry, 0) * .9px), calc(var(--rx, 0) * -.7px));
+}
+.tilt3d .project__year {
+  transform: translate(calc(var(--ry, 0) * 1.5px), calc(var(--rx, 0) * -1.2px));
+}
+
+/* ---- CSS gyroscopes (decorative, injected by JS on desktop only) ---- */
+.gyro {
+  position: absolute; aspect-ratio: 1; pointer-events: none; z-index: -1;
+  opacity: .5; perspective: 700px;
+}
+.gyro i {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  animation: gyroTumble 16s linear infinite;
+}
+.gyro i:nth-child(2) {
+  inset: 8%;
+  border-color: color-mix(in srgb, var(--accent-2) 48%, transparent);
+  animation: gyroTumble2 23s linear infinite;
+}
+.gyro i:nth-child(3) {
+  inset: 16%;
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+  animation: gyroTumble3 29s linear infinite;
+}
+.gyro b {
+  position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; margin: -4.5px;
+  border-radius: 50%; background: var(--grad);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 80%, transparent);
+}
+@keyframes gyroTumble  { from { transform: rotate3d(1, 1, 0, 0deg); }        to { transform: rotate3d(1, 1, 0, 360deg); } }
+@keyframes gyroTumble2 { from { transform: rotate3d(1, -.7, .3, 0deg); }     to { transform: rotate3d(1, -.7, .3, 360deg); } }
+@keyframes gyroTumble3 { from { transform: rotate3d(.3, 1, 0, 0deg); }       to { transform: rotate3d(.3, 1, 0, 360deg); } }
+.about__stats { position: relative; }
+
+/* ---- 3D press on buttons (momentary; !important beats magnetic inline) ---- */
+.btn:active, .icon-btn:active {
+  transform: perspective(600px) translateY(1px) rotateX(8deg) scale(.97) !important;
+  transition-duration: .08s;
+}

@@ -68,6 +68,9 @@ function init(THREE, host) {
 
   let mx = 0, my = 0, tx = 0, ty = 0;
   addEventListener("pointermove", (e) => { tx = e.clientX / innerWidth - 0.5; ty = e.clientY / innerHeight - 0.5; }, { passive: true });
+  // Scroll dolly: the camera pulls back and the scene tips away as you leave the hero.
+  let scrollK = 0;
+  addEventListener("scroll", () => { scrollK = Math.min(scrollY / innerHeight, 1); }, { passive: true });
 
   function resize() {
     const w = host.clientWidth || innerWidth, h = host.clientHeight || innerHeight;
@@ -89,7 +92,13 @@ function init(THREE, host) {
     if (document.hidden || !heroVisible || !host.offsetParent) return;
     const t = clock.getElapsedTime();
     mx += (tx - mx) * 0.045; my += (ty - my) * 0.045;
-    if (content) content.update(t, mx, my);
+    // True positional parallax: the camera itself strafes with the pointer
+    // and dollies back with scroll, always looking at the scene core.
+    camera.position.x = mx * 2.4;
+    camera.position.y = -my * 1.8 - scrollK * 1.4;
+    camera.position.z = 14 + scrollK * 8;
+    camera.lookAt(0, 0, 0);
+    if (content) content.update(t, mx, my, scrollK);
     renderer.render(scene, camera);
   }
   tick();
@@ -132,15 +141,37 @@ function buildNetwork(THREE) {
   const lines = new THREE.LineSegments(lineGeo, lineMat);
   group.add(lines);
 
+  // Far dust shell: counter-rotates against the pointer for depth parallax.
+  const DN = 220;
+  const dp = new Float32Array(DN * 3), dc = new Float32Array(DN * 3);
+  for (let i = 0; i < DN; i++) {
+    const u = Math.random(), w = Math.random();
+    const theta = 2 * Math.PI * u, phi = Math.acos(2 * w - 1);
+    const r = 10 + Math.random() * 3.5;
+    dp[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+    dp[i * 3 + 1] = r * Math.cos(phi) * 0.8;
+    dp[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
+    const c = (Math.random() < 0.35 ? violet : blue).clone().multiplyScalar(0.75);
+    dc[i * 3] = c.r; dc[i * 3 + 1] = c.g; dc[i * 3 + 2] = c.b;
+  }
+  const dustGeo = new THREE.BufferGeometry();
+  dustGeo.setAttribute("position", new THREE.BufferAttribute(dp, 3));
+  dustGeo.setAttribute("color", new THREE.BufferAttribute(dc, 3));
+  const dustMat = new THREE.PointsMaterial({ size: 0.17, map: dot, vertexColors: true, transparent: true, opacity: 0.35, depthWrite: false, sizeAttenuation: true });
+  const dust = new THREE.Points(dustGeo, dustMat);
+  group.add(dust);
+
   return {
     group,
-    update(t, mx, my) {
+    update(t, mx, my, k = 0) {
       group.rotation.y = t * 0.05 + mx * 0.6;
-      group.rotation.x = my * 0.4 + Math.sin(t * 0.12) * 0.04;
+      group.rotation.x = my * 0.4 + Math.sin(t * 0.12) * 0.04 + k * 0.45;
+      group.position.y = k * 2.2;
       group.scale.setScalar(1 + Math.sin(t * 0.5) * 0.02);
       nodeMat.size = 0.42 + Math.sin(t * 1.4) * 0.04;
+      dust.rotation.y = -t * 0.012 - mx * 0.3;
     },
-    dispose() { nodeGeo.dispose(); lineGeo.dispose(); nodeMat.dispose(); lineMat.dispose(); dot.dispose(); },
+    dispose() { nodeGeo.dispose(); lineGeo.dispose(); dustGeo.dispose(); nodeMat.dispose(); lineMat.dispose(); dustMat.dispose(); dot.dispose(); },
   };
 }
 
@@ -168,17 +199,21 @@ function buildNebula(THREE) {
   }
   const outer = cloud(3400, 7.4, 2.6, 0.15, 0.7);
   const inner = cloud(1600, 3.8, 1.6, 0.12, 0.8);
-  group.add(outer, inner);
+  const far = cloud(1200, 13.5, 5, 0.1, 0.5); // distant starfield for depth parallax
+  group.add(outer, inner, far);
   return {
     group,
-    update(t, mx, my) {
+    update(t, mx, my, k = 0) {
       group.rotation.y = t * 0.055 + mx * 0.7;
-      group.rotation.x = my * 0.45 + Math.sin(t * 0.15) * 0.05;
+      group.rotation.x = my * 0.45 + Math.sin(t * 0.15) * 0.05 + k * 0.5;
+      group.position.y = k * 2.4;
       inner.rotation.y = -t * 0.09;
+      far.rotation.y = -t * 0.018 - mx * 0.32;
+      far.rotation.x = -my * 0.18;
       group.scale.setScalar(1 + Math.sin(t * 0.6) * 0.03);
     },
     dispose() {
-      [outer, inner].forEach((o) => { o.geometry.dispose(); o.material.dispose(); });
+      [outer, inner, far].forEach((o) => { o.geometry.dispose(); o.material.dispose(); });
       soft.dispose();
     },
   };
