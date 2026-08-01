@@ -4,7 +4,7 @@
 // ===================================================================
 const I18N = {
   en: {
-    "doc.title": "Raed Ouiriemmi — Software Developer & Data Scientist in Zarzis, Tunisia",
+    "doc.title": "Raed Ouiriemmi — Software Developer & Data Scientist",
     "doc.desc": "Raed Ouiriemmi is a Software Developer with a Master's in Data Science, based in Zarzis, Tunisia — full-stack web & mobile apps with AI and RAG chatbots.",
     "nav.about": "About",
     "nav.skills": "Skills",
@@ -42,6 +42,7 @@ const I18N = {
     "skills.methods": "Methods",
     "projects.title": "Featured projects",
     "projects.code": "Code on request",
+    "projects.view": "View the code",
     "projects.viewall": "View all on GitHub",
     "proj.fitness.title": "AppFullSport, Fitness coaching app",
     "proj.fitness.desc": "Full-stack mobile fitness app: per-set weight/rep tracking, rest timer, and automatic personal-record detection (~83 exercises). Cross-platform step counting, deployed on a hardened, self-managed VPS.",
@@ -85,7 +86,7 @@ const I18N = {
   },
 
   fr: {
-    "doc.title": "Raed Ouiriemmi — Développeur logiciel & Data Scientist à Zarzis, Tunisie",
+    "doc.title": "Raed Ouiriemmi — Développeur logiciel & Data Scientist",
     "doc.desc": "Raed Ouiriemmi, développeur logiciel titulaire d'un Master en Data Science à Zarzis, Tunisie — applications web et mobiles full-stack avec IA et chatbots RAG.",
     "nav.about": "À propos",
     "nav.skills": "Compétences",
@@ -123,6 +124,7 @@ const I18N = {
     "skills.methods": "Méthodes",
     "projects.title": "Projets phares",
     "projects.code": "Code sur demande",
+    "projects.view": "Voir le code",
     "projects.viewall": "Voir tout sur GitHub",
     "proj.fitness.title": "AppFullSport, appli de coaching fitness",
     "proj.fitness.desc": "Application mobile de fitness full-stack : suivi poids/répétitions par série, minuteur de repos et détection automatique des records (~83 exercices). Comptage des pas multiplateforme, déployée sur un VPS auto-géré et sécurisé.",
@@ -166,7 +168,7 @@ const I18N = {
   },
 
   ar: {
-    "doc.title": "رائد الويريمي — مطوّر برمجيات وعالم بيانات في جرجيس، تونس",
+    "doc.title": "رائد الويريمي — مطوّر برمجيات وعالم بيانات",
     "doc.desc": "رائد الويريمي، مطوّر برمجيات حاصل على ماجستير في علوم البيانات من جرجيس، تونس — يبني تطبيقات ويب وجوال متكاملة بالذكاء الاصطناعي وروبوتات محادثة RAG.",
     "nav.about": "نبذة",
     "nav.skills": "المهارات",
@@ -204,6 +206,7 @@ const I18N = {
     "skills.methods": "المنهجيات",
     "projects.title": "مشاريع مختارة",
     "projects.code": "الكود عند الطلب",
+    "projects.view": "عرض الكود",
     "projects.viewall": "عرض الكل على GitHub",
     "proj.fitness.title": "AppFullSport, تطبيق تدريب رياضي",
     "proj.fitness.desc": "تطبيق لياقة بدنية متكامل: تتبّع الأوزان والتكرارات لكل مجموعة، ومؤقّت راحة، وكشف تلقائي للأرقام القياسية (نحو 83 تمرينًا). عدّ خطوات متعدّد المنصّات؛ منشور على خادم VPS مُدار ذاتيًا ومؤمَّن.",

@@ -4,13 +4,23 @@
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://www.google.com; object-src 'none'; base-uri 'self'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MPLFTZPCCY"></script>
+  <!-- Google tag (gtag.js) — loaded on idle: it is the page's single largest
+       download, and the stub below queues every event until it arrives -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-MPLFTZPCCY');
+    (function () {
+      var load = function () {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-MPLFTZPCCY';
+        document.head.appendChild(s);
+      };
+      if ('requestIdleCallback' in window) requestIdleCallback(load, { timeout: 3000 });
+      else setTimeout(load, 1500);
+    })();
   </script>
   <!-- Apply saved theme + language before paint (no flash of wrong theme/direction) -->
   <script>
@@ -33,7 +43,7 @@
     })();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Raed Ouiriemmi — Software Developer & Data Scientist in Zarzis, Tunisia</title>
+  <title>Raed Ouiriemmi — Software Developer & Data Scientist</title>
   <meta name="description" content="Raed Ouiriemmi is a Software Developer with a Master's in Data Science, based in Zarzis, Tunisia — full-stack web & mobile apps with AI and RAG chatbots." />
   <meta name="author" content="Raed Ouiriemmi" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -408,7 +418,7 @@
             <span>Python</span><span>Telegram Bot API</span><span>Linux / VPS</span><span>cron</span>
           </div>
           <div class="project__links">
-            <a href="mailto:ouiriemmiraed@gmail.com?subject=Project%3A%20Telegram%20Bot" class="project__link"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.code">Code on request</span></a>
+            <a href="https://github.com/ouiriemmiraed/vps-sentinel" target="_blank" rel="noopener" class="project__link"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> <span data-i18n="projects.view">View the code</span></a>
           </div>
         </article>
 
