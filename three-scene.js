@@ -93,7 +93,7 @@ function init(THREE, host) {
   // Pause rendering while the hero is off-screen (saves CPU/GPU when reading
   // the rest of the page; the rAF keeps looping cheaply so it resumes itself).
   let heroVisible = true;
-  new IntersectionObserver((es) => { heroVisible = es[0].isIntersecting; }).observe(host);
+  new IntersectionObserver((es) => { heroVisible = es[es.length - 1].isIntersecting; }).observe(host);
 
   const clock = new THREE.Clock();
   function tick() {

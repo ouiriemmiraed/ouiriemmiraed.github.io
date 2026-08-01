@@ -4,6 +4,12 @@
 const root = document.documentElement;
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isTouch = window.matchMedia("(hover: none)").matches;
+// localStorage throws SecurityError when the browser blocks all cookies —
+// an uncaught throw here would abort the whole script (page stuck hidden).
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch { /* blocked */ } },
+};
 // Scroll-story animations only run under html.fx; without it every .reveal
 // stays visible (no-JS visitors, crawlers and reduced-motion users).
 const fx = !reduceMotion;
@@ -32,9 +38,9 @@ function applyTheme(theme) {
   root.setAttribute("data-theme", theme);
   if (themeMeta) themeMeta.setAttribute("content", THEME_COLOR[theme] || THEME_COLOR.dark);
   themeToggle.setAttribute("aria-pressed", String(theme === "light"));
-  localStorage.setItem("theme", theme);
+  store.set("theme", theme);
 }
-applyTheme(localStorage.getItem("theme") || "light");
+applyTheme(store.get("theme") || "light");
 themeToggle.addEventListener("click", () => {
   applyTheme(root.getAttribute("data-theme") === "light" ? "dark" : "light");
 });
@@ -75,7 +81,8 @@ function applyLang(lang) {
   };
   const cvFile = CV[lang] || CV.en;
   document.querySelectorAll(".cv-link").forEach((a) => {
-    a.setAttribute("href", cvFile);
+    // root-absolute: a bare filename would resolve under /fr/ or /ar/ → 404
+    a.setAttribute("href", "/" + cvFile);
     a.setAttribute("download", cvFile);
   });
   if (langSelect) langSelect.value = lang;
@@ -84,11 +91,11 @@ function applyLang(lang) {
 // the root page honours an explicit saved choice and defaults to English on first visit.
 const PAGE_LANG_URLS = { en: "/", fr: "/fr/", ar: "/ar/" };
 const pageDefaultLang = root.getAttribute("data-default-lang");
-const savedLang = localStorage.getItem("lang");
+const savedLang = store.get("lang");
 applyLang(pageDefaultLang || (["en", "fr", "ar"].includes(savedLang) ? savedLang : "en"));
 if (langSelect) langSelect.addEventListener("change", (e) => {
   const lang = e.target.value;
-  localStorage.setItem("lang", lang);
+  store.set("lang", lang);
   const target = PAGE_LANG_URLS[lang];
   // Each language lives at its own URL; navigate unless already there (or previewing via file://).
   if (location.protocol.indexOf("http") === 0 && target && location.pathname !== target) {
@@ -101,7 +108,7 @@ if (langSelect) langSelect.addEventListener("change", (e) => {
 document.querySelectorAll(".footer__langs a").forEach((a) =>
   a.addEventListener("click", () => {
     const lang = a.getAttribute("hreflang");
-    if (["en", "fr", "ar"].includes(lang)) localStorage.setItem("lang", lang);
+    if (["en", "fr", "ar"].includes(lang)) store.set("lang", lang);
   })
 );
 
@@ -150,15 +157,18 @@ const onScroll = () => {
   progress.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + "%";
   if (!fx) return;
   const vh = isTouch ? vhTouch : window.innerHeight;
-  // Ghost numbers lean in 3D and pivot slightly as they drift past.
-  const flip = root.getAttribute("dir") === "rtl" ? -1 : 1;
-  ghosts.forEach((g) => {
-    const r = g.getBoundingClientRect();
-    const off = (r.top + r.height / 2 - vh / 2) / vh; // -1..1 through viewport
-    g.style.transform =
-      `perspective(600px) translateY(calc(-58% + ${(-off * 42).toFixed(1)}px)) ` +
-      `rotateY(${(flip * (-13 + off * 7)).toFixed(1)}deg)`;
-  });
+  // Ghost numbers lean in 3D and pivot slightly as they drift past
+  // (skipped entirely when the ghosts are display:none on small screens).
+  if (ghosts.length && ghosts[0].offsetParent !== null) {
+    const flip = root.getAttribute("dir") === "rtl" ? -1 : 1;
+    ghosts.forEach((g) => {
+      const r = g.getBoundingClientRect();
+      const off = (r.top + r.height / 2 - vh / 2) / vh; // -1..1 through viewport
+      g.style.transform =
+        `perspective(600px) translateY(calc(-58% + ${(-off * 42).toFixed(1)}px)) ` +
+        `rotateY(${(flip * (-13 + off * 7)).toFixed(1)}deg)`;
+    });
+  }
   // Timeline draws its ink as the reader moves through it.
   if (timelineEl) {
     const r = timelineEl.getBoundingClientRect();
@@ -204,13 +214,26 @@ onScroll();
 
 // ===== Scroll story: staged reveals (direction, depth, cascades) =====
 if (fx) {
-  // Hero enters as a cascade of its pieces rather than one block.
+  const REVEAL_CLASSES = ["reveal", "reveal--side", "reveal--zoom", "in"];
+  // Hero enters as a cascade of its pieces rather than one block. It plays
+  // immediately on load (NOT via the observer): on short viewports the CTA
+  // sits below the observer's -7% trigger line and would stay hidden.
   if (heroInner) {
     heroInner.classList.remove("reveal");
-    [...heroInner.children].forEach((el, i) => {
+    const kids = [...heroInner.children];
+    kids.forEach((el, i) => {
       el.classList.add("reveal");
       el.style.transitionDelay = i * 90 + "ms";
     });
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      kids.forEach((el) => {
+        el.classList.add("in");
+        setTimeout(() => {
+          el.classList.remove(...REVEAL_CLASSES);
+          el.style.transitionDelay = "";
+        }, 2000 + (parseFloat(el.style.transitionDelay) || 0));
+      });
+    }));
   }
   // About: the text slides from the reading side, stat cards materialize.
   const about = document.querySelector(".about");
@@ -236,7 +259,6 @@ if (fx) {
       child.style.setProperty("--d", i * 80 + "ms");
     });
   });
-  const REVEAL_CLASSES = ["reveal", "reveal--side", "reveal--zoom", "in"];
   const io = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
@@ -387,11 +409,17 @@ if (fx && isTouch) {
   const attach = () => addEventListener("deviceorientation", onOri, { passive: true });
   if (typeof DeviceOrientationEvent !== "undefined" &&
       typeof DeviceOrientationEvent.requestPermission === "function") {
-    addEventListener("touchend", () => {
+    // A scroll-flick's touchend carries no user activation and the request
+    // rejects — keep listening until the prompt actually resolves.
+    const ask = () => {
       DeviceOrientationEvent.requestPermission()
-        .then((s) => { if (s === "granted") attach(); })
-        .catch(() => {});
-    }, { once: true, passive: true });
+        .then((s) => {
+          removeEventListener("touchend", ask);
+          if (s === "granted") attach();
+        })
+        .catch(() => {}); // no activation yet — retry on the next tap
+    };
+    addEventListener("touchend", ask, { passive: true });
   } else {
     attach();
   }
@@ -429,6 +457,9 @@ if (!reduceMotion && !isTouch) {
     const ease = (base) => 1 - Math.pow(1 - base, dt);
     let busy = false;
     tiltCards.forEach((st) => {
+      // entrance still playing: its .9s transform transition would re-smooth
+      // every lerp write into rubber — wait until the reveal classes are gone
+      if (st.el.classList.contains("reveal")) { if (st.on) busy = true; return; }
       const k = ease(st.on ? 0.14 : 0.24); // ease back out faster than in
       st.cx += (st.tx - st.cx) * k;
       st.cy += (st.ty - st.cy) * k;
@@ -504,10 +535,14 @@ if (!reduceMotion && !isTouch) {
   }
   let tx = window.innerWidth / 2, ty = window.innerHeight / 2, cx = tx, cy = ty;
   let lastY = window.scrollY, shear = 0, hx = 0, hy = 0;
+  let fxRAF = null, lastInput = performance.now();
+  const wakeFx = () => { lastInput = performance.now(); if (fxRAF === null) fxRAF = requestAnimationFrame(raf); };
   window.addEventListener("pointermove", (e) => {
     tx = e.clientX; ty = e.clientY;
     document.body.classList.add("has-cursor");
+    wakeFx();
   });
+  window.addEventListener("scroll", wakeFx, { passive: true });
   const raf = () => {
     cx += (tx - cx) * 0.12;
     cy += (ty - cy) * 0.12;
@@ -526,7 +561,16 @@ if (!reduceMotion && !isTouch) {
         l.el.style.transform = `translate3d(${(hx * l.d).toFixed(1)}px, ${(hy * l.d * 0.7).toFixed(1)}px, 0)`;
       });
     }
-    requestAnimationFrame(raf);
+    // Park the loop once everything settles; pointermove/scroll wakes it.
+    if (performance.now() - lastInput > 300 &&
+        Math.abs(tx - cx) < 0.5 && Math.abs(ty - cy) < 0.5 &&
+        Math.abs(shear) < 0.05 &&
+        Math.abs(tx / window.innerWidth - 0.5 - hx) < 0.005 &&
+        Math.abs(ty / window.innerHeight - 0.5 - hy) < 0.005) {
+      fxRAF = null;
+      return;
+    }
+    fxRAF = requestAnimationFrame(raf);
   };
-  raf();
+  wakeFx();
 }

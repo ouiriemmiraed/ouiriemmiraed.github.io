@@ -835,8 +835,7 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
 .tilt3d h3,
 .tilt3d .tags,
 .tilt3d .stat__n,
-.tilt3d .contact__title,
-.tilt3d .contact__email {
+.tilt3d .contact__title {
   transform: translate(calc(var(--ry, 0) * .9px), calc(var(--rx, 0) * -.7px));
 }
 .tilt3d .project__year {
@@ -926,3 +925,25 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
 }
 /* the mobile gyro ring is quieter than the desktop ones */
 @media (max-width: 860px) { .gyro { opacity: .35; } }
+
+/* ===================================================================
+   Audit fixes — AA contrast, touch targets, print
+   =================================================================== */
+/* Dark theme: white on the accent gradient is 3.2:1 — dark ink reads at 6.3:1 */
+:root[data-theme="dark"] .btn--primary { color: #060912; }
+
+/* Touch targets: footer language links and nav logo were under 40px */
+.footer__langs a { display: inline-block; padding: 12px 8px; margin: -8px 0; }
+.nav__logo { display: inline-block; padding: 6px 8px; margin: -6px -8px; }
+
+/* Print: force readable light palette, drop decorative layers, unhide reveals */
+@media print {
+  :root, :root[data-theme="dark"] {
+    --bg: #fff; --bg-soft: #fff; --card: #fff;
+    --text: #000; --muted: #333; --border: #ccc; --border-soft: #ddd;
+  }
+  body { background: #fff; }
+  .hero__canvas, .aurora, .marquee, .grain, .bg-grid, .cursor-glow,
+  .gyro, .scroll-progress, .nav, .hero__scroll, .section__ghost { display: none !important; }
+  .fx .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+}
