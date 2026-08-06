@@ -14,6 +14,15 @@ const store = {
 // stays visible (no-JS visitors, crawlers and reduced-motion users).
 const fx = !reduceMotion;
 if (fx) root.classList.add("fx");
+// Chromium animates the initial #hash navigation when scroll-behavior is
+// smooth (a long scroll flight from the top on load) — jump instantly
+// instead, then hand control back to the stylesheet for in-page nav clicks.
+if (location.hash) {
+  root.style.scrollBehavior = "auto";
+  addEventListener("load", () => {
+    setTimeout(() => { root.style.scrollBehavior = ""; }, 120);
+  }, { once: true });
+}
 
 // ===== Mobile menu =====
 const menuToggle = document.getElementById("menuToggle");
@@ -29,6 +38,23 @@ menuToggle.addEventListener("click", () => setMenuState(!navLinks.classList.cont
 navLinks.querySelectorAll("a").forEach((a) =>
   a.addEventListener("click", () => setMenuState(false))
 );
+// The dropdown floats over the page: close it when the page scrolls under it,
+// on Escape (focus returns to the toggle), or on a tap outside.
+window.addEventListener("scroll", () => {
+  if (navLinks.classList.contains("open")) setMenuState(false);
+}, { passive: true });
+addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && navLinks.classList.contains("open")) {
+    setMenuState(false);
+    menuToggle.focus();
+  }
+});
+document.addEventListener("pointerdown", (e) => {
+  if (navLinks.classList.contains("open") &&
+      !navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+    setMenuState(false);
+  }
+});
 
 // ===== Theme toggle (persists; syncs browser UI color) =====
 const themeToggle = document.getElementById("themeToggle");
@@ -123,10 +149,19 @@ const scrollCards = isTouch
   ? [...document.querySelectorAll(".project, .skill-card, .stat")]
   : [];
 // Touch: the URL bar collapse resizes the viewport mid-scroll — anchor all
-// scroll math to a stable vh, updated only on real rotations (>150px jumps).
-let vhTouch = window.innerHeight;
+// scroll math to a stable vh. Re-anchor on any width change (rotations and
+// split-screen always change width, the URL bar never does) or a big height
+// jump; multi-step rotations can otherwise latch an intermediate height.
+let vhTouch = window.innerHeight, vwTouch = window.innerWidth;
 window.addEventListener("resize", () => {
-  if (!isTouch || Math.abs(window.innerHeight - vhTouch) > 150) vhTouch = window.innerHeight;
+  if (!isTouch || window.innerWidth !== vwTouch ||
+      Math.abs(window.innerHeight - vhTouch) > 150) {
+    vwTouch = window.innerWidth;
+    vhTouch = window.innerHeight;
+  }
+  // scroll-linked transforms (ghosts, covers, progress) go stale without
+  // a scroll event
+  onScroll();
 });
 // Scroll-tilt state: cards ease back flat when scrolling pauses.
 const cardTilt = new Map();
@@ -154,7 +189,8 @@ const onScroll = () => {
   const y = Math.max(0, window.scrollY); // iOS rubber-band reports negative
   nav.classList.toggle("scrolled", y > 20);
   const max = document.documentElement.scrollHeight - window.innerHeight;
-  progress.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + "%";
+  progress.style.transform =
+    "scaleX(" + (max > 0 ? Math.min(1, y / max) : 0).toFixed(4) + ")";
   if (!fx) return;
   const vh = isTouch ? vhTouch : window.innerHeight;
   // Ghost numbers lean in 3D and pivot slightly as they drift past
@@ -201,7 +237,12 @@ const onScroll = () => {
       const r = el.getBoundingClientRect();
       if (r.bottom < -60 || r.top > vh + 60) return;
       const off = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / (vh / 2)));
-      const a = off * 4;
+      // Ease toward the target angle instead of writing it directly: the
+      // first frame after an entrance cleanup (or after re-entering the cull
+      // window) would otherwise snap the card by up to 4° in one frame —
+      // transform is deliberately excluded from transitions on touch.
+      const prev = cardTilt.get(el) || 0;
+      const a = prev + (off * 4 - prev) * 0.3;
       cardTilt.set(el, a);
       el.style.transform =
         `perspective(900px) rotateX(${a.toFixed(2)}deg) scale(${(1 - Math.abs(a) * 0.00375).toFixed(3)})`;
@@ -210,7 +251,9 @@ const onScroll = () => {
   }
 };
 window.addEventListener("scroll", onScroll, { passive: true });
-onScroll();
+// NOTE: the initial onScroll() call sits AFTER the reveal setup below — on a
+// scroll-restored load (bfcache) it would otherwise tilt in-view cards right
+// before they receive their hidden entrance state.
 
 // ===== Scroll story: staged reveals (direction, depth, cascades) =====
 if (fx) {
@@ -282,6 +325,7 @@ if (fx) {
   );
   document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 }
+onScroll();
 
 // ===== Scroll-spy: highlight active nav link =====
 const navAnchors = [...navLinks.querySelectorAll("a")];
@@ -300,6 +344,12 @@ const spy = new IntersectionObserver(
   { rootMargin: "-45% 0px -50% 0px" }
 );
 sections.forEach((s) => spy.observe(s));
+// Back in the hero no section is being read — clear the highlight (the spy
+// only ever moves it, so the last section stayed underlined at the top).
+window.addEventListener("scroll", () => {
+  if (window.scrollY < window.innerHeight * 0.35)
+    navAnchors.forEach((a) => a.classList.remove("active"));
+}, { passive: true });
 
 // ===== Animated count-up stats =====
 const countIO = new IntersectionObserver(
@@ -429,6 +479,20 @@ if (fx && isTouch) {
 //  Pointer-driven effects (desktop, motion-allowed only)
 // ===================================================================
 if (!reduceMotion && !isTouch) {
+  // Last known pointer position: scrolling can move an element out from
+  // under a stationary cursor without any pointer event (Safari never
+  // re-hit-tests hover during scroll), so scroll handlers below use these
+  // coordinates to detect and release stale hover states themselves.
+  let lastPX = -1, lastPY = -1;
+  window.addEventListener("pointermove", (e) => {
+    lastPX = e.clientX; lastPY = e.clientY;
+  }, { passive: true });
+  const pointerOutside = (el) => {
+    if (lastPX < 0) return false;
+    const r = el.getBoundingClientRect();
+    return lastPX < r.left || lastPX > r.right || lastPY < r.top || lastPY > r.bottom;
+  };
+
   // -- Spotlight: cards light up under the cursor --
   document.querySelectorAll(".spot").forEach((card) => {
     card.addEventListener("pointermove", (e) => {
@@ -473,7 +537,12 @@ if (!reduceMotion && !isTouch) {
         }
         return;
       }
-      busy = true;
+      // Steady hover: everything converged — park until the pointer moves
+      // again (the card's pointermove handler calls tiltWake).
+      if (!(st.on && st.p > 0.995 &&
+            Math.abs(st.tx - st.cx) < 0.001 && Math.abs(st.ty - st.cy) < 0.001)) {
+        busy = true;
+      }
       if (!st.live) { st.live = true; st.el.classList.add("is-tilting"); }
       const rx = -st.cy * st.max * st.p;
       const ry = st.cx * st.max * st.p;
@@ -499,14 +568,15 @@ if (!reduceMotion && !isTouch) {
         const r = el.getBoundingClientRect();
         st.tx = (e.clientX - r.left) / r.width - 0.5;
         st.ty = (e.clientY - r.top) / r.height - 0.5;
+        tiltWake(); // the loop parks on steady hover
       });
-      el.addEventListener("pointerleave", () => { st.on = false; st.tx = 0; st.ty = 0; });
+      el.addEventListener("pointerleave", () => { st.on = false; st.tx = 0; st.ty = 0; tiltWake(); });
       tiltCards.push(st);
     })
   );
 
-
   // -- Magnetic buttons --
+  const magLive = new Set();
   document.querySelectorAll(".magnetic").forEach((btn) => {
     const STR = 0.35;
     btn.addEventListener("pointermove", (e) => {
@@ -514,11 +584,31 @@ if (!reduceMotion && !isTouch) {
       const x = e.clientX - (r.left + r.width / 2);
       const y = e.clientY - (r.top + r.height / 2);
       btn.style.transform = `translate(${x * STR}px, ${y * STR}px)`;
+      magLive.add(btn);
     });
     btn.addEventListener("pointerleave", () => {
       btn.style.transform = "";
+      magLive.delete(btn);
     });
   });
+
+  // Stale-hover release (Safari, see lastPX above): when a scroll moves a
+  // tilted card or a magnetized button away from the resting cursor, no
+  // pointerleave ever fires — detect it here and ease everything back.
+  window.addEventListener("scroll", () => {
+    tiltCards.forEach((st) => {
+      if (st.on && pointerOutside(st.el)) {
+        st.on = false; st.tx = 0; st.ty = 0;
+        tiltWake();
+      }
+    });
+    magLive.forEach((btn) => {
+      if (pointerOutside(btn)) {
+        btn.style.transform = "";
+        magLive.delete(btn);
+      }
+    });
+  }, { passive: true });
 
   // -- Cursor glow + marquee shear + hero depth rig (one rAF loop) --
   const glow = document.getElementById("cursorGlow");
@@ -553,7 +643,8 @@ if (!reduceMotion && !isTouch) {
     lastY = yNow;
     if (marquee) marquee.style.transform = `perspective(800px) rotateX(4deg) skewX(${shear.toFixed(2)}deg)`;
     // Hero parallax (only while the hero is on screen).
-    if (heroLayers.length && yNow < window.innerHeight) {
+    const heroNow = heroLayers.length > 0 && yNow < window.innerHeight;
+    if (heroNow) {
       hx += (tx / window.innerWidth - 0.5 - hx) * 0.06;
       hy += (ty / window.innerHeight - 0.5 - hy) * 0.06;
       heroLayers.forEach((l) => {
@@ -562,11 +653,15 @@ if (!reduceMotion && !isTouch) {
       });
     }
     // Park the loop once everything settles; pointermove/scroll wakes it.
+    // hx/hy only converge while the hero is on screen — below it they're
+    // frozen, so requiring their convergence there would keep the loop
+    // spinning at full frame rate for the rest of the session.
     if (performance.now() - lastInput > 300 &&
         Math.abs(tx - cx) < 0.5 && Math.abs(ty - cy) < 0.5 &&
         Math.abs(shear) < 0.05 &&
-        Math.abs(tx / window.innerWidth - 0.5 - hx) < 0.005 &&
-        Math.abs(ty / window.innerHeight - 0.5 - hy) < 0.005) {
+        (!heroNow ||
+         (Math.abs(tx / window.innerWidth - 0.5 - hx) < 0.005 &&
+          Math.abs(ty / window.innerHeight - 0.5 - hy) < 0.005))) {
       fxRAF = null;
       return;
     }

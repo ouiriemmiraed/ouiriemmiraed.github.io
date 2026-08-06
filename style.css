@@ -28,13 +28,20 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 ::selection { background: color-mix(in srgb, var(--accent) 45%, transparent); color: #fff; }
-html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+/* overflow-x on BOTH html and body: iOS Safari can pan horizontally when only
+   body clips (transient ±48px reveal transforms, RTL flips). `clip` upgrades
+   `hidden` where supported — it forbids scrolling instead of creating a
+   scrollable-but-hidden box. */
+html {
+  scroll-behavior: smooth; scroll-padding-top: 96px;
+  overflow-x: hidden; overflow-x: clip;
+}
 body {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.65;
-  overflow-x: hidden;
+  overflow-x: hidden; overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   transition: background .5s var(--ease), color .5s var(--ease);
 }
@@ -44,7 +51,10 @@ img { max-width: 100%; display: block; }
 
 /* ===== Scroll progress ===== */
 .scroll-progress {
-  position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+  position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+  /* JS drives scaleX (compositor-only) — animating width forces a layout
+     on every scroll frame */
+  transform: scaleX(0); transform-origin: 0 50%; will-change: transform;
   background: var(--grad); z-index: 100; border-radius: 0 3px 3px 0;
   box-shadow: 0 0 14px rgba(91, 140, 255, .6);
 }
@@ -631,7 +641,7 @@ html[lang="ar"] .hero__name { letter-spacing: 0; }
 [dir="rtl"] .lang-select { padding: 0 13px 0 30px; background-position: left 10px center; }
 [dir="rtl"] .project__link svg,
 [dir="rtl"] .hero__cta .btn--ghost svg { transform: scaleX(-1); }
-[dir="rtl"] .scroll-progress { left: auto; right: 0; border-radius: 3px 0 0 3px; }
+[dir="rtl"] .scroll-progress { transform-origin: 100% 50%; border-radius: 3px 0 0 3px; }
 [dir="rtl"] .marquee__track { animation-direction: reverse; }
 
 /* ---- Skip-to-content link (a11y) ---- */

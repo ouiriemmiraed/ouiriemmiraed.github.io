@@ -96,10 +96,17 @@ function init(THREE, host) {
   new IntersectionObserver((es) => { heroVisible = es[es.length - 1].isIntersecting; }).observe(host);
 
   const clock = new THREE.Clock();
+  // Own time accumulator with a capped delta: clock.getElapsedTime() keeps
+  // counting while the tab is hidden / the hero is off-screen, and t-driven
+  // rotations would teleport by the whole pause in one frame on resume.
+  let t = 0;
   function tick() {
     requestAnimationFrame(tick);
-    if (document.hidden || !heroVisible || !host.offsetParent) return;
-    const t = clock.getElapsedTime();
+    if (document.hidden || !heroVisible || !host.offsetParent) {
+      clock.getDelta(); // keep the delta origin fresh while paused
+      return;
+    }
+    t += Math.min(clock.getDelta(), 0.1);
     const tilt = window.__tilt;
     if (touch && tilt && tilt.active) { tx = tilt.x * 0.4; ty = tilt.y * 0.4; }
     mx += (tx - mx) * 0.045; my += (ty - my) * 0.045;
